@@ -8,3 +8,4 @@ $PROJDIR/Obj/
 *.user
 *.userprefs
 *.DS_store
+Library/
