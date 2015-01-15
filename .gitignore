@@ -9,3 +9,4 @@ $PROJDIR/Obj/
 *.userprefs
 *.DS_store
 Library/
+Temp/
