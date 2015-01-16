@@ -9,7 +9,7 @@ public class SCR_playerMove : MonoBehaviour {
     
 	public bool clickToMove;  
 	public float clickMoveSpeed;						// The Speed the character will move
- 	public float keyMoveSpeed = 0.05F;
+ 	public float keyMoveSpeed = 0.03F;
  
 	void Start () {
 		myTransform = transform;							// sets myTransform to this GameObject.transform
