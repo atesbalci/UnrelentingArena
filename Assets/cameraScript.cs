@@ -45,7 +45,6 @@ public class cameraScript : MonoBehaviour {
 		}
 		if (Mathf.Abs (cPos.z + z) > zLimit) {
 			transform.position = new Vector3(cPos.x, cPos.y, cPos.z > 0 ? zLimit : -zLimit);
-			print(z);
 			z = 0;
 		}
 		if ((cPos.y + y) < -zoomLimit || (cPos.y + y) > 0) {
