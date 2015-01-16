@@ -17,7 +17,6 @@ public class SCR_playerMove : MonoBehaviour {
 	}
  
 	void Update () {
- 
         if(clickToMove==true){
 			// keep track of the distance between this gameObject and destinationPosition
 			destinationDistance = Vector3.Distance(destinationPosition, myTransform.position);
@@ -35,7 +34,7 @@ public class SCR_playerMove : MonoBehaviour {
 			if (Input.GetMouseButtonDown(1)&& GUIUtility.hotControl ==0) {
 	 
 				Plane playerPlane = new Plane(Vector3.up, myTransform.position);
-				Ray ray = Camera.current.ScreenPointToRay(Input.mousePosition);
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				float hitdist = 0.0f;
 	 
 				if (playerPlane.Raycast(ray, out hitdist)) {
@@ -50,7 +49,7 @@ public class SCR_playerMove : MonoBehaviour {
 			else if (Input.GetMouseButton(1)&& GUIUtility.hotControl ==0) {
 	 
 				Plane playerPlane = new Plane(Vector3.up, myTransform.position);
-				Ray ray = Camera.current.ScreenPointToRay(Input.mousePosition);
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				float hitdist = 0.0f;
 	 
 				if (playerPlane.Raycast(ray, out hitdist)) {
@@ -67,43 +66,12 @@ public class SCR_playerMove : MonoBehaviour {
 				myTransform.position = Vector3.MoveTowards(myTransform.position, destinationPosition, clickMoveSpeed * Time.deltaTime);
 			}
 		}
-		
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
-		    clickToMove=false;	
-			transform.Translate(new Vector3(0,0,1) * keyMoveSpeed);
-			animation.Play("run");
-		} 
-		else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
-		    clickToMove=false;
-			transform.Translate(new Vector3(0,0,-1) * keyMoveSpeed);
-			animation.Play("run");
-		} else {
-		    if(Input.GetMouseButtonDown(0)){
-                clickToMove=true;
-			}
-			
-			if(clickToMove==false&&Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
-				animation.Play("strafeLeft");
-            }				
-	
-			else if(clickToMove==false&&Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
-				animation.Play("strafeRight");
-            }	
-	
-		    else if(clickToMove==false){
-				animation.Play("idle");
-            }				
-        }	
-		
-		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
-			transform.Rotate(new Vector3(0,-1,0) * 5);
-			clickToMove=false;
-		} 
-		else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
-			transform.Rotate(new Vector3(0,1,0) * 5);
-			clickToMove=false;
+	    if(Input.GetMouseButtonDown(1)){
+        clickToMove=true;
+		}
 
-		} 	
-
+	    else if(clickToMove==false){
+			animation.Play("idle");
+    	}
 	}
 }
