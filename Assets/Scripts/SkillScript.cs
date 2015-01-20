@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SkillScript : MonoBehaviour {
     public Skill skill { get; set; }
+    public Vector3 targetPosition { get; set; }
 
     void Start() {
 
@@ -10,16 +11,22 @@ public class SkillScript : MonoBehaviour {
 
     void Update() {
         if (skill != null)
-            skill.update(gameObject, Time.deltaTime);
+            skill.update(gameObject, Time.deltaTime, targetPosition);
     }
 
-    public void OnCollisionEnter(Collision collision) {
+    void OnTriggerEnter(Collider collider) {
         if (skill != null) {
-            SkillScript skillScript = collision.gameObject.GetComponent<SkillScript>();
-            if (skillScript != null)
-                skill.collisionWithSkill(gameObject, collision, skillScript.skill);
+            SkillScript skillScript = collider.gameObject.GetComponent<SkillScript>();
+            PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
+            if (playerScript != null) {
+                if (skill.player != playerScript.player)
+                    skill.collisionWithPlayer(gameObject, collider, playerScript.player);
+                else
+                    skill.collisionWithSelf(gameObject, collider);
+            } else if (skillScript != null)
+                skill.collisionWithSkill(gameObject, collider, skillScript.skill);
             else
-                skill.collisionWithOtherObject(gameObject, collision);
+                skill.collisionWithOtherObject(gameObject, collider);
         }
     }
 }

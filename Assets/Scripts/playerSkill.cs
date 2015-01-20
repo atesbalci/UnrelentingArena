@@ -3,6 +3,7 @@ using System.Collections;
 
 public class playerSkill : MonoBehaviour {
     public KeyCode skillKey1 = KeyCode.Alpha1;
+    public KeyCode skillKey2 = KeyCode.Alpha2;
 
     private SkillSet skillSet;
 
@@ -12,9 +13,14 @@ public class playerSkill : MonoBehaviour {
 
     void Update() {
         Skill skill = null;
+        Player player = gameObject.GetComponent<PlayerScript>().player;
 
-        if (Input.GetKeyDown(skillKey1) && GUIUtility.hotControl == 0) {
-            skill = skillSet.castFireball();
+        if (GUIUtility.hotControl == 0) {
+            if (Input.GetKeyDown(skillKey1)) {
+                skill = skillSet.castFireball(player);
+            } else if (Input.GetKeyDown(skillKey2)) {
+                skill = skillSet.castBlink(player);
+            }
         }
 
         if (skill != null) {
@@ -29,6 +35,7 @@ public class playerSkill : MonoBehaviour {
                 GameObject skillGameObject = Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), new Vector3(transform.position.x, 1, transform.position.z), targetRotation) as GameObject;
                 SkillScript skillScript = skillGameObject.AddComponent<SkillScript>();
                 skillScript.skill = skill;
+                skillScript.targetPosition = targetPoint;
             }
         }
     }
