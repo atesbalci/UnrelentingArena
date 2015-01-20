@@ -16,8 +16,8 @@ public class Player {
 
     public void update(GameObject gameObject, float delta) {
         if (positionToBeChanged) {
+            gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
             gameObject.GetComponent<playerMove>().resetMovement();
-            gameObject.transform.position = newPosition;
             positionToBeChanged = false;
         }
         if (health <= 0)
@@ -26,13 +26,13 @@ public class Player {
 
     public void damage(float damage) {
         health -= damage;
-        if(health < 0)
+        if (health < 0)
             health = 0;
     }
 
     public void heal(float heal) {
         health += heal;
-        if(health > maxHealth)
+        if (health > maxHealth)
             health = maxHealth;
     }
 
