@@ -8,9 +8,8 @@ public class SkillSet {
         
     }
 
-    public Skill castFireball() {
-        Skill skill = new Skill();
-        skill.setPrefab("Fireball");
-        return skill;
+    public Fireball castFireball() {
+        Fireball fireball = new Fireball();
+        return fireball;
     }
 }

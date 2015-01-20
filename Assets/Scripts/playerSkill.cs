@@ -26,9 +26,9 @@ public class playerSkill : MonoBehaviour {
                 Vector3 targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
                 transform.rotation = targetRotation;
-                GameObject skillGameObject = Instantiate(Resources.Load(skill.getPrefab(), typeof(GameObject)), transform.position, targetRotation) as GameObject;
+                GameObject skillGameObject = Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), new Vector3(transform.position.x, 1, transform.position.z), targetRotation) as GameObject;
                 SkillScript skillScript = skillGameObject.AddComponent<SkillScript>();
-                skillScript.setRemainingDistance(skill.getRange());
+                skillScript.skill = skill;
             }
         }
     }

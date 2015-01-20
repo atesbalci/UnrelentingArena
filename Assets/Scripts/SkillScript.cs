@@ -2,30 +2,24 @@
 using System.Collections;
 
 public class SkillScript : MonoBehaviour {
-    private float remainingDistance = 0;
-    private float speed = 16f;
+    public Skill skill { get; set; }
 
     void Start() {
 
     }
 
     void Update() {
-        float travel = speed * Time.deltaTime;
-        if (remainingDistance <= 0)
-            Destroy(gameObject);
-        if (remainingDistance - travel >= 0) {
-            transform.Translate(0, 0, speed * Time.deltaTime);
-        } else {
-            transform.Translate(0, 0, remainingDistance);
+        if (skill != null)
+            skill.update(gameObject, Time.deltaTime);
+    }
+
+    public void OnCollisionEnter(Collision collision) {
+        if (skill != null) {
+            SkillScript skillScript = collision.gameObject.GetComponent<SkillScript>();
+            if (skillScript != null)
+                skill.collisionWithSkill(gameObject, collision, skillScript.skill);
+            else
+                skill.collisionWithOtherObject(gameObject, collision);
         }
-        remainingDistance -= travel;
-    }
-
-    public void setRemainingDistance(float remainingDistance) {
-        this.remainingDistance = remainingDistance;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
     }
 }
