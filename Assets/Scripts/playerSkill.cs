@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerSkill : MonoBehaviour {
+public class PlayerSkill : MonoBehaviour {
     public KeyCode skillKey1 = KeyCode.Alpha1;
     public KeyCode skillKey2 = KeyCode.Alpha2;
 

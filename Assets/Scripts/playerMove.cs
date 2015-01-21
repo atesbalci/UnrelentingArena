@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerMove : MonoBehaviour {
+public class PlayerMove : MonoBehaviour {
     public KeyCode moveButton = KeyCode.Mouse1;
     public Vector3 destinationPosition;
 

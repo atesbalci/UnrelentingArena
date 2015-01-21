@@ -1003,7 +1003,7 @@ MonoBehaviour:
   xLimit: 30
   zLimit: 30
   zoomLimit: 20
-  zoomSpeed: 1
+  zoomSpeed: 1.5
 --- !u!1 &873799850
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class castBarScript : MonoBehaviour {
+public class CastBarScript : MonoBehaviour {
     private GameObject castBar;
 
 	void Start () {

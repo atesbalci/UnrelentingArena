@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class castBarInScript : MonoBehaviour {
+public class CastBarInScript : MonoBehaviour {
 
     void Start() {
 

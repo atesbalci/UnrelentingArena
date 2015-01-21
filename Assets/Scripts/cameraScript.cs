@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class cameraScript : MonoBehaviour {
+public class CameraScript : MonoBehaviour {
     private Vector3 cPos;
 
     public float ratio = 0.025f;
