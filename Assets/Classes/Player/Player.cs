@@ -21,7 +21,7 @@ public class Player {
         maxHealth = 100;
         health = maxHealth;
         positionToBeChanged = false;
-        movementSpeed = 8;
+        movementSpeed = 6;
     }
 
     public void update(GameObject gameObject) {
