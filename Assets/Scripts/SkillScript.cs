@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SkillScript : MonoBehaviour {
     public Skill skill { get; set; }
-    public Vector3 targetPosition { get; set; }
 
     void Start() {
 
@@ -11,7 +10,7 @@ public class SkillScript : MonoBehaviour {
 
     void Update() {
         if (skill != null)
-            skill.update(gameObject, Time.deltaTime, targetPosition);
+            skill.update(gameObject);
     }
 
     void OnTriggerEnter(Collider collider) {

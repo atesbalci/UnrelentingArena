@@ -3,19 +3,22 @@ using System.Collections;
 
 public abstract class Skill {
     private float _range;
-    public float range { get { return _range; } set { _range = value; remainingDistance = value; } }
+    public virtual float range { get { return _range; } set { _range = value; } }
     public string prefab { get; set; }
     public Player player { get; set; }
-
-    protected float remainingDistance;
+    public Vector3 targetPosition { get; set; }
+    public float channelTime { get; set; }
+    public float recoilTime { get; set; }
 
     public Skill(Player player) {
         range = 10;
         prefab = "";
         this.player = player;
+        channelTime = 0.5f;
+        recoilTime = 0.5f;
     }
 
-    public virtual void update(GameObject gameObject, float delta, Vector3 targetPosition) {
+    public virtual void update(GameObject gameObject) {
     }
 
     public virtual void collisionWithPlayer(GameObject gameObject, Collider collider, Player player) {

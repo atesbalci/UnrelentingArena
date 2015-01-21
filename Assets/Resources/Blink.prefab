@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 417464}
   - 198: {fileID: 19817464}
   - 199: {fileID: 19917464}
-  - 135: {fileID: 13517464}
   - 54: {fileID: 5417464}
+  - 135: {fileID: 13517464}
   m_Layer: 0
   m_Name: Blink
   m_TagString: Untagged
@@ -48,7 +48,7 @@ Rigidbody:
   m_CollisionDetection: 0
 --- !u!135 &13517464
 SphereCollider:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117464}

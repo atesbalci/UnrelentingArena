@@ -2,14 +2,12 @@
 using System.Collections;
 
 public class playerMove : MonoBehaviour {
-    public float movementSpeed = 8;
     public KeyCode moveButton = KeyCode.Mouse1;
+    public Vector3 destinationPosition;
 
     private Transform myTransform;
-    private Vector3 destinationPosition;
     private float destinationDistance;
     private float clickMoveSpeed = 0;
-    private bool stopped = false;
 
     void Start() {
         myTransform = transform;
@@ -17,15 +15,18 @@ public class playerMove : MonoBehaviour {
     }
 
     void Update() {
-        if (!stopped) {
-            destinationDistance = Vector3.Distance(destinationPosition, myTransform.position);
+        Player player = GetComponent<PlayerScript>().player;
+        destinationDistance = Vector3.Distance(destinationPosition, myTransform.position);
 
+        if(clickMoveSpeed > 0.5f)
+            animation.Play("run");
+        else
+            animation.Play("idle");
+        if (player.currentSpeed > 0.5f) {
             if (destinationDistance < .5f) {
                 clickMoveSpeed = 0;
-                animation.Play("idle");
             } else if (destinationDistance > .5f) {
-                clickMoveSpeed = movementSpeed;
-                animation.Play("run");
+                clickMoveSpeed = player.currentSpeed;
             }
 
             if (Input.GetKey(moveButton) && GUIUtility.hotControl == 0) {
@@ -40,24 +41,15 @@ public class playerMove : MonoBehaviour {
                     myTransform.rotation = targetRotation;
                 }
             }
-
             if (destinationDistance > .5f) {
                 myTransform.position = Vector3.MoveTowards(myTransform.position, destinationPosition, clickMoveSpeed * Time.deltaTime);
             }
+        } else
+            clickMoveSpeed = 0;
+
+        if (player.movementReset) {
+            destinationPosition = transform.position;
+            player.movementReset = false;
         }
-    }
-
-    public void stop() {
-        stopped = true;
-        animation.Play("idle");
-    }
-
-    public void start() {
-        stopped = false;
-        resetMovement();
-    }
-
-    public void resetMovement() {
-        destinationPosition = transform.position;
     }
 }

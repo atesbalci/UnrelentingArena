@@ -2127,8 +2127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4cb2b8a6a6ec748b8f9cf1320c3e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 8
   moveButton: 324
+  destinationPosition: {x: 0, y: 0, z: 0}
 --- !u!136 &2073870287
 CapsuleCollider:
   m_ObjectHideFlags: 0

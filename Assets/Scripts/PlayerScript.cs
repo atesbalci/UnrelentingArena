@@ -13,6 +13,6 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Update() {
-        player.update(gameObject, Time.deltaTime);
+        player.update(gameObject);
     }
 }

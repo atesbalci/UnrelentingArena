@@ -9,16 +9,16 @@ public class Blink : TargetSkill {
         : base(player) {
         prefab = "Blink";
         blinkDone = false;
-        timeBeforeDestruction = 3;
+        timeBeforeDestruction = 1.5f;
     }
 
-    public override void update(GameObject gameObject, float delta, Vector3 targetPosition) {
-        base.update(gameObject, delta, targetPosition);
+    public override void update(GameObject gameObject) {
+        base.update(gameObject);
         if (!blinkDone) {
             player.schedulePositionChange(gameObject.transform.position);
             blinkDone = true;
         } else {
-            timeBeforeDestruction -= delta;
+            timeBeforeDestruction -= Time.deltaTime;
             if (timeBeforeDestruction <= 0)
                 MonoBehaviour.Destroy(gameObject);
         }

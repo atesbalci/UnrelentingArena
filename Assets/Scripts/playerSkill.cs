@@ -5,10 +5,7 @@ public class playerSkill : MonoBehaviour {
     public KeyCode skillKey1 = KeyCode.Alpha1;
     public KeyCode skillKey2 = KeyCode.Alpha2;
 
-    private SkillSet skillSet;
-
     void Start() {
-        skillSet = new SkillSet();
     }
 
     void Update() {
@@ -17,9 +14,9 @@ public class playerSkill : MonoBehaviour {
 
         if (GUIUtility.hotControl == 0) {
             if (Input.GetKeyDown(skillKey1)) {
-                skill = skillSet.castFireball(player);
+                skill = player.skillSet.castFireball(player);
             } else if (Input.GetKeyDown(skillKey2)) {
-                skill = skillSet.castBlink(player);
+                skill = player.skillSet.castBlink(player);
             }
         }
 
@@ -32,10 +29,8 @@ public class playerSkill : MonoBehaviour {
                 Vector3 targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
                 transform.rotation = targetRotation;
-                GameObject skillGameObject = Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), new Vector3(transform.position.x, 1, transform.position.z), targetRotation) as GameObject;
-                SkillScript skillScript = skillGameObject.AddComponent<SkillScript>();
-                skillScript.skill = skill;
-                skillScript.targetPosition = targetPoint;
+                skill.targetPosition = targetPoint;
+                player.addBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation));
             }
         }
     }
