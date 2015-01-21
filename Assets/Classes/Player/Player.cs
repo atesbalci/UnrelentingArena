@@ -37,6 +37,7 @@ public class Player {
             node.Value.update();
             node = nextNode;
         }
+        skillSet.update();
 
         if (health <= 0)
             MonoBehaviour.Destroy(gameObject);
