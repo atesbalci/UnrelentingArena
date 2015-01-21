@@ -68,4 +68,12 @@ public class Player {
         buffs.Remove(buff);
         buff.debuff();
     }
+
+    public Channel getChannel() {
+        foreach(Buff b in buffs) {
+            if (b.GetType() == typeof(Channel))
+                return b as Channel;
+        }
+        return null;
+    }
 }

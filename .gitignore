@@ -12,3 +12,4 @@ Library/
 Temp/
 ProjectSettings/EditorBuildSettings.asset
 obj/Debug/Assembly-CSharp-vs.csproj.FileListAbsolute.txt
+ProjectSettings/TagManager.asset
