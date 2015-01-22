@@ -15,7 +15,7 @@ public abstract class SkillShot : Skill {
     public override void update(GameObject gameObject) {
         float travel = speed * Time.deltaTime;
         if (remainingDistance <= 0)
-            MonoBehaviour.Destroy(gameObject);
+            Network.Destroy(gameObject);
         if (remainingDistance - travel >= 0) {
             gameObject.transform.Translate(0, 0, speed * Time.deltaTime);
         } else {
@@ -25,6 +25,6 @@ public abstract class SkillShot : Skill {
     }
 
     public override void collisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
-        MonoBehaviour.Destroy(gameObject);
+        Network.Destroy(gameObject);
     }
 }

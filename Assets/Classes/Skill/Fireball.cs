@@ -12,6 +12,6 @@ public class Fireball : SkillShot {
 
     public override void collisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
         player.health -= damage;
-        MonoBehaviour.Destroy(gameObject);
+        Network.Destroy(gameObject);
     }
 }

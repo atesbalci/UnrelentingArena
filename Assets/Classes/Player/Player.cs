@@ -40,7 +40,7 @@ public class Player {
         skillSet.update();
 
         if (health <= 0)
-            MonoBehaviour.Destroy(gameObject);
+            Network.Destroy(gameObject);
     }
 
     public void damage(float damage) {

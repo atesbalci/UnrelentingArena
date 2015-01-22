@@ -20,7 +20,7 @@ public class Blink : TargetSkill {
         } else {
             timeBeforeDestruction -= Time.deltaTime;
             if (timeBeforeDestruction <= 0)
-                MonoBehaviour.Destroy(gameObject);
+                Network.Destroy(gameObject);
         }
     }
 }

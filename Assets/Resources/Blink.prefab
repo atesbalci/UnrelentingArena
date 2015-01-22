@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 417464}
   - 198: {fileID: 19817464}
   - 199: {fileID: 19917464}
+  - 148: {fileID: 14822612}
   m_Layer: 0
   m_Name: Blink
   m_TagString: Untagged
@@ -29,6 +30,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!148 &14822612
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117464}
+  m_Enabled: 1
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 417464}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!198 &19817464
 ParticleSystem:
   m_ObjectHideFlags: 1

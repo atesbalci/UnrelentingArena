@@ -13,7 +13,6 @@ public class NetworkManager : MonoBehaviour {
 
     public IEnumerator refreshHosts() {
         MasterServer.RequestHostList(gameName);
-        float timeStarted = Time.time;
         float timeEnd = Time.time + refreshRequestLength;
 
         while (Time.time < timeEnd) {
@@ -23,11 +22,16 @@ public class NetworkManager : MonoBehaviour {
     }
 
     void OnConnectedToServer() {
+        Network.Instantiate(Resources.Load("Player"), new Vector3(0, 0, 0), new Quaternion(), 0);
+    }
 
+    void OnPlayerDisconnected(NetworkPlayer player) {
+        Network.RemoveRPCs(player);
+        Network.DestroyPlayerObjects(player);
     }
 
     void OnServerInitialized() {
-
+        OnConnectedToServer();
     }
 
     void OnGUI() {

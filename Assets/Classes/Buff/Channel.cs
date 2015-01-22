@@ -25,7 +25,7 @@ public class Channel : Buff {
     public override void debuff() {
         if (skill != null) {
             player.addBuff(this);
-            GameObject skillGameObject = MonoBehaviour.Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), position, rotation) as GameObject;
+            GameObject skillGameObject = Network.Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), position, rotation, 0) as GameObject;
             SkillScript skillScript = skillGameObject.AddComponent<SkillScript>();
             skillScript.skill = skill;
             duration = skill.recoilTime;
