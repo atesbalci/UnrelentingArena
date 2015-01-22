@@ -3,15 +3,18 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class CastBarInScript : MonoBehaviour {
+    public Player player { get; set; }
 
     void Start() {
 
     }
 
     void Update() {
-        Channel channel = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().player.getChannel();
-        if (channel != null) {
-            GetComponent<Image>().fillAmount = 1 - channel.remainingDuration / channel.duration;
+        if (player != null) {
+            Channel channel = player.getChannel();
+            if (channel != null) {
+                GetComponent<Image>().fillAmount = 1 - channel.remainingDuration / channel.duration;
+            }
         }
     }
 }

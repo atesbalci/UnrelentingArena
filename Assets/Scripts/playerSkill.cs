@@ -2,20 +2,21 @@
 using System.Collections;
 
 public class PlayerSkill : MonoBehaviour {
-    public KeyCode skillKey1 = KeyCode.Alpha1;
-    public KeyCode skillKey2 = KeyCode.Alpha2;
+    private ControlScript controlScript;
+    private Player player;
 
     void Start() {
+        controlScript = GetComponent<ControlScript>();
+        player = GetComponent<PlayerScript>().player;
     }
 
     void Update() {
         Skill skill = null;
-        Player player = gameObject.GetComponent<PlayerScript>().player;
 
         if (GUIUtility.hotControl == 0) {
-            if (Input.GetKeyDown(skillKey1)) {
+            if (controlScript.spell1) {
                 skill = player.skillSet.castFireball(player);
-            } else if (Input.GetKeyDown(skillKey2)) {
+            } else if (controlScript.spell2) {
                 skill = player.skillSet.castBlink(player);
             }
         }

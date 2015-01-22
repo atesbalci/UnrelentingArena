@@ -360,6 +360,8 @@ GameObject:
   - 114: {fileID: 11423230}
   - 114: {fileID: 11423228}
   - 114: {fileID: 11495616}
+  - 114: {fileID: 11402256}
+  - 148: {fileID: 14802256}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1074,7 +1076,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123184}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
-  m_LocalPosition: {x: -.100000001, y: 0, z: -8.09000015}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 423164}
@@ -1538,6 +1540,20 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &11402256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d691e3fa202442f4a8528b50b5439322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveKey: 324
+  spell1Key: 49
+  spell2Key: 50
 --- !u!114 &11423228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1549,8 +1565,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca815d603bd3f4b44bf1306946bb1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillKey1: 49
-  skillKey2: 50
 --- !u!114 &11423230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1562,8 +1576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4cb2b8a6a6ec748b8f9cf1320c3e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveButton: 324
-  destinationPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11423232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1702,6 +1714,18 @@ SkinnedMeshRenderer:
     m_Center: {x: .109321743, y: .220904529, z: -.000130653381}
     m_Extent: {x: 1.02764952, y: .810324252, z: 1.05320835}
   m_DirtyAABB: 0
+--- !u!148 &14802256
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123184}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 423184}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

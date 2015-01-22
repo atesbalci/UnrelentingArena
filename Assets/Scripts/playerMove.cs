@@ -2,20 +2,21 @@
 using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
-    public KeyCode moveButton = KeyCode.Mouse1;
-    public Vector3 destinationPosition;
-
+    private Vector3 destinationPosition;
     private Transform myTransform;
     private float destinationDistance;
     private float clickMoveSpeed = 0;
+    private ControlScript controlScript;
+    private Player player;
 
     void Start() {
         myTransform = transform;
         destinationPosition = myTransform.position;
+        controlScript = GetComponent<ControlScript>();
+        player = GetComponent<PlayerScript>().player;
     }
 
     void Update() {
-        Player player = GetComponent<PlayerScript>().player;
         destinationDistance = Vector3.Distance(destinationPosition, myTransform.position);
 
         if(clickMoveSpeed > 0.5f)
@@ -29,7 +30,7 @@ public class PlayerMove : MonoBehaviour {
                 clickMoveSpeed = player.currentSpeed;
             }
 
-            if (Input.GetKey(moveButton) && GUIUtility.hotControl == 0) {
+            if (controlScript.move && GUIUtility.hotControl == 0) {
                 Plane playerPlane = new Plane(Vector3.up, myTransform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
