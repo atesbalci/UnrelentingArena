@@ -25,7 +25,7 @@ public abstract class SkillShot : Skill {
     }
 
     public override void collisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
-        Network.Destroy(gameObject);
+        destroy(gameObject);
     }
 
     public override void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
