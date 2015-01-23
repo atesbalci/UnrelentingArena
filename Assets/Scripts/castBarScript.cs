@@ -22,9 +22,8 @@ public class CastBarScript : MonoBehaviour {
         if (player != null) {
             Channel channel = player.getChannel();
             if (channel != null) {
-                bool casting = channel.skill != null;
-                castBar.SetActive(casting);
-                if (casting)
+                castBar.SetActive(!channel.onRecoil);
+                if (!channel.onRecoil)
                     castBar.GetComponentInChildren<CastBarInScript>().player = player;
                 return;
             }

@@ -363,6 +363,7 @@ GameObject:
   - 114: {fileID: 11402256}
   - 148: {fileID: 14802256}
   - 148: {fileID: 14827390}
+  - 148: {fileID: 14820632}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1580,7 +1581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4cb2b8a6a6ec748b8f9cf1320c3e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destinationPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11423232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1728,6 +1728,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 2
   m_Observed: {fileID: 423184}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14820632
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123184}
+  m_Enabled: 1
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 11423228}
   m_ViewID:
     m_ID: 0
     m_Type: 0

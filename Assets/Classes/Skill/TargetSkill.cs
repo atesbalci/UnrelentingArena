@@ -4,8 +4,7 @@ using System.Collections;
 public class TargetSkill : Skill {
     protected bool initialized;
 
-    public TargetSkill(Player player)
-        : base(player) {
+    public TargetSkill() {
         initialized = false;
     }
 

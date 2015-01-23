@@ -2,16 +2,22 @@
 using System.Collections;
 
 public class SkillPreset {
+    public int skill { get; set; }
     public float damage { get; set; }
     public float range { get; set; }
     public float cooldown { get; set; }
     public float remainingCooldown { get; set; }
+    public float channelTime { get; set; }
+    public float recoilTime { get; set; }
 
-    public SkillPreset() {
+    public SkillPreset(int skill) {
+        this.skill = skill;
         range = 10;
         damage = 20;
         cooldown = 5;
         remainingCooldown = 0;
+        channelTime = 0.5f;
+        recoilTime = 0.5f;
     }
 
     public void update() {

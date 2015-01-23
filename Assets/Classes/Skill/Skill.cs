@@ -7,15 +7,12 @@ public abstract class Skill {
     public string prefab { get; set; }
     public Player player { get; set; }
     public Vector3 targetPosition { get; set; }
-    public float channelTime { get; set; }
-    public float recoilTime { get; set; }
+    public float damage { get; set; }
 
-    public Skill(Player player) {
+    public Skill() {
         range = 10;
         prefab = "";
-        this.player = player;
-        channelTime = 0.5f;
-        recoilTime = 0.5f;
+        damage = 20;
     }
 
     public virtual void update(GameObject gameObject) {
@@ -34,5 +31,9 @@ public abstract class Skill {
     }
 
     public virtual void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
+    }
+
+    public void destroy(GameObject gameObject) {
+        MonoBehaviour.Destroy(gameObject);
     }
 }

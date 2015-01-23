@@ -2,16 +2,20 @@
 using System.Collections;
 
 public class Channel : Buff {
-    public Skill skill { get; set; }
+    public SkillPreset skill { get; set; }
     public Quaternion rotation { get; set; }
     public Vector3 position { get; set; }
+    public Vector3 targetPosition { get; set; }
+    public bool onRecoil { get; set; }
 
-    public Channel(Player player, Skill skill, Vector3 position, Quaternion rotation)
+    public Channel(Player player, SkillPreset skill, Vector3 position, Quaternion rotation, Vector3 targetPosition)
         : base(player) {
         duration = skill.channelTime;
         this.skill = skill;
         this.rotation = rotation;
         this.position = position;
+        this.targetPosition = targetPosition;
+        onRecoil = false;
     }
 
     public override void update() {
@@ -23,13 +27,11 @@ public class Channel : Buff {
     }
 
     public override void debuff() {
-        if (skill != null) {
+        if (!onRecoil) {
             player.addBuff(this);
-            GameObject skillGameObject = Network.Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), position, rotation, 0) as GameObject;
-            SkillScript skillScript = skillGameObject.GetComponent<SkillScript>();
-            skillScript.skill = skill;
             duration = skill.recoilTime;
-            skill = null;
+            player.toBeCast = this;
+            onRecoil = true;
         } else {
             player.currentSpeed = player.movementSpeed;
             player.movementReset = true;

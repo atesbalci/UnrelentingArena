@@ -5,8 +5,7 @@ public class Blink : TargetSkill {
     private float timeBeforeDestruction;
     private bool blinkDone;
 
-    public Blink(Player player)
-        : base(player) {
+    public Blink() {
         prefab = "Blink";
         blinkDone = false;
         timeBeforeDestruction = 1.5f;
@@ -20,7 +19,7 @@ public class Blink : TargetSkill {
         } else {
             timeBeforeDestruction -= Time.deltaTime;
             if (timeBeforeDestruction <= 0)
-                Network.Destroy(gameObject);
+                destroy(gameObject);
         }
     }
 }

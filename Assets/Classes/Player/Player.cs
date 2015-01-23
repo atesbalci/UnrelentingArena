@@ -11,6 +11,7 @@ public class Player {
     public SkillSet skillSet { get; set; }
     public LinkedList<Buff> buffs { get; set; }
     public bool movementReset { get; set; }
+    public Channel toBeCast { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;

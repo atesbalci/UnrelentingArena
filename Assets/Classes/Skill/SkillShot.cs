@@ -6,15 +6,14 @@ public abstract class SkillShot : Skill {
     public override float range { get { return base.range; } set { base.range = value; remainingDistance = value; } }
     public float remainingDistance { get; set; }
 
-    public SkillShot(Player player)
-        : base(player) {
+    public SkillShot() {
         speed = 16;
     }
 
     public override void update(GameObject gameObject) {
         float travel = speed * Time.deltaTime;
         if (remainingDistance <= 0)
-            Network.Destroy(gameObject);
+            destroy(gameObject);
         Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         if (remainingDistance - travel >= 0) {
             gameObject.transform.Translate(0, 0, speed * Time.deltaTime);
