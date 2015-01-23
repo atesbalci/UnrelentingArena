@@ -28,4 +28,17 @@ public class SkillScript : MonoBehaviour {
                 skill.collisionWithOtherObject(gameObject, collider);
         }
     }
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+        //Skill s = null;
+        //if (stream.isWriting) {
+        //    s = skill;
+        //    stream.Serialize(ref s);
+        //} else {
+        //    stream.Serialize(ref s);
+        //    skill = s;
+        //}
+        if (skill != null)
+            skill.serializeNetworkView(gameObject, stream, info);
+    }
 }

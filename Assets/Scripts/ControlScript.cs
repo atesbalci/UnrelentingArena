@@ -7,15 +7,14 @@ public class ControlScript : MonoBehaviour {
     public KeyCode spell1Key = KeyCode.Alpha1;
     public KeyCode spell2Key = KeyCode.Alpha2;
 
-    public bool move { get; set; }
-    public bool spell1 { get; set; }
-    public bool spell2 { get; set; }
+    public bool move;
+    public bool spell1;
+    public bool spell2;
 
     private bool mine;
 
     void Start() {
         mine = networkView.isMine;
-        Debug.Log("Mine: " + mine);
     }
 
     void Update() {

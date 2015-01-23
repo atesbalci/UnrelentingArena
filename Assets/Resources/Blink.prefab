@@ -11,6 +11,8 @@ GameObject:
   - 198: {fileID: 19817464}
   - 199: {fileID: 19917464}
   - 148: {fileID: 14822612}
+  - 114: {fileID: 11427390}
+  - 148: {fileID: 14862154}
   m_Layer: 0
   m_Name: Blink
   m_TagString: Untagged
@@ -30,6 +32,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11427390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea8c693d7244dd4e9370ded12f9b0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!148 &14822612
 NetworkView:
   m_ObjectHideFlags: 1
@@ -39,6 +52,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 2
   m_Observed: {fileID: 417464}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14862154
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117464}
+  m_Enabled: 1
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 11427390}
   m_ViewID:
     m_ID: 0
     m_Type: 0

@@ -12,7 +12,8 @@ GameObject:
   - 199: {fileID: 19998718}
   - 135: {fileID: 13510224}
   - 54: {fileID: 5415364}
-  - 148: {fileID: 14853938}
+  - 114: {fileID: 11494048}
+  - 148: {fileID: 14889404}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -47,6 +48,17 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &11494048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea8c693d7244dd4e9370ded12f9b0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13510224
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -59,7 +71,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: .510599971}
---- !u!148 &14853938
+--- !u!148 &14889404
 NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -67,7 +79,7 @@ NetworkView:
   m_GameObject: {fileID: 188744}
   m_Enabled: 1
   m_StateSynchronization: 2
-  m_Observed: {fileID: 488744}
+  m_Observed: {fileID: 11494048}
   m_ViewID:
     m_ID: 0
     m_Type: 0

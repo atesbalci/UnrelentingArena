@@ -10,9 +10,14 @@ public class CastBarScript : MonoBehaviour {
 
     void Update() {
         Player player = null;
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player")) {
-            player = go.GetComponent<PlayerScript>().player;
-            break;
+        GameObject[] playerQuery = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < playerQuery.Length; i++) {
+            if (playerQuery[i].GetComponent<NetworkView>() != null) {
+                if (playerQuery[i].networkView.isMine) {
+                    player = playerQuery[i].GetComponent<PlayerScript>().player;
+                    break;
+                }
+            }
         }
         if (player != null) {
             Channel channel = player.getChannel();

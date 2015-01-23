@@ -32,4 +32,7 @@ public abstract class Skill {
 
     public virtual void collisionWithOtherObject(GameObject gameObject, Collider collider) {
     }
+
+    public virtual void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
+    }
 }

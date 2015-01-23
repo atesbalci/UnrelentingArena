@@ -26,7 +26,7 @@ public class Channel : Buff {
         if (skill != null) {
             player.addBuff(this);
             GameObject skillGameObject = Network.Instantiate(Resources.Load(skill.prefab, typeof(GameObject)), position, rotation, 0) as GameObject;
-            SkillScript skillScript = skillGameObject.AddComponent<SkillScript>();
+            SkillScript skillScript = skillGameObject.GetComponent<SkillScript>();
             skillScript.skill = skill;
             duration = skill.recoilTime;
             skill = null;
