@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SkillPreset {
-    public int skill { get; set; }
+    public SkillType skill { get; set; }
     public float damage { get; set; }
     public float range { get; set; }
     public float cooldown { get; set; }
@@ -10,7 +10,7 @@ public class SkillPreset {
     public float channelTime { get; set; }
     public float recoilTime { get; set; }
 
-    public SkillPreset(int skill) {
+    public SkillPreset(SkillType skill) {
         this.skill = skill;
         range = 10;
         damage = 20;
@@ -23,5 +23,15 @@ public class SkillPreset {
     public void update() {
         if (remainingCooldown > 0)
             remainingCooldown -= Time.deltaTime;
+    }
+
+    public string prefab {
+        get {
+            if (skill == SkillType.fireball)
+                return "Fireball";
+            else if (skill == SkillType.blink)
+                return "Blink";
+            return "";
+        }
     }
 }

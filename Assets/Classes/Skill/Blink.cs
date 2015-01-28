@@ -6,7 +6,6 @@ public class Blink : TargetSkill {
     private bool blinkDone;
 
     public Blink() {
-        prefab = "Blink";
         blinkDone = false;
         timeBeforeDestruction = 1.5f;
     }

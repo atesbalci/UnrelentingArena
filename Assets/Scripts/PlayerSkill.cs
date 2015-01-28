@@ -14,54 +14,51 @@ public class PlayerSkill : MonoBehaviour {
     }
 
     void Update() {
-        if (GUIUtility.hotControl == 0) {
-            if (controlScript.spell1) {
-                casting = 1;
-            } else if (controlScript.spell2) {
-                casting = 2;
+        if (networkView.isMine) {
+            if (GUIUtility.hotControl == 0) {
+                if (controlScript.spell1) {
+                    casting = 1;
+                } else if (controlScript.spell2) {
+                    casting = 2;
+                }
             }
-        }
 
-        if (player.toBeCast != null) {
-            Skill toBeCast = null;
-            if (player.toBeCast.skill.skill == SkillSet.FIREBALL) {
-                toBeCast = new Fireball();
-            } else if (player.toBeCast.skill.skill == SkillSet.BLINK) {
-                toBeCast = new Blink();
-            }
-            toBeCast.range = player.toBeCast.skill.range;
-            toBeCast.damage = player.toBeCast.skill.damage;
-            toBeCast.player = player;
-            toBeCast.targetPosition = player.toBeCast.targetPosition;
-            instantiateSkill(toBeCast, player.toBeCast.position, player.toBeCast.rotation);
-            player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
-            player.toBeCast = null;
-        } else if (player.getChannel() == null && casting > 0) {
-            SkillPreset skill = null;
-            if (casting == 1)
-                skill = player.skillSet.tryToCast(SkillSet.FIREBALL);
-            else if (casting == 2)
-                skill = player.skillSet.tryToCast(SkillSet.BLINK);
-            if (skill == null) {
-                casting = 0;
-                return;
-            }
-            Plane playerPlane = new Plane(Vector3.up, transform.position);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float hitdist = 0.0f;
+            if (player.toBeCast != null) {
+                Skill skill = instantiateSkill(player.toBeCast.position, player.toBeCast.rotation, player.toBeCast.skill.prefab);
+                skill.range = player.toBeCast.skill.range;
+                skill.damage = player.toBeCast.skill.damage;
+                skill.player = player;
+                skill.targetPosition = player.toBeCast.targetPosition;
+                player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
+                player.toBeCast = null;
+            } else if (player.getChannel() == null && casting > 0) {
+                SkillPreset skill = null;
+                if (casting == 1)
+                    skill = player.skillSet.tryToCast(SkillType.fireball);
+                else if (casting == 2)
+                    skill = player.skillSet.tryToCast(SkillType.blink);
+                if (skill == null) {
+                    casting = 0;
+                    return;
+                }
+                Plane playerPlane = new Plane(Vector3.up, transform.position);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float hitdist = 0.0f;
 
-            if (playerPlane.Raycast(ray, out hitdist) && networkView.isMine)
-                targetPoint = ray.GetPoint(hitdist);
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-            transform.rotation = targetRotation;
-            player.addBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+                if (playerPlane.Raycast(ray, out hitdist) && networkView.isMine)
+                    targetPoint = ray.GetPoint(hitdist);
+                Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+                transform.rotation = targetRotation;
+                player.addBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+            }
         }
     }
 
-    public void instantiateSkill(Skill skill, Vector3 position, Quaternion rotation) {
-        GameObject skillObject = MonoBehaviour.Instantiate(Resources.Load(skill.prefab), position, rotation) as GameObject;
-        SkillScript skillScript = skillObject.GetComponent<SkillScript>();
-        skillScript.skill = skill;
+    public Skill instantiateSkill(Vector3 position, Quaternion rotation, string prefab) {
+        GameObject skillObject = Network.Instantiate(Resources.Load(prefab), position, rotation, 0) as GameObject;
+        SkillScript ss = skillObject.GetComponent<SkillScript>();
+        ss.Start();
+        return ss.skill;
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {

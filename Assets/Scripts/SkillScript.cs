@@ -2,10 +2,25 @@
 using System.Collections;
 
 public class SkillScript : MonoBehaviour {
+    public SkillType skillType;
     public Skill skill { get; set; }
 
-    void Start() {
+    public void Start() {
+        if (skill == null) {
+            Player player = null;
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player")) {
+                if (go.GetComponent<NetworkView>().owner == networkView.owner) {
+                    player = go.GetComponent<PlayerScript>().player;
+                    break;
+                }
+            }
+            if (skillType == SkillType.fireball)
+                skill = new Fireball();
+            else if (skillType == SkillType.blink)
+                skill = new Blink();
 
+            skill.player = player;
+        }
     }
 
     void Update() {

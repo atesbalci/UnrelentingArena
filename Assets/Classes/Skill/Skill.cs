@@ -4,14 +4,12 @@ using System.Collections;
 public abstract class Skill {
     private float _range;
     public virtual float range { get { return _range; } set { _range = value; } }
-    public string prefab { get; set; }
     public Player player { get; set; }
     public Vector3 targetPosition { get; set; }
     public float damage { get; set; }
 
     public Skill() {
         range = 10;
-        prefab = "";
         damage = 20;
     }
 
@@ -31,6 +29,20 @@ public abstract class Skill {
     }
 
     public virtual void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
+        float dmg = 0;
+        float rng = 0;
+
+        if (stream.isWriting) {
+            rng = range;
+            dmg = damage;
+            stream.Serialize(ref rng);
+            stream.Serialize(ref dmg);
+        } else {
+            stream.Serialize(ref rng);
+            stream.Serialize(ref dmg);
+            damage = dmg;
+            range = rng;
+        }
     }
 
     public void destroy(GameObject gameObject) {
