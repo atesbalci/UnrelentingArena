@@ -13,14 +13,13 @@ public abstract class SkillShot : Skill {
     public override void update(GameObject gameObject) {
         base.update(gameObject);
         float travel = speed * Time.deltaTime;
-        if (remainingDistance <= 0)
+        if (Network.isServer && remainingDistance <= 0)
             destroy(gameObject);
         Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-        if (remainingDistance - travel >= 0) {
-            gameObject.transform.Translate(0, 0, speed * Time.deltaTime);
-        } else {
-            gameObject.transform.Translate(0, 0, remainingDistance);
+        if (remainingDistance - travel <= 0) {
+            travel = remainingDistance;
         }
+        gameObject.transform.Translate(0, 0, travel);
         gameObject.transform.position = Vector3.Lerp(prev, gameObject.transform.position, 1);
         remainingDistance -= travel;
     }

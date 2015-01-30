@@ -7,7 +7,9 @@ public class Fireball : SkillShot {
     }
 
     public override void collisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
-        player.health -= damage;
-        destroy(gameObject);
+        if (Network.isServer) {
+            player.damage(damage);
+            destroy(gameObject);
+        }
     }
 }

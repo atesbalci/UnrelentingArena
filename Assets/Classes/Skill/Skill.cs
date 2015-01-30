@@ -34,6 +34,6 @@ public abstract class Skill {
     }
 
     public void destroy(GameObject gameObject) {
-        MonoBehaviour.Destroy(gameObject);
+        Network.Destroy(gameObject);
     }
 }

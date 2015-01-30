@@ -25,7 +25,9 @@ public class PlayerSkill : MonoBehaviour {
 
             if (player.toBeCast != null) {
                 GameObject skillObject = Network.Instantiate(Resources.Load(player.toBeCast.skill.prefab), player.toBeCast.position, player.toBeCast.rotation, 0) as GameObject;
-                networkView.RPC("initializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.range, player.toBeCast.skill.damage, player.toBeCast.targetPosition);
+                networkView.RPC("initializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.level, player.toBeCast.skill.range, player.toBeCast.skill.damage, player.toBeCast.targetPosition);
+                player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
+                player.toBeCast = null;
             } else if (player.getChannel() == null && casting > 0) {
                 SkillPreset skill = null;
                 if (casting == 1)
@@ -50,17 +52,16 @@ public class PlayerSkill : MonoBehaviour {
     }
 
     [RPC]
-    public void initializeSkill(NetworkViewID id, float range, float damage, Vector3 targetPosition) {
+    public void initializeSkill(NetworkViewID id, int level, float range, float damage, Vector3 targetPosition) {
         GameObject skillObject = NetworkView.Find(id).gameObject;
         SkillScript ss = skillObject.GetComponent<SkillScript>();
         ss.initialize();
         Skill skill = ss.skill;
         if (skill != null) {
+            skill.level = level;
             skill.range = range;
             skill.damage = damage;
             skill.targetPosition = targetPosition;
         }
-        player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
-        player.toBeCast = null;
     }
 }
