@@ -11,6 +11,7 @@ public abstract class SkillShot : Skill {
     }
 
     public override void update(GameObject gameObject) {
+        base.update(gameObject);
         float travel = speed * Time.deltaTime;
         if (remainingDistance <= 0)
             destroy(gameObject);

@@ -9,6 +9,7 @@ public class SkillPreset {
     public float remainingCooldown { get; set; }
     public float channelTime { get; set; }
     public float recoilTime { get; set; }
+    public int level { get; set; }
 
     public SkillPreset(SkillType skill) {
         this.skill = skill;
@@ -18,6 +19,7 @@ public class SkillPreset {
         remainingCooldown = 0;
         channelTime = 0.5f;
         recoilTime = 0.5f;
+        level = 1;
     }
 
     public void update() {

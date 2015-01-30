@@ -5,7 +5,11 @@ public class SkillScript : MonoBehaviour {
     public SkillType skillType;
     public Skill skill { get; set; }
 
-    public void Start() {
+    void Start() {
+        initialize();
+    }
+
+    public void initialize() {
         if (skill == null) {
             Player player = null;
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player")) {

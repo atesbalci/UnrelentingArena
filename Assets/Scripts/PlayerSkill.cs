@@ -24,13 +24,8 @@ public class PlayerSkill : MonoBehaviour {
             }
 
             if (player.toBeCast != null) {
-                Skill skill = instantiateSkill(player.toBeCast.position, player.toBeCast.rotation, player.toBeCast.skill.prefab);
-                skill.range = player.toBeCast.skill.range;
-                skill.damage = player.toBeCast.skill.damage;
-                skill.player = player;
-                skill.targetPosition = player.toBeCast.targetPosition;
-                player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
-                player.toBeCast = null;
+                GameObject skillObject = Network.Instantiate(Resources.Load(player.toBeCast.skill.prefab), player.toBeCast.position, player.toBeCast.rotation, 0) as GameObject;
+                networkView.RPC("initializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.range, player.toBeCast.skill.damage, player.toBeCast.targetPosition);
             } else if (player.getChannel() == null && casting > 0) {
                 SkillPreset skill = null;
                 if (casting == 1)
@@ -54,36 +49,18 @@ public class PlayerSkill : MonoBehaviour {
         }
     }
 
-    public Skill instantiateSkill(Vector3 position, Quaternion rotation, string prefab) {
-        GameObject skillObject = Network.Instantiate(Resources.Load(prefab), position, rotation, 0) as GameObject;
+    [RPC]
+    public void initializeSkill(NetworkViewID id, float range, float damage, Vector3 targetPosition) {
+        GameObject skillObject = NetworkView.Find(id).gameObject;
         SkillScript ss = skillObject.GetComponent<SkillScript>();
-        ss.Start();
-        return ss.skill;
-    }
-
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        Vector3 pos = new Vector3(0, 0, 0);
-        int cas = casting;
-        float rd = -1;
-        Channel c = player.getChannel();
-
-        if (stream.isWriting) {
-            pos = targetPoint;
-            cas = casting;
-            if (c != null)
-                rd = c.remainingDuration;
-            stream.Serialize(ref pos);
-            stream.Serialize(ref cas);
-            stream.Serialize(ref rd);
-        } else {
-            stream.Serialize(ref pos);
-            stream.Serialize(ref cas);
-            stream.Serialize(ref rd);
-            if (c != null)
-                c.remainingDuration = rd;
-            targetPoint = pos;
-            if (cas != 0)
-                casting = cas;
+        ss.initialize();
+        Skill skill = ss.skill;
+        if (skill != null) {
+            skill.range = range;
+            skill.damage = damage;
+            skill.targetPosition = targetPosition;
         }
+        player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
+        player.toBeCast = null;
     }
 }
