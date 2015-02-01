@@ -6,8 +6,8 @@ public abstract class Skill {
     public virtual float range { get { return _range; } set { _range = value; } }
     public Player player { get; set; }
     public Vector3 targetPosition { get; set; }
-    public float damage { get; set; }
     public int level { get; set; }
+    public float damage { get; set; }
 
     public Skill() {
         range = 10;
