@@ -4,8 +4,13 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
 
+    private Texture health;
+    private Texture back;
+
     public PlayerScript() {
         player = new Player();
+        health = Resources.Load("UI-Elements/healthabove") as Texture;
+        back = Resources.Load("UI-Elements/castbar-back") as Texture;
     }
 
     void Start() {
@@ -16,20 +21,18 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void OnGUI() {
-        Vector2 targetPos;
-        targetPos = Camera.main.WorldToScreenPoint(transform.position);
+        Vector2 targetPos = Camera.main.WorldToScreenPoint(transform.position);
         targetPos.y += 70;
-        Texture health = Resources.Load("UI-Elements/healthabove") as Texture;
 
-        int width = 150;
-        int height = 40;
+        int width = 200;
+        int height = 50;
 
-        GUI.Box(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "");
-        GUI.DrawTexture(new Rect(targetPos.x - width / 2 + 5, Screen.height - targetPos.y, (player.health / player.maxHealth) * (width - 10), height), health, ScaleMode.ScaleToFit, true, 10.0F);
-        GUIStyle style = GUIStyle.none;
+        GUI.DrawTexture(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), back, ScaleMode.ScaleAndCrop);
+        GUI.DrawTexture(new Rect(targetPos.x - width / 2 + 18, Screen.height - targetPos.y + 17, (player.health / player.maxHealth) * (width - 36), height - 34), health, ScaleMode.ScaleAndCrop);
+        GUIStyle style = new GUIStyle();
         style.richText = true;
         style.alignment = TextAnchor.MiddleCenter;
-        GUI.TextField(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + (player.health + "/" + player.maxHealth) + "</color>", style);
+        GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + (player.health + "/" + player.maxHealth) + "</color>", style);
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
