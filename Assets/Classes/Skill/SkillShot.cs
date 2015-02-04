@@ -29,13 +29,6 @@ public abstract class SkillShot : Skill {
     }
 
     public override void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
-        float rem = 0;
-        if (stream.isWriting) {
-            rem = remainingDistance;
-            stream.Serialize(ref rem);
-        } else {
-            stream.Serialize(ref rem);
-            remainingDistance = rem;
-        }
+        
     }
 }

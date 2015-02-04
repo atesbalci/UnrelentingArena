@@ -14,10 +14,13 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Start() {
+        player.networkId = networkView.viewID;
     }
 
     void Update() {
         player.update(gameObject);
+        if (Network.isServer)
+            networkView.RPC("refreshHealth", RPCMode.AllBuffered, player.health);
     }
 
     void OnGUI() {
@@ -35,14 +38,17 @@ public class PlayerScript : MonoBehaviour {
         GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + (player.health + "/" + player.maxHealth) + "</color>", style);
     }
 
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        float health = 100;
-        if (stream.isWriting) {
-            health = player.health;
-            stream.Serialize(ref health);
-        } else {
-            stream.Serialize(ref health);
-            player.health = health;
-        }
+    [RPC]
+    public void refreshHealth(float health) {
+        player.health = health;
+    }
+
+    public void knockback(Vector3 direction, float distance, float speed) {
+        networkView.RPC("applyKnockback", RPCMode.AllBuffered, direction, distance, speed);
+    }
+
+    [RPC]
+    public void applyKnockback(Vector3 direction, float distance, float speed) {
+        player.addBuff(new Knockback(player, direction, distance, speed));
     }
 }

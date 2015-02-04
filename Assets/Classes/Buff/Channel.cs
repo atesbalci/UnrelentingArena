@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Channel : Buff {
+public class Channel : Stun {
     public SkillPreset skill { get; set; }
     public Quaternion rotation { get; set; }
     public Vector3 position { get; set; }
@@ -18,23 +18,13 @@ public class Channel : Buff {
         onRecoil = false;
     }
 
-    public override void update() {
-        base.update();
-    }
-
-    public override void buff() {
-        player.currentSpeed = 0;
-    }
-
     public override void debuff() {
         if (!onRecoil) {
             player.addBuff(this);
             duration = skill.recoilTime;
             player.toBeCast = this;
             onRecoil = true;
-        } else {
-            player.currentSpeed = player.movementSpeed;
-            player.movementReset = true;
-        }
+        } else
+            base.debuff();
     }
 }

@@ -33,7 +33,7 @@ public class SkillScript : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider collider) {
-        if (skill != null) {
+        if (skill != null && Network.isServer) {
             SkillScript skillScript = collider.gameObject.GetComponent<SkillScript>();
             PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
             if (playerScript != null) {

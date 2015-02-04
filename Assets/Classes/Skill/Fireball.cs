@@ -7,9 +7,9 @@ public class Fireball : SkillShot {
     }
 
     public override void collisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
-        if (Network.isServer) {
-            player.damage(damage);
-            destroy(gameObject);
-        }
+        player.damage(damage);
+        Vector3 direction = gameObject.transform.rotation * Vector3.forward;
+        collider.gameObject.GetComponent<PlayerScript>().knockback(direction, 10, 30);
+        destroy(gameObject);
     }
 }

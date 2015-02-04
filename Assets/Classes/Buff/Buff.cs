@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Buff {
+public abstract class Buff {
     private float _duration;
     public float duration { get { return _duration; } set { _duration = value; remainingDuration = value; } }
     public float remainingDuration { get; set; }

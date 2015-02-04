@@ -15,7 +15,7 @@ public class PlayerSkill : MonoBehaviour {
 
     void Update() {
         if (networkView.isMine) {
-            if (GUIUtility.hotControl == 0) {
+            if (player.canCast) {
                 if (controlScript.spell1) {
                     casting = 1;
                 } else if (controlScript.spell2) {

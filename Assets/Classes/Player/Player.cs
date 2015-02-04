@@ -12,6 +12,8 @@ public class Player {
     public LinkedList<Buff> buffs { get; set; }
     public bool movementReset { get; set; }
     public Channel toBeCast { get; set; }
+    public bool canCast { get; set; }
+    public NetworkViewID networkId { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;
@@ -23,6 +25,7 @@ public class Player {
         health = maxHealth;
         positionToBeChanged = false;
         movementSpeed = 6;
+        canCast = true;
     }
 
     public void update(GameObject gameObject) {
@@ -32,6 +35,8 @@ public class Player {
             positionToBeChanged = false;
         }
 
+        canCast = true;
+        currentSpeed = movementSpeed;
         LinkedListNode<Buff> node = buffs.First;
         while (node != null) {
             var nextNode = node.Next;
