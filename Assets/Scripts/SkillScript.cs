@@ -11,19 +11,17 @@ public class SkillScript : MonoBehaviour {
 
     public void initialize() {
         if (skill == null) {
-            Player player = null;
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player")) {
-                if (go.GetComponent<NetworkView>().owner == networkView.owner) {
-                    player = go.GetComponent<PlayerScript>().player;
+            switch (skillType) {
+                case SkillType.fireball:
+                    skill = new Fireball();
                     break;
-                }
+                case SkillType.blink:
+                    skill = new Blink();
+                    break;
+                default:
+                    skill = null;
+                    break;
             }
-            if (skillType == SkillType.fireball)
-                skill = new Fireball();
-            else if (skillType == SkillType.blink)
-                skill = new Blink();
-
-            skill.player = player;
         }
     }
 

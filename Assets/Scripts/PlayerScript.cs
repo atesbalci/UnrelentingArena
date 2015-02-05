@@ -7,14 +7,9 @@ public class PlayerScript : MonoBehaviour {
     private Texture health;
     private Texture back;
 
-    public PlayerScript() {
-        player = new Player();
+    void Start() {
         health = Resources.Load("UI-Elements/healthabove") as Texture;
         back = Resources.Load("UI-Elements/castbar-back") as Texture;
-    }
-
-    void Start() {
-        player.networkId = networkView.viewID;
     }
 
     void Update() {
@@ -49,6 +44,6 @@ public class PlayerScript : MonoBehaviour {
 
     [RPC]
     public void applyKnockback(Vector3 direction, float distance, float speed) {
-        player.addBuff(new Knockback(player, direction, distance, speed));
+        player.addBuff(new Knockback(player, gameObject, direction, distance, speed));
     }
 }

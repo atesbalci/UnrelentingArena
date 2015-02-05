@@ -28,15 +28,14 @@ public class PlayerMove : MonoBehaviour {
                 clickMoveSpeed = player.currentSpeed;
             }
 
-            if (controlScript.move && GUIUtility.hotControl == 0) {
+            if (controlScript.move) {
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
 
                 if (playerPlane.Raycast(ray, out hitdist)) {
                     Vector3 targetPoint = ray.GetPoint(hitdist);
-                    destinationPosition = ray.GetPoint(hitdist);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 1);
+                    networkView.RPC("updateMovement", RPCMode.All, ray.GetPoint(hitdist), Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 1));
                 }
             }
             if (destinationDistance > .5f) {
@@ -55,19 +54,9 @@ public class PlayerMove : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, target, 1);
     }
 
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        Vector3 dest = new Vector3(0, 0, 0);
-        Quaternion rot = new Quaternion(0, 0, 0, 0);
-        if (stream.isWriting) {
-            rot = transform.rotation;
-            dest = destinationPosition;
-            stream.Serialize(ref dest);
-            stream.Serialize(ref rot);
-        } else {
-            stream.Serialize(ref dest);
-            stream.Serialize(ref rot);
-            destinationPosition = dest;
-            transform.rotation = rot;
-        }
+    [RPC]
+    public void updateMovement(Vector3 destination, Quaternion rotation) {
+        destinationPosition = destination;
+        transform.rotation = rotation;
     }
 }

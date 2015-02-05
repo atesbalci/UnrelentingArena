@@ -8,13 +8,13 @@ public class Knockback : Stun {
 
     protected GameObject playerObject;
 
-    public Knockback(Player player, Vector3 direction, float distance, float speed)
+    public Knockback(Player player, GameObject playerObject, Vector3 direction, float distance, float speed)
         : base(player) {
         duration = 3;
         this.direction = direction;
         remainingDistance = distance;
         this.speed = speed;
-        playerObject = NetworkView.Find(player.networkId).gameObject;
+        this.playerObject = playerObject;
     }
 
     public override void update() {

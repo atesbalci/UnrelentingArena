@@ -13,7 +13,6 @@ public class Player {
     public bool movementReset { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
-    public NetworkViewID networkId { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;
