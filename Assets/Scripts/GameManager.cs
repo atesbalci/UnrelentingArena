@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetworkManager : MonoBehaviour {
+public class GameManager : MonoBehaviour {
     public bool started { get; set; }
     public Player player { get; set; }
+    public string name { get; set; }
+    public int credits { get; set; }
 
-    private string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game";
+    private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game";
     private float refreshRequestLength = 3;
     private HostData[] hostData;
 
     void Start() {
         started = false;
+        name = "PlayerNameGoesHere";
     }
 
     public void startServer() {
         Network.InitializeServer(8, 25002, false);
-        MasterServer.RegisterHost(gameName, "Test", "a game");
+        MasterServer.RegisterHost(gameName, "Test", "");
     }
 
     public IEnumerator refreshHosts() {
@@ -29,42 +32,51 @@ public class NetworkManager : MonoBehaviour {
     }
 
     void OnConnectedToServer() {
-
-    }
-
-    void OnPlayerDisconnected(NetworkPlayer player) {
-        Network.RemoveRPCs(player);
-        Network.DestroyPlayerObjects(player);
-    }
-
-    void OnPlayerConnected(NetworkPlayer player) {
-
+        credits = 0;
+        name = "OtherPlayerNameGoesHere";
     }
 
     void OnServerInitialized() {
+        credits = 0;
+    }
+
+    void OnPlayerDisconnected(NetworkPlayer player) {
+        foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
+            if (playerObject.GetComponent<PlayerServersideScript>().networkPlayer == player) {
+                Network.Destroy(playerObject);
+                break;
+            }
+        }
+    }
+
+    void OnPlayerConnected(NetworkPlayer player) {
+        if (started) {
+            Network.CloseConnection(player, true);
+        }
     }
 
     public void beginGame() {
         int x = -20;
-        int no = 1;
+        int no = 0;
+        GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
+        hostPlayerObject.AddComponent<PlayerServersideScript>().networkPlayer = Network.player;
+        initializePlayer(hostPlayerObject.networkView.viewID, no);
         foreach (NetworkPlayer player in Network.connections) {
-            GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-            networkView.RPC("initializePlayer", RPCMode.All, playerObject.networkView.viewID, player, no);
             x += 20;
             no++;
+            GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
+            playerObject.AddComponent<PlayerServersideScript>().networkPlayer = player;
+            networkView.RPC("initializePlayer", player, playerObject.networkView.viewID, no);
         }
-        GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-        networkView.RPC("initializePlayer", RPCMode.All, hostPlayerObject.networkView.viewID, Network.player, 0);
         networkView.RPC("setStarted", RPCMode.All, true);
     }
 
     [RPC]
-    public void initializePlayer(NetworkViewID id, NetworkPlayer networkPlayer, int no) {
+    public void initializePlayer(NetworkViewID id, int no) {
         Player newPlayer = new Player();
         NetworkView.Find(id).GetComponent<PlayerScript>().player = newPlayer;
-        if (networkPlayer.Equals(Network.player)) {
-            player = newPlayer;
-        }
+        player = newPlayer;
+        player.name = name;
     }
 
     private void listPlayers() {
@@ -87,7 +99,7 @@ public class NetworkManager : MonoBehaviour {
                     if (GUI.Button(new Rect(100, 100, 100, 30), "Begin"))
                         beginGame();
                 } else if (Network.isClient) {
-                    GUI.Label(new Rect(100, 100, 100, 30), "Awaiting server to start the game");
+                    GUI.Label(new Rect(100, 100, 100, 50), "Awaiting server to start the game");
                 }
                 listPlayers();
             }

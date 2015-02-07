@@ -11,8 +11,4 @@ public class Stun : Buff {
         player.canCast = false;
         base.update();
     }
-
-    public override void debuff() {
-        player.movementReset = true;
-    }
 }

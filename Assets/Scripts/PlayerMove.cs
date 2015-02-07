@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerMove : MonoBehaviour {
     private Vector3 destinationPosition;
     private float destinationDistance;
-    private float clickMoveSpeed = 0;
+    private float moveSpeed = 0;
     private ControlScript controlScript;
     private Player player;
 
@@ -17,15 +17,15 @@ public class PlayerMove : MonoBehaviour {
     void Update() {
         destinationDistance = Vector3.Distance(destinationPosition, transform.position);
 
-        if (clickMoveSpeed > 0.5f)
+        if (moveSpeed > 0.5f)
             animation.Play("run");
         else
             animation.Play("idle");
         if (player.currentSpeed > 0.5f) {
             if (destinationDistance < .5f) {
-                clickMoveSpeed = 0;
+                moveSpeed = 0;
             } else if (destinationDistance > .5f) {
-                clickMoveSpeed = player.currentSpeed;
+                moveSpeed = player.currentSpeed;
             }
 
             if (controlScript.move) {
@@ -39,14 +39,11 @@ public class PlayerMove : MonoBehaviour {
                 }
             }
             if (destinationDistance > .5f) {
-                movePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * clickMoveSpeed));
+                movePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed));
             }
-        } else
-            clickMoveSpeed = 0;
-
-        if (player.movementReset) {
+        } else {
+            moveSpeed = 0;
             destinationPosition = transform.position;
-            player.movementReset = false;
         }
     }
 

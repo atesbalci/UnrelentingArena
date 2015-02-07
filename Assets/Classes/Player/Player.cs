@@ -10,9 +10,9 @@ public class Player {
     public float health { get; set; }
     public SkillSet skillSet { get; set; }
     public LinkedList<Buff> buffs { get; set; }
-    public bool movementReset { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
+    public string name { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;
@@ -25,12 +25,12 @@ public class Player {
         positionToBeChanged = false;
         movementSpeed = 6;
         canCast = true;
+        name = "";
     }
 
     public void update(GameObject gameObject) {
         if (positionToBeChanged) {
             gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
-            movementReset = true;
             positionToBeChanged = false;
         }
 

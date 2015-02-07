@@ -357,9 +357,9 @@ GameObject:
   - 111: {fileID: 11123236}
   - 54: {fileID: 5423236}
   - 136: {fileID: 13623236}
+  - 114: {fileID: 11495616}
   - 114: {fileID: 11423230}
   - 114: {fileID: 11423228}
-  - 114: {fileID: 11495616}
   - 114: {fileID: 11402256}
   - 148: {fileID: 14802256}
   - 148: {fileID: 14827390}
@@ -1557,9 +1557,6 @@ MonoBehaviour:
   moveKey: 324
   spell1Key: 49
   spell2Key: 50
-  move: 0
-  spell1: 0
-  spell2: 0
 --- !u!114 &11423228
 MonoBehaviour:
   m_ObjectHideFlags: 1

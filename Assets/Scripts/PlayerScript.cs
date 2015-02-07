@@ -4,12 +4,20 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
 
-    private Texture health;
-    private Texture back;
+    public PlayerScript() {
+        player = new Player();
+    }
 
     void Start() {
         health = Resources.Load("UI-Elements/healthabove") as Texture;
         back = Resources.Load("UI-Elements/castbar-back") as Texture;
+        if (player == Camera.main.GetComponent<GameManager>().player)
+            networkView.RPC("updatePlayerName", RPCMode.All, player.name);
+    }
+
+    [RPC]
+    public void updatePlayerName(string name) {
+        player.name = name;
     }
 
     void Update() {
@@ -18,6 +26,9 @@ public class PlayerScript : MonoBehaviour {
             networkView.RPC("refreshHealth", RPCMode.AllBuffered, player.health);
     }
 
+    private Texture health;
+    private Texture back;
+
     void OnGUI() {
         Vector2 targetPos = Camera.main.WorldToScreenPoint(transform.position);
         targetPos.y += 70;
@@ -25,11 +36,12 @@ public class PlayerScript : MonoBehaviour {
         int width = 200;
         int height = 50;
 
-        GUI.DrawTexture(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), back, ScaleMode.ScaleAndCrop);
-        GUI.DrawTexture(new Rect(targetPos.x - width / 2 + 18, Screen.height - targetPos.y + 17, (player.health / player.maxHealth) * (width - 36), height - 34), health, ScaleMode.ScaleAndCrop);
         GUIStyle style = new GUIStyle();
         style.richText = true;
         style.alignment = TextAnchor.MiddleCenter;
+        GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y - 30, width, height), "<color=#FFFFFF>" + player.name + "</color>", style);
+        GUI.DrawTexture(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), back, ScaleMode.ScaleAndCrop);
+        GUI.DrawTexture(new Rect(targetPos.x - width / 2 + 18, Screen.height - targetPos.y + 17, (player.health / player.maxHealth) * (width - 36), height - 34), health, ScaleMode.ScaleAndCrop);
         GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + (player.health + "/" + player.maxHealth) + "</color>", style);
     }
 
