@@ -1,24 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+public enum GameState {
+    menu, pregame, ingame, intermission
+}
 
 public class GameManager : MonoBehaviour {
-    public bool started { get; set; }
+    public string playerName { get; set; }
+    public GameState state { get; set; }
     public Player player { get; set; }
-    public string name { get; set; }
     public int credits { get; set; }
 
     private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game";
     private float refreshRequestLength = 3;
     private HostData[] hostData;
+    private Dictionary<NetworkPlayer, string> nameList;
 
     void Start() {
-        started = false;
-        name = "PlayerNameGoesHere";
+        setState(GameState.menu);
+        playerName = "";
     }
 
     public void startServer() {
         Network.InitializeServer(8, 25002, false);
-        MasterServer.RegisterHost(gameName, "Test", "");
+        MasterServer.RegisterHost(gameName, "Test");
     }
 
     public IEnumerator refreshHosts() {
@@ -31,16 +37,36 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void OnConnectedToServer() {
+    public void initialize() {
+        setState(GameState.pregame);
         credits = 0;
-        name = "OtherPlayerNameGoesHere";
+        nameList = new Dictionary<NetworkPlayer, string>();
+        networkView.RPC("sendName", RPCMode.AllBuffered, Network.player, playerName);
+    }
+
+    void OnConnectedToServer() {
+        initialize();
+    }
+
+    [RPC]
+    public void sendName(NetworkPlayer player, string name) {
+        nameList.Add(player, name);
     }
 
     void OnServerInitialized() {
-        credits = 0;
+        initialize();
+    }
+
+    void OnDisconnectedFromServer(NetworkDisconnection info) {
+        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
+            Destroy(gameObject);
+        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
+            Destroy(gameObject);
+        setState(GameState.menu);
     }
 
     void OnPlayerDisconnected(NetworkPlayer player) {
+        nameList.Remove(player);
         foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
             if (playerObject.GetComponent<PlayerServersideScript>().networkPlayer == player) {
                 Network.Destroy(playerObject);
@@ -50,7 +76,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void OnPlayerConnected(NetworkPlayer player) {
-        if (started) {
+        if (state != GameState.pregame) {
             Network.CloseConnection(player, true);
         }
     }
@@ -68,7 +94,7 @@ public class GameManager : MonoBehaviour {
             playerObject.AddComponent<PlayerServersideScript>().networkPlayer = player;
             networkView.RPC("initializePlayer", player, playerObject.networkView.viewID, no);
         }
-        networkView.RPC("setStarted", RPCMode.All, true);
+        networkView.RPC("setState", RPCMode.All, GameState.ingame);
     }
 
     [RPC]
@@ -76,51 +102,64 @@ public class GameManager : MonoBehaviour {
         Player newPlayer = new Player();
         NetworkView.Find(id).GetComponent<PlayerScript>().player = newPlayer;
         player = newPlayer;
-        player.name = name;
+        player.name = playerName;
     }
 
     private void listPlayers() {
-        int h = 200;
-        foreach (NetworkPlayer player in Network.connections) {
-            GUI.Label(new Rect(300, 100, 100, 30), player.externalIP);
-            h += 50;
+        int h = 100;
+        foreach (NetworkPlayer player in nameList.Keys) {
+            string name;
+            if (nameList.TryGetValue(player, out name)) {
+                GUI.Label(new Rect(300, h, 200, 30), name);
+                h += 50;
+            }
         }
     }
 
     [RPC]
-    public void setStarted(bool b) {
-        started = b;
+    public void setState(GameState state) {
+        this.state = state;
     }
 
     void OnGUI() {
-        if (Network.isServer || Network.isClient) {
-            if (!started) {
-                if (Network.isServer) {
-                    if (GUI.Button(new Rect(100, 100, 100, 30), "Begin"))
-                        beginGame();
-                } else if (Network.isClient) {
-                    GUI.Label(new Rect(100, 100, 100, 50), "Awaiting server to start the game");
-                }
-                listPlayers();
-            }
-        } else {
-            if (GUI.Button(new Rect(100, 100, 100, 30), "Start Server")) {
-                startServer();
-            }
-
-            if (GUI.Button(new Rect(100, 150, 100, 30), "Refresh Servers")) {
-                StartCoroutine("refreshHosts");
-            }
-
-            if (hostData != null) {
-                int h = 200;
-                foreach (HostData hd in hostData) {
-                    if (GUI.Button(new Rect(100, h, 100, 30), hd.gameName)) {
-                        Network.Connect(hd);
+        switch (state) {
+            case GameState.menu: {
+                    playerName = GUI.TextField(new Rect(100, 50, 100, 30), playerName);
+                    if (GUI.Button(new Rect(100, 100, 100, 30), "Start Server")) {
+                        startServer();
                     }
-                    h += 50;
+
+                    if (GUI.Button(new Rect(100, 150, 100, 30), "Refresh Servers")) {
+                        StartCoroutine("refreshHosts");
+                    }
+
+                    if (hostData != null) {
+                        int h = 200;
+                        foreach (HostData hd in hostData) {
+                            if (GUI.Button(new Rect(100, h, 100, 30), hd.gameName)) {
+                                Network.Connect(hd);
+                            }
+                            h += 50;
+                        }
+                    }
+                    break;
                 }
-            }
+            case GameState.pregame: {
+                    if (Network.isServer) {
+                        if (GUI.Button(new Rect(100, 100, 100, 30), "Begin"))
+                            beginGame();
+                    } else if (Network.isClient) {
+                        GUI.Label(new Rect(100, 100, 100, 50), "Awaiting server to start the game");
+                    }
+                    listPlayers();
+                    break;
+                }
+            case GameState.ingame: {
+                    break;
+                }
+            case GameState.intermission: {
+                    break;
+                }
         }
     }
 }
