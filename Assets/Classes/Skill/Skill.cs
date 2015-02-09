@@ -15,25 +15,25 @@ public abstract class Skill {
         level = 1;
     }
 
-    public virtual void update(GameObject gameObject) {
+    public virtual void Update(GameObject gameObject) {
     }
 
-    public virtual void collisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
+    public virtual void CollisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
     }
 
-    public virtual void collisionWithSelf(GameObject gameObject, Collider collider) {
+    public virtual void CollisionWithSelf(GameObject gameObject, Collider collider) {
     }
 
-    public virtual void collisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
+    public virtual void CollisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
     }
 
-    public virtual void collisionWithOtherObject(GameObject gameObject, Collider collider) {
+    public virtual void CollisionWithOtherObject(GameObject gameObject, Collider collider) {
     }
 
-    public virtual void serializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
+    public virtual void SerializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
     }
 
-    public void destroy(GameObject gameObject) {
+    public void Destroy(GameObject gameObject) {
         Network.Destroy(gameObject);
     }
 }

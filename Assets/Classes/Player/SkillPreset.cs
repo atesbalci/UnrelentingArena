@@ -22,16 +22,16 @@ public class SkillPreset {
         level = 1;
     }
 
-    public void update() {
+    public void Update() {
         if (remainingCooldown > 0)
             remainingCooldown -= Time.deltaTime;
     }
 
     public string prefab {
         get {
-            if (skill == SkillType.fireball)
+            if (skill == SkillType.Fireball)
                 return "Fireball";
-            else if (skill == SkillType.blink)
+            else if (skill == SkillType.Blink)
                 return "Blink";
             return "";
         }

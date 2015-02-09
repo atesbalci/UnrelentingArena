@@ -10,15 +10,15 @@ public class Blink : TargetSkill {
         timeBeforeDestruction = 1.5f;
     }
 
-    public override void update(GameObject gameObject) {
-        base.update(gameObject);
+    public override void Update(GameObject gameObject) {
+        base.Update(gameObject);
         if (!blinkDone) {
-            player.schedulePositionChange(gameObject.transform.position);
+            player.SchedulePositionChange(gameObject.transform.position);
             blinkDone = true;
         } else {
             timeBeforeDestruction -= Time.deltaTime;
             if (timeBeforeDestruction <= 0)
-                destroy(gameObject);
+                Destroy(gameObject);
         }
     }
 }

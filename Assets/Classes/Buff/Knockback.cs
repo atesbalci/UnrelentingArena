@@ -17,14 +17,14 @@ public class Knockback : Stun {
         this.playerObject = playerObject;
     }
 
-    public override void update() {
+    public override void Update() {
         float travel = speed * Time.deltaTime;
         if (remainingDistance - travel <= 0) {
             travel = remainingDistance;
-            player.removeBuff(this);
+            player.RemoveBuff(this);
         }
         remainingDistance -= travel;
         playerObject.transform.position += direction * travel;
-        base.update();
+        base.Update();
     }
 }

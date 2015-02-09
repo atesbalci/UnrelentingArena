@@ -7,19 +7,19 @@ public class SkillSet {
 
     public SkillSet() {
         skills = new Dictionary<SkillType, SkillPreset>();
-        SkillPreset sp = new SkillPreset(SkillType.blink);
-        skills.Add(SkillType.blink, sp);
-        sp = new SkillPreset(SkillType.fireball);
-        skills.Add(SkillType.fireball, sp);
+        SkillPreset sp = new SkillPreset(SkillType.Blink);
+        skills.Add(SkillType.Blink, sp);
+        sp = new SkillPreset(SkillType.Fireball);
+        skills.Add(SkillType.Fireball, sp);
     }
 
-    public void update() {
+    public void Update() {
         foreach (KeyValuePair<SkillType, SkillPreset> sp in skills) {
-            sp.Value.update();
+            sp.Value.Update();
         }
     }
 
-    public SkillPreset tryToCast(SkillType skill) {
+    public SkillPreset TryToCast(SkillType skill) {
         if (skills.ContainsKey(skill)) {
             SkillPreset sp;
             skills.TryGetValue(skill, out sp);

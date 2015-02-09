@@ -11,16 +11,16 @@ public abstract class Buff {
         this.player = player;
     }
 
-    public virtual void update() {
+    public virtual void Update() {
         remainingDuration -= Time.deltaTime;
         if (remainingDuration <= 0) {
-            player.removeBuff(this);
+            player.RemoveBuff(this);
         }
     }
 
-    public virtual void debuff() {
+    public virtual void Unbuff() {
     }
 
-    public virtual void buff() {
+    public virtual void ApplyBuff() {
     }
 }

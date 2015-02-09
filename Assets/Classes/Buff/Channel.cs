@@ -18,13 +18,13 @@ public class Channel : Stun {
         onRecoil = false;
     }
 
-    public override void debuff() {
+    public override void Unbuff() {
         if (!onRecoil) {
-            player.addBuff(this);
+            player.AddBuff(this);
             duration = skill.recoilTime;
             player.toBeCast = this;
             onRecoil = true;
         } else
-            base.debuff();
+            base.Unbuff();
     }
 }

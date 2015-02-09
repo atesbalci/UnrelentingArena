@@ -11,19 +11,12 @@ public class PlayerScript : MonoBehaviour {
     void Start() {
         health = Resources.Load("UI-Elements/healthabove") as Texture;
         back = Resources.Load("UI-Elements/castbar-back") as Texture;
-        if (player == Camera.main.GetComponent<GameManager>().player)
-            networkView.RPC("updatePlayerName", RPCMode.All, player.name);
-    }
-
-    [RPC]
-    public void updatePlayerName(string name) {
-        player.name = name;
     }
 
     void Update() {
-        player.update(gameObject);
+        player.Update(gameObject);
         if (Network.isServer)
-            networkView.RPC("refreshHealth", RPCMode.AllBuffered, player.health);
+            networkView.RPC("RefreshHealth", RPCMode.AllBuffered, player.health);
     }
 
     private Texture health;
@@ -46,16 +39,16 @@ public class PlayerScript : MonoBehaviour {
     }
 
     [RPC]
-    public void refreshHealth(float health) {
+    public void RefreshHealth(float health) {
         player.health = health;
     }
 
-    public void knockback(Vector3 direction, float distance, float speed) {
-        networkView.RPC("applyKnockback", RPCMode.AllBuffered, direction, distance, speed);
+    public void Knockback(Vector3 direction, float distance, float speed) {
+        networkView.RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
     }
 
     [RPC]
-    public void applyKnockback(Vector3 direction, float distance, float speed) {
-        player.addBuff(new Knockback(player, gameObject, direction, distance, speed));
+    public void ApplyKnockback(Vector3 direction, float distance, float speed) {
+        player.AddBuff(new Knockback(player, gameObject, direction, distance, speed));
     }
 }

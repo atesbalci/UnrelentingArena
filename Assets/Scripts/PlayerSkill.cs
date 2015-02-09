@@ -24,15 +24,15 @@ public class PlayerSkill : MonoBehaviour {
 
         if (player.toBeCast != null && Network.isServer) {
             GameObject skillObject = Network.Instantiate(Resources.Load(player.toBeCast.skill.prefab), player.toBeCast.position, player.toBeCast.rotation, 0) as GameObject;
-            networkView.RPC("initializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.level, player.toBeCast.targetPosition);
+            networkView.RPC("InitializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.level, player.toBeCast.targetPosition);
             player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
             player.toBeCast = null;
-        } else if (player.getChannel() == null && casting > 0) {
+        } else if (player.channel == null && casting > 0) {
             SkillPreset skill = null;
             if (casting == 1)
-                skill = player.skillSet.tryToCast(SkillType.fireball);
+                skill = player.skillSet.TryToCast(SkillType.Fireball);
             else if (casting == 2)
-                skill = player.skillSet.tryToCast(SkillType.blink);
+                skill = player.skillSet.TryToCast(SkillType.Blink);
             if (skill == null) {
                 casting = 0;
                 return;
@@ -45,15 +45,15 @@ public class PlayerSkill : MonoBehaviour {
                 targetPoint = ray.GetPoint(hitdist);
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
             transform.rotation = targetRotation;
-            player.addBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+            player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
         }
     }
 
     [RPC]
-    public void initializeSkill(NetworkViewID id, int level, Vector3 targetPosition) {
+    public void InitializeSkill(NetworkViewID id, int level, Vector3 targetPosition) {
         GameObject skillObject = NetworkView.Find(id).gameObject;
         SkillScript skillScript = skillObject.GetComponent<SkillScript>();
-        skillScript.initialize();
+        skillScript.Initialize();
         Skill skill = skillScript.skill;
         if (skill != null) {
             skill.level = level;

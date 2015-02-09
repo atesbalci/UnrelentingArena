@@ -3,13 +3,13 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-    public void playButton() {
+    public void PlayButton() {
         Debug.Log("Selams");
         Application.LoadLevel("MainGame");
     }
 
 
-    public void exitApp () {
+    public void ExitApp () {
         Application.Quit();
     }
 

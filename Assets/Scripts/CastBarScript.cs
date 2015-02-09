@@ -6,7 +6,7 @@ public class CastBarScript : MonoBehaviour {
     void Update() {
         Player player = Camera.main.GetComponent<GameManager>().player;
         if (player != null) {
-            Channel channel = player.getChannel();
+            Channel channel = player.channel;
             if (channel != null) {
                 if (!channel.onRecoil) {
                     foreach (Image i in GetComponentsInChildren<Image>()) {

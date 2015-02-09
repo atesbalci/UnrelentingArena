@@ -6,16 +6,16 @@ public class SkillScript : MonoBehaviour {
     public Skill skill { get; set; }
 
     void Start() {
-        initialize();
+        Initialize();
     }
 
-    public void initialize() {
+    public void Initialize() {
         if (skill == null) {
             switch (skillType) {
-                case SkillType.fireball:
+                case SkillType.Fireball:
                     skill = new Fireball();
                     break;
-                case SkillType.blink:
+                case SkillType.Blink:
                     skill = new Blink();
                     break;
                 default:
@@ -27,7 +27,7 @@ public class SkillScript : MonoBehaviour {
 
     void Update() {
         if (skill != null)
-            skill.update(gameObject);
+            skill.Update(gameObject);
     }
 
     void OnTriggerEnter(Collider collider) {
@@ -36,18 +36,18 @@ public class SkillScript : MonoBehaviour {
             PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
             if (playerScript != null) {
                 if (skill.player != playerScript.player)
-                    skill.collisionWithPlayer(gameObject, collider, playerScript.player);
+                    skill.CollisionWithPlayer(gameObject, collider, playerScript.player);
                 else
-                    skill.collisionWithSelf(gameObject, collider);
+                    skill.CollisionWithSelf(gameObject, collider);
             } else if (skillScript != null)
-                skill.collisionWithSkill(gameObject, collider, skillScript.skill);
+                skill.CollisionWithSkill(gameObject, collider, skillScript.skill);
             else
-                skill.collisionWithOtherObject(gameObject, collider);
+                skill.CollisionWithOtherObject(gameObject, collider);
         }
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (skill != null)
-            skill.serializeNetworkView(gameObject, stream, info);
+            skill.SerializeNetworkView(gameObject, stream, info);
     }
 }

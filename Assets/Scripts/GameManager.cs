@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum GameState {
-    menu, pregame, ingame, intermission
+    Menu, Pregame, Ingame, Intermission
 }
 
 public class GameManager : MonoBehaviour {
     public string playerName { get; set; }
-    public GameState state { get; set; }
+    private GameState _state;
+    public GameState state { get { return _state; } set { SetState(value); } }
     public Player player { get; set; }
     public int credits { get; set; }
 
@@ -18,16 +19,16 @@ public class GameManager : MonoBehaviour {
     private Dictionary<NetworkPlayer, string> nameList;
 
     void Start() {
-        setState(GameState.menu);
+        SetState(GameState.Menu);
         playerName = "";
     }
 
-    public void startServer() {
+    public void StartServer() {
         Network.InitializeServer(8, 25002, false);
         MasterServer.RegisterHost(gameName, "Test");
     }
 
-    public IEnumerator refreshHosts() {
+    public IEnumerator RefreshHosts() {
         MasterServer.RequestHostList(gameName);
         float timeEnd = Time.time + refreshRequestLength;
 
@@ -37,24 +38,24 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void initialize() {
-        setState(GameState.pregame);
+    public void Initialize() {
+        SetState(GameState.Pregame);
         credits = 0;
         nameList = new Dictionary<NetworkPlayer, string>();
-        networkView.RPC("sendName", RPCMode.AllBuffered, Network.player, playerName);
+        networkView.RPC("SendName", RPCMode.AllBuffered, Network.player, playerName);
     }
 
     void OnConnectedToServer() {
-        initialize();
+        Initialize();
     }
 
     [RPC]
-    public void sendName(NetworkPlayer player, string name) {
+    public void SendName(NetworkPlayer player, string name) {
         nameList.Add(player, name);
     }
 
     void OnServerInitialized() {
-        initialize();
+        Initialize();
     }
 
     void OnDisconnectedFromServer(NetworkDisconnection info) {
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
             Destroy(gameObject);
-        setState(GameState.menu);
+        SetState(GameState.Menu);
     }
 
     void OnPlayerDisconnected(NetworkPlayer player) {
@@ -76,36 +77,36 @@ public class GameManager : MonoBehaviour {
     }
 
     void OnPlayerConnected(NetworkPlayer player) {
-        if (state != GameState.pregame) {
+        if (state != GameState.Pregame) {
             Network.CloseConnection(player, true);
         }
     }
 
-    public void beginGame() {
+    public void BeginGame() {
         int x = -20;
         int no = 0;
         GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
         hostPlayerObject.AddComponent<PlayerServersideScript>().networkPlayer = Network.player;
-        initializePlayer(hostPlayerObject.networkView.viewID, no);
+        InitializePlayer(hostPlayerObject.networkView.viewID, no);
         foreach (NetworkPlayer player in Network.connections) {
             x += 20;
             no++;
             GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
             playerObject.AddComponent<PlayerServersideScript>().networkPlayer = player;
-            networkView.RPC("initializePlayer", player, playerObject.networkView.viewID, no);
+            networkView.RPC("InitializePlayer", player, playerObject.networkView.viewID, no);
         }
-        networkView.RPC("setState", RPCMode.All, GameState.ingame);
+        networkView.RPC("SetState", RPCMode.All, GameState.Ingame);
     }
 
     [RPC]
-    public void initializePlayer(NetworkViewID id, int no) {
+    public void InitializePlayer(NetworkViewID id, int no) {
         Player newPlayer = new Player();
         NetworkView.Find(id).GetComponent<PlayerScript>().player = newPlayer;
         player = newPlayer;
         player.name = playerName;
     }
 
-    private void listPlayers() {
+    private void ListPlayers() {
         int h = 100;
         foreach (NetworkPlayer player in nameList.Keys) {
             string name;
@@ -117,20 +118,20 @@ public class GameManager : MonoBehaviour {
     }
 
     [RPC]
-    public void setState(GameState state) {
-        this.state = state;
+    public void SetState(GameState state) {
+        _state = state;
     }
 
     void OnGUI() {
         switch (state) {
-            case GameState.menu: {
+            case GameState.Menu: {
                     playerName = GUI.TextField(new Rect(100, 50, 100, 30), playerName);
                     if (GUI.Button(new Rect(100, 100, 100, 30), "Start Server")) {
-                        startServer();
+                        StartServer();
                     }
 
                     if (GUI.Button(new Rect(100, 150, 100, 30), "Refresh Servers")) {
-                        StartCoroutine("refreshHosts");
+                        StartCoroutine("RefreshHosts");
                     }
 
                     if (hostData != null) {
@@ -144,20 +145,20 @@ public class GameManager : MonoBehaviour {
                     }
                     break;
                 }
-            case GameState.pregame: {
+            case GameState.Pregame: {
                     if (Network.isServer) {
                         if (GUI.Button(new Rect(100, 100, 100, 30), "Begin"))
-                            beginGame();
+                            BeginGame();
                     } else if (Network.isClient) {
                         GUI.Label(new Rect(100, 100, 100, 50), "Awaiting server to start the game");
                     }
-                    listPlayers();
+                    ListPlayers();
                     break;
                 }
-            case GameState.ingame: {
+            case GameState.Ingame: {
                     break;
                 }
-            case GameState.intermission: {
+            case GameState.Intermission: {
                     break;
                 }
         }

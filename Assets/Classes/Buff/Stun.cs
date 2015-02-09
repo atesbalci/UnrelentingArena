@@ -6,9 +6,9 @@ public class Stun : Buff {
         : base(player) {
     }
 
-    public override void update() {
+    public override void Update() {
         player.currentSpeed = 0;
         player.canCast = false;
-        base.update();
+        base.Update();
     }
 }

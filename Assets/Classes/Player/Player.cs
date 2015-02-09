@@ -28,7 +28,7 @@ public class Player {
         name = "";
     }
 
-    public void update(GameObject gameObject) {
+    public void Update(GameObject gameObject) {
         if (positionToBeChanged) {
             gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
             positionToBeChanged = false;
@@ -39,47 +39,49 @@ public class Player {
         LinkedListNode<Buff> node = buffs.First;
         while (node != null) {
             var nextNode = node.Next;
-            node.Value.update();
+            node.Value.Update();
             node = nextNode;
         }
-        skillSet.update();
+        skillSet.Update();
 
         if (health <= 0)
             Network.Destroy(gameObject);
     }
 
-    public void damage(float damage) {
+    public void Damage(float damage) {
         health -= damage;
         if (health < 0)
             health = 0;
     }
 
-    public void heal(float heal) {
+    public void Heal(float heal) {
         health += heal;
         if (health > maxHealth)
             health = maxHealth;
     }
 
-    public void schedulePositionChange(Vector3 newPosition) {
+    public void SchedulePositionChange(Vector3 newPosition) {
         this.newPosition = newPosition;
         positionToBeChanged = true;
     }
 
-    public void addBuff(Buff buff) {
+    public void AddBuff(Buff buff) {
         buffs.AddLast(buff);
-        buff.buff();
+        buff.ApplyBuff();
     }
 
-    public void removeBuff(Buff buff) {
+    public void RemoveBuff(Buff buff) {
         buffs.Remove(buff);
-        buff.debuff();
+        buff.Unbuff();
     }
 
-    public Channel getChannel() {
-        foreach(Buff b in buffs) {
-            if (b.GetType() == typeof(Channel))
-                return b as Channel;
+    public Channel channel {
+        get {
+            foreach (Buff b in buffs) {
+                if (b.GetType() == typeof(Channel))
+                    return b as Channel;
+            }
+            return null;
         }
-        return null;
     }
 }

@@ -35,11 +35,11 @@ public class PlayerMove : MonoBehaviour {
 
                 if (playerPlane.Raycast(ray, out hitdist)) {
                     Vector3 targetPoint = ray.GetPoint(hitdist);
-                    networkView.RPC("updateMovement", RPCMode.All, ray.GetPoint(hitdist), Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 1));
+                    networkView.RPC("UpdateMovement", RPCMode.All, ray.GetPoint(hitdist), Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 1));
                 }
             }
             if (destinationDistance > .5f) {
-                movePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed));
+                MovePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed));
             }
         } else {
             moveSpeed = 0;
@@ -47,12 +47,12 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
-    public void movePlayer(Vector3 target) {
+    public void MovePlayer(Vector3 target) {
         transform.position = Vector3.Lerp(transform.position, target, 1);
     }
 
     [RPC]
-    public void updateMovement(Vector3 destination, Quaternion rotation) {
+    public void UpdateMovement(Vector3 destination, Quaternion rotation) {
         destinationPosition = destination;
         transform.rotation = rotation;
     }
