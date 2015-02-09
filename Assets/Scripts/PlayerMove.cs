@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
     private Vector3 destinationPosition;
-    private float destinationDistance;
     private float moveSpeed = 0;
     private ControlScript controlScript;
     private Player player;
@@ -15,7 +14,7 @@ public class PlayerMove : MonoBehaviour {
     }
 
     void Update() {
-        destinationDistance = Vector3.Distance(destinationPosition, transform.position);
+        float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
 
         if (moveSpeed > 0.5f)
             animation.Play("run");
@@ -34,8 +33,7 @@ public class PlayerMove : MonoBehaviour {
                 float hitdist = 0.0f;
 
                 if (playerPlane.Raycast(ray, out hitdist)) {
-                    Vector3 targetPoint = ray.GetPoint(hitdist);
-                    networkView.RPC("UpdateMovement", RPCMode.All, ray.GetPoint(hitdist), Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetPoint - transform.position), 1));
+                    networkView.RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(destinationPosition - transform.position));
                 }
             }
             if (destinationDistance > .5f) {
@@ -52,8 +50,19 @@ public class PlayerMove : MonoBehaviour {
     }
 
     [RPC]
-    public void UpdateMovement(Vector3 destination, Quaternion rotation) {
+    public void Move(Vector3 destination, Quaternion rotation) {
         destinationPosition = destination;
         transform.rotation = rotation;
     }
+
+    //void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+    //    if (stream.isWriting) {
+    //        Vector3 destination = destinationPosition;
+    //        stream.Serialize(ref destination);
+    //    } else {
+    //        Vector3 destination = new Vector3();
+    //        stream.Serialize(ref destination);
+    //        destinationPosition = destination;
+    //    }
+    //}
 }

@@ -15,8 +15,6 @@ public class PlayerScript : MonoBehaviour {
 
     void Update() {
         player.Update(gameObject);
-        if (Network.isServer)
-            networkView.RPC("RefreshHealth", RPCMode.AllBuffered, player.health);
     }
 
     private Texture health;
@@ -38,9 +36,15 @@ public class PlayerScript : MonoBehaviour {
         GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + (player.health + "/" + player.maxHealth) + "</color>", style);
     }
 
-    [RPC]
-    public void RefreshHealth(float health) {
-        player.health = health;
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+        if (stream.isWriting) {
+            float health = player.health;
+            stream.Serialize(ref health);
+        } else {
+            float health = -1;
+            stream.Serialize(ref health);
+            player.health = health;
+        }
     }
 
     public void Knockback(Vector3 direction, float distance, float speed) {
