@@ -22,9 +22,11 @@ public class PlayerSkill : MonoBehaviour {
             }
         }
 
-        if (player.toBeCast != null && Network.isServer) {
-            GameObject skillObject = Network.Instantiate(Resources.Load(player.toBeCast.skill.prefab), player.toBeCast.position, player.toBeCast.rotation, 0) as GameObject;
-            networkView.RPC("InitializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, player.toBeCast.skill.level, player.toBeCast.targetPosition);
+        if (player.toBeCast != null) {
+            //networkView.RPC("InstantiateSkill", RPCMode.All, player.toBeCast.skill.prefab, player.toBeCast.position,
+            //    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
+            InstantiateSkill(player.toBeCast.skill.prefab, player.toBeCast.position,
+                player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
             player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
             player.toBeCast = null;
         } else if (player.channel == null && casting > 0) {
@@ -44,8 +46,16 @@ public class PlayerSkill : MonoBehaviour {
             if (playerPlane.Raycast(ray, out hitdist) && networkView.isMine)
                 targetPoint = ray.GetPoint(hitdist);
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-            transform.rotation = targetRotation;
+            GetComponent<PlayerMove>().networkView.RPC("Move", RPCMode.All, transform.position, targetRotation);
             player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+        }
+    }
+
+    [RPC]
+    public void InstantiateSkill(string prefab, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
+        if (true) {
+            GameObject skillObject = Network.Instantiate(Resources.Load(prefab), position, rotation, 0) as GameObject;
+            networkView.RPC("InitializeSkill", RPCMode.AllBuffered, skillObject.networkView.viewID, level, targetPosition);
         }
     }
 
