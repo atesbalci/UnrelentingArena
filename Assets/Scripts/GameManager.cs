@@ -8,7 +8,17 @@ public enum GameState {
 
 public class GameManager : MonoBehaviour {
     public string playerName { get; set; }
-    public GameState state { get; set; }
+    private GameState _state;
+    public GameState state {
+        get {
+            return _state;
+        }
+        set {
+            _state = value;
+            StageMainScript stageMainScript = GameObject.FindGameObjectWithTag("Stage").GetComponent<StageMainScript>();
+            stageMainScript.running = state == GameState.Ingame;
+        }
+    }
     public Player player { get; set; }
     public int credits { get; set; }
 
