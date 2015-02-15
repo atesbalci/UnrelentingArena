@@ -15,8 +15,10 @@ public class StageMainScript : MonoBehaviour {
             if (running) {
                 remainingTime = timeInterval;
             } else {
-                foreach (StageScript ss in stageScripts) {
-                    ss.state = StageState.normal;
+                if (stageScripts != null) {
+                    foreach (StageScript ss in stageScripts) {
+                        ss.state = StageState.normal;
+                    }
                 }
             }
         }

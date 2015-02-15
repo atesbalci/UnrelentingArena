@@ -508,9 +508,18 @@ Prefab:
       propertyPath: unstableTimer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2392178, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2392180, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9592168, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
     - {fileID: 11492178, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
+    - {fileID: 2392178, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 274fda5fe9755f042bee5b65f70d774e, type: 2}
   m_RootGameObject: {fileID: 1842844943}
   m_IsPrefabParent: 0
@@ -1601,9 +1610,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1917076921}
   - 33: {fileID: 1917076924}
-  - 23: {fileID: 1917076923}
   - 64: {fileID: 1917076922}
   - 114: {fileID: 1917076925}
+  - 23: {fileID: 1917076923}
   m_Layer: 0
   m_Name: Stage_1
   m_TagString: Untagged
@@ -1640,9 +1649,8 @@ MeshCollider:
 --- !u!23 &1917076923
 Renderer:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 2392178, guid: 274fda5fe9755f042bee5b65f70d774e,
-    type: 2}
-  m_PrefabInternal: {fileID: 364641682}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1917076920}
   m_Enabled: 1
   m_CastShadows: 1
