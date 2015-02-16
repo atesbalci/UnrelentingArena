@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class StageMainScript : MonoBehaviour {
-    public float timeInterval;
+    public float timeInterval = 6;
     private float remainingTime;
     private StageScript[] stageScripts;
     private bool _running;
