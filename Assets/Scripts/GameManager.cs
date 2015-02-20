@@ -7,11 +7,15 @@ public enum GameState {
 }
 
 public class GameManager : MonoBehaviour {
+    public const int PORT = 25002;
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
 
     public HostData[] hostData { get; set; }
     public PlayerData playerData { get; set; }
+    public int round { get; set; }
+    public float remainingIntermissionDuration { get; set; }
+
     private GameState _state;
     public GameState state {
         get {
@@ -25,8 +29,6 @@ public class GameManager : MonoBehaviour {
     }
     private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
     private Dictionary<NetworkPlayer, PlayerData> playerList;
-    private float remainingIntermissionDuration;
-    private int round;
 
     public void SetName(string name) {
         playerData.name = name;
@@ -46,8 +48,8 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartServer() {
-        Network.InitializeServer(8, 25002, false);
-        MasterServer.RegisterHost(gameName, "Test");
+        Network.InitializeServer(8, PORT, false);
+        MasterServer.RegisterHost(gameName, playerData.name + "'s Game");
     }
 
     public IEnumerator RefreshHosts() {

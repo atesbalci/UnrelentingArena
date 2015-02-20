@@ -55,7 +55,8 @@ public class Player {
         health -= damage;
         if (health < 0)
             health = 0;
-        lastHitter = hitter;
+        if (hitter != null)
+            lastHitter = hitter;
     }
 
     public void Heal(float heal) {
