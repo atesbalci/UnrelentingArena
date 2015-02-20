@@ -25,8 +25,8 @@ public class StageMainScript : MonoBehaviour {
     }
 
     void Start() {
-        stageScripts = GetComponentsInChildren<StageScript>();
         running = false;
+        stageScripts = GetComponentsInChildren<StageScript>();
     }
 
     void Update() {

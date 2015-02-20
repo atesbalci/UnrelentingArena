@@ -7,8 +7,8 @@ public enum StageState {
 
 public class StageScript : MonoBehaviour {
     public float damage = 20;
-    public Color warningColor = Color.red;
-    public Color damagingColor = new Color(0, 0, 0, 0.6f);
+    public Color warningColor = new Color(255/255.0F,102/255.0F,0/255.0F,255/255.0F);
+    public Color damagingColor = Color.red;
     public float blinkSpeed = 4;
     public float unstableTimer = 3;
 
@@ -67,7 +67,7 @@ public class StageScript : MonoBehaviour {
         if (state == StageState.damaging) {
             if (Network.isServer) {
                 if (collider.gameObject.tag == "Player") {
-                    collider.gameObject.GetComponent<PlayerScript>().player.Damage(damage * Time.deltaTime);
+                    collider.gameObject.GetComponent<PlayerScript>().player.Damage(damage * Time.deltaTime, null);
                 }
             }
         }

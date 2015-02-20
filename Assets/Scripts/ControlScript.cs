@@ -13,7 +13,7 @@ public class ControlScript : MonoBehaviour {
     public bool mine { get; set; }
 
     void Start() {
-        mine = Camera.main.GetComponent<GameManager>().player == GetComponent<PlayerScript>().player;
+        mine = GetComponent<PlayerScript>().owner == Network.player;
     }
 
     void Update() {

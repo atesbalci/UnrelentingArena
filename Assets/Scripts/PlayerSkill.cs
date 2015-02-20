@@ -29,7 +29,7 @@ public class PlayerSkill : MonoBehaviour {
                 player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
             player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
             player.toBeCast = null;
-        } else if (player.channel == null && casting > 0) {
+        } else if (player.Channel == null && casting > 0) {
             SkillPreset skill = null;
             if (casting == 1)
                 skill = player.skillSet.TryToCast(SkillType.Fireball);

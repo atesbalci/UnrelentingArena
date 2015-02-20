@@ -29,11 +29,22 @@ public class SkillPreset {
 
     public string prefab {
         get {
-            if (skill == SkillType.Fireball)
-                return "Fireball";
-            else if (skill == SkillType.Blink)
-                return "Blink";
+            switch (skill) {
+                case SkillType.Fireball:
+                    return "Fireball";
+                case SkillType.Blink:
+                    return "Blink";
+            }
             return "";
+        }
+    }
+
+    public int maxLevel {
+        get {
+            switch (skill) {
+                default:
+                    return 5;
+            }
         }
     }
 }

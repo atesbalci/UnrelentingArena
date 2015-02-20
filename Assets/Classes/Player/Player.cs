@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player {
-    private float _movementSpeed;
-    public float movementSpeed { get { return _movementSpeed; } set { _movementSpeed = value; currentSpeed = value; } }
+    public float movementSpeed { get; set; }
     public float currentSpeed { get; set; }
     public float maxHealth { get; set; }
     public float health { get; set; }
     public SkillSet skillSet { get; set; }
+    public ItemSet itemSet { get; set; }
     public LinkedList<Buff> buffs { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
     public string name { get; set; }
+    public Player lastHitter { get; set; }
+    public bool dead { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;
@@ -20,6 +22,7 @@ public class Player {
     public Player() {
         buffs = new LinkedList<Buff>();
         skillSet = new SkillSet();
+        dead = false;
         maxHealth = 100;
         health = maxHealth;
         positionToBeChanged = false;
@@ -29,6 +32,9 @@ public class Player {
     }
 
     public void Update(GameObject gameObject) {
+        if (dead) {
+            gameObject.GetComponent<ControlScript>().mine = false;
+        }
         if (positionToBeChanged) {
             gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
             positionToBeChanged = false;
@@ -43,15 +49,13 @@ public class Player {
             node = nextNode;
         }
         skillSet.Update();
-
-        if (health <= 0)
-            Network.Destroy(gameObject);
     }
 
-    public void Damage(float damage) {
+    public void Damage(float damage, Player hitter) {
         health -= damage;
         if (health < 0)
             health = 0;
+        lastHitter = hitter;
     }
 
     public void Heal(float heal) {
@@ -75,13 +79,26 @@ public class Player {
         buff.Unbuff();
     }
 
-    public Channel channel {
+    public Channel Channel {
         get {
             foreach (Buff b in buffs) {
                 if (b.GetType() == typeof(Channel))
                     return b as Channel;
             }
             return null;
+        }
+    }
+
+    public void Die(GameObject gameObject) {
+        gameObject.collider.isTrigger = true;
+        dead = true;
+        if (lastHitter != null) {
+            foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
+                if (playerObject.GetComponent<PlayerScript>().player == lastHitter) {
+                    playerObject.GetComponent<PlayerScript>().score += 100;
+                    break;
+                }
+            }
         }
     }
 }

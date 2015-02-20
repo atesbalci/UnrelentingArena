@@ -3,9 +3,12 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
+    public int score { get; set; }
+    public NetworkPlayer owner { get; set; }
 
     public PlayerScript() {
         player = new Player();
+        score = 0;
     }
 
     void Start() {
@@ -15,6 +18,16 @@ public class PlayerScript : MonoBehaviour {
 
     void Update() {
         player.Update(gameObject);
+        if (Network.isServer) {
+            if (player.health <= 0) {
+                networkView.RPC("Die", RPCMode.AllBuffered);
+            }
+        }
+    }
+
+    [RPC]
+    public void Die() {
+        player.Die(gameObject);
     }
 
     private Texture health;
