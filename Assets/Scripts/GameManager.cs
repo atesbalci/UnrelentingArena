@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
         Network.RemoveRPCs(player);
         playerList.Remove(player);
         foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-            if (playerObject.GetComponent<PlayerScript>().owner == player) {
+            if (playerObject.GetComponent<PlayerScript>().player.owner == player) {
                 Network.Destroy(playerObject);
                 break;
             }
@@ -118,12 +118,12 @@ public class GameManager : MonoBehaviour {
     public void BeginGame() {
         int x = -20;
         GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-        hostPlayerObject.GetComponent<PlayerScript>().owner = Network.player;
+        hostPlayerObject.GetComponent<PlayerScript>().player.owner = Network.player;
         networkView.RPC("InitializePlayer", RPCMode.AllBuffered, hostPlayerObject.networkView.viewID, Network.player);
         foreach (NetworkPlayer networkPlayer in Network.connections) {
             x += 20;
             GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-            playerObject.GetComponent<PlayerScript>().owner = networkPlayer;
+            playerObject.GetComponent<PlayerScript>().player.owner = networkPlayer;
             networkView.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.networkView.viewID, networkPlayer);
         }
         networkView.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
@@ -135,8 +135,8 @@ public class GameManager : MonoBehaviour {
         PlayerScript playerScript = NetworkView.Find(id).GetComponent<PlayerScript>();
         PlayerData data;
         if (playerList.TryGetValue(owner, out data)) {
-            playerScript.name = data.name;
-            playerScript.owner = owner;
+            playerScript.player.name = data.name;
+            playerScript.player.owner = owner;
             playerScript.player.skillSet = data.skillSet;
             playerScript.player.itemSet = data.itemSet;
         }
@@ -201,11 +201,11 @@ public class GameManager : MonoBehaviour {
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                         PlayerData data;
                         int credits = 0;
-                        NetworkPlayer np = playerObject.GetComponent<PlayerScript>().owner;
+                        NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
                         if (playerList.TryGetValue(np, out data)) {
                             credits = data.credits;
                         }
-                        networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().score);
+                        networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score);
                     }
                     networkView.RPC("SetState", RPCMode.All, (int)GameState.Scores);
                     remainingIntermissionDuration = 30;

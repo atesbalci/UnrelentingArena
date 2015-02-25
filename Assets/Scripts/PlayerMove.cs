@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviour {
         destinationPosition = transform.position;
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
-        if (GetComponent<PlayerScript>().owner == Network.player) {
+        if (GetComponent<PlayerScript>().player.owner == Network.player) {
             networkView.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
     }

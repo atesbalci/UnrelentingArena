@@ -21,7 +21,7 @@ public class CastBarScript : MonoBehaviour {
             } else {
                 foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                     PlayerScript playerScript = playerObject.GetComponent<PlayerScript>();
-                    if (playerScript.owner == Network.player) {
+                    if (playerScript.player.owner == Network.player) {
                         player = playerScript.player;
                         break;
                     }

@@ -16,7 +16,6 @@ public class PlatformScript : MonoBehaviour {
     }
 
     void Update() {
-
         timer += Time.deltaTime;
 
         if (timer > changeColourTime) {

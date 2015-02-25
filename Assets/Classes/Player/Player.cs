@@ -13,8 +13,10 @@ public class Player {
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
     public string name { get; set; }
+    public int score { get; set; }
     public Player lastHitter { get; set; }
     public bool dead { get; set; }
+    public NetworkPlayer owner { get; set; }
 
     private bool positionToBeChanged;
     private Vector3 newPosition;
@@ -29,6 +31,7 @@ public class Player {
         movementSpeed = 6;
         canCast = true;
         name = "";
+        score = 0;
     }
 
     public void Update(GameObject gameObject) {
@@ -96,7 +99,7 @@ public class Player {
         if (lastHitter != null) {
             foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                 if (playerObject.GetComponent<PlayerScript>().player == lastHitter) {
-                    playerObject.GetComponent<PlayerScript>().score += 100;
+                    playerObject.GetComponent<PlayerScript>().player.score += 100;
                     break;
                 }
             }
