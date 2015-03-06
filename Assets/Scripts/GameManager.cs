@@ -150,6 +150,7 @@ public class GameManager : MonoBehaviour {
     public void UpgradeSkill(NetworkPlayer player, int skill) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
+            pd.credits -= pd.skillSet.GetUpgradeCost((SkillType)skill);
             pd.skillSet.Upgrade((SkillType)skill);
         }
     }
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour {
                     Clear();
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                         NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
-                        networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score);
+                        networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
                     }
                     networkView.RPC("SetState", RPCMode.All, (int)GameState.Scores);
                     remainingIntermissionDuration = 30;

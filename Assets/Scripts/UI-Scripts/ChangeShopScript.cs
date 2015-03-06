@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class ChangeShopScript : MonoBehaviour {
-    public GameObject panel;
+    public ShopPanelScript panel;
 
     private bool isSkills;
 
@@ -18,6 +18,6 @@ public class ChangeShopScript : MonoBehaviour {
             GetComponentInChildren<Text>().text = "Go to Skills";
         else
             GetComponentInChildren<Text>().text = "Go to Items";
-        panel.GetComponent<ShopPanelScript>().state = isSkills;
+        panel.state = isSkills;
     }
 }

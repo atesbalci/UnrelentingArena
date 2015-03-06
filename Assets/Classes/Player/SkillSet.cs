@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SkillSet {
-    public Dictionary<SkillType, SkillPreset> skills;
+    public Dictionary<SkillType, SkillPreset> skills { get; set; }
 
     public SkillSet() {
         skills = new Dictionary<SkillType, SkillPreset>();
-        SkillPreset sp = new SkillPreset(SkillType.Blink);
-        skills.Add(SkillType.Blink, sp);
-        sp = new SkillPreset(SkillType.Fireball);
-        skills.Add(SkillType.Fireball, sp);
+        skills.Add(SkillType.Fireball, new FireballPreset());
+        skills.Add(SkillType.Blink, new BlinkPreset());
     }
 
     public void Update() {
@@ -31,9 +29,17 @@ public class SkillSet {
         if (skills.ContainsKey(skill)) {
             SkillPreset sp;
             skills.TryGetValue(skill, out sp);
-            if (sp.remainingCooldown < 0.01f)
+            if (sp.level > 0 && sp.remainingCooldown < 0.01f)
                 return sp;
         }
         return null;
+    }
+
+    public int GetUpgradeCost(SkillType skill) {
+        SkillPreset sp;
+        if (skills.TryGetValue(skill, out sp)) {
+            return sp.price;
+        }
+        return 0;
     }
 }

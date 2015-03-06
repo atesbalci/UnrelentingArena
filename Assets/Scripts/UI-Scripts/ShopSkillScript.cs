@@ -10,9 +10,14 @@ public class ShopSkillScript : MonoBehaviour {
     public SkillPreset skillPreset { get; set; }
 
     void Start() {
+        Refresh();
+    }
+
+    public void Refresh() {
         skillName.text = skillPreset.name;
         level.text = "Level " + skillPreset.level;
-        button.interactable = skillPreset.level >= skillPreset.maxLevel;
+        button.GetComponentInChildren<Text>().text = skillPreset.price + "C";
+        button.interactable = skillPreset.level < skillPreset.maxLevel;
         button.onClick = new Button.ButtonClickedEvent();
         button.onClick.AddListener(() => { Buy(); });
         //image algorithm goes here
@@ -20,9 +25,11 @@ public class ShopSkillScript : MonoBehaviour {
 
     public void Buy() {
         if (skillPreset != null) {
-            //if (Camera.main.GetComponent<GameManager>().playerData.credits)
-            skillPreset.level++;
-            Start();
+            GameManager game = Camera.main.GetComponent<GameManager>();
+            if (game.playerData.credits >= skillPreset.price) {
+                game.networkView.RPC("UpgradeSkill", RPCMode.All, Network.player, (int)skillPreset.skill);
+                Refresh();
+            }
         }
     }
 }
