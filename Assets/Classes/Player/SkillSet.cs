@@ -21,11 +21,10 @@ public class SkillSet {
 
     public void Upgrade(SkillType skill) {
         SkillPreset sp;
-        skills.TryGetValue(skill, out sp);
-        if (sp.maxLevel > sp.level)
-            sp.level++;
-        else
-            skills.Add(skill, new SkillPreset(skill));
+        if (skills.TryGetValue(skill, out sp)) {
+            if (sp.maxLevel > sp.level)
+                sp.level++;
+        }
     }
 
     public SkillPreset TryToCast(SkillType skill) {

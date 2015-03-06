@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum GameState {
-    Menu, Pregame, Ingame, Scores, Shop
+    Menu,
+    Pregame,
+    Ingame,
+    Scores,
+    Shop
 }
 
 public class GameManager : MonoBehaviour {
+    private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
     public const int PORT = 25002;
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
@@ -15,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
+    private Dictionary<NetworkPlayer, PlayerData> playerList;
 
     private GameState _state;
     public GameState state {
@@ -27,8 +33,6 @@ public class GameManager : MonoBehaviour {
             GameObject.FindGameObjectWithTag("Canvas").GetComponent<CanvasNavigator>().RefreshUI();
         }
     }
-    private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
-    private Dictionary<NetworkPlayer, PlayerData> playerList;
 
     public void SetName(string name) {
         playerData.name = name;
@@ -196,15 +200,10 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 0) {
+                if (headCount <= 1) {
                     Clear();
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-                        PlayerData data;
-                        int credits = 0;
                         NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
-                        if (playerList.TryGetValue(np, out data)) {
-                            credits = data.credits;
-                        }
                         networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score);
                     }
                     networkView.RPC("SetState", RPCMode.All, (int)GameState.Scores);

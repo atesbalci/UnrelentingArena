@@ -25,7 +25,7 @@ public class PlayerSkill : MonoBehaviour {
         if (player.toBeCast != null) {
             //networkView.RPC("InstantiateSkill", RPCMode.All, player.toBeCast.skill.prefab, player.toBeCast.position,
             //    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
-            InstantiateSkill(player.toBeCast.skill.prefab, player.toBeCast.position,
+            InstantiateSkill(player.toBeCast.skill.name, player.toBeCast.position,
                 player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
             player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
             player.toBeCast = null;

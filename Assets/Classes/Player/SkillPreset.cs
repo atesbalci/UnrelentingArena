@@ -27,7 +27,7 @@ public class SkillPreset {
             remainingCooldown -= Time.deltaTime;
     }
 
-    public string prefab {
+    public string name {
         get {
             switch (skill) {
                 case SkillType.Fireball:

@@ -13,26 +13,19 @@ public class ServerListScript : MonoBehaviour {
 
     void Update() {
         refresh -= Time.deltaTime;
-        float scroll = rectTransform.offsetMax.y;
         if (refresh <= 0) {
             refresh = 1;
             rectTransform.sizeDelta = new Vector2(GetComponentInParent<RectTransform>().rect.width, 0);
             foreach (Button child in GetComponentsInChildren<Button>()) {
                 GameObject.Destroy(child.gameObject);
             }
-            int y = 0;
-            if (Camera.main.GetComponent<GameManager>().hostData != null) {
-                foreach (HostData hd in Camera.main.GetComponent<GameManager>().hostData) {
-                    //for (int i = 0; i < 30; i++) {
-                    GameObject hostData = Instantiate(Resources.Load("UI-Elements/HostData")) as GameObject;
-                    hostData.transform.SetParent(gameObject.transform);
-                    hostData.GetComponent<HostDataScript>().hostData = hd;
-                    hostData.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, y - 15);
-                    y -= 30;
+            HostData[] hostData = Camera.main.GetComponent<GameManager>().hostData;
+            if (hostData != null) {
+                foreach (HostData hd in hostData) {
+                    GameObject host = Instantiate(Resources.Load("UI-Elements/HostData")) as GameObject;
+                    host.transform.SetParent(gameObject.transform);
+                    host.GetComponent<HostDataScript>().hostData = hd;
                 }
-                if (-y > rectTransform.rect.height)
-                    rectTransform.sizeDelta = new Vector2(rectTransform.rect.width, -y);
-                rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, scroll);
             }
         }
     }
