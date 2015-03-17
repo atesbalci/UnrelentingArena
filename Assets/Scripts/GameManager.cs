@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour {
         state = GameState.Pregame;
         playerData.Clear();
         playerList = new Dictionary<NetworkPlayer, PlayerData>();
-        networkView.RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
+        GetComponent<NetworkView>().RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
         round = 0;
     }
 
@@ -132,20 +132,20 @@ public class GameManager : MonoBehaviour {
         int x = -20;
         GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
         hostPlayerObject.GetComponent<PlayerScript>().player.owner = Network.player;
-        networkView.RPC("InitializePlayer", RPCMode.AllBuffered, hostPlayerObject.networkView.viewID, Network.player);
+        GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, hostPlayerObject.GetComponent<NetworkView>().viewID, Network.player);
         if (round == 0)
-            networkView.RPC("SetColor", RPCMode.All, Network.player, 0);
+            GetComponent<NetworkView>().RPC("SetColor", RPCMode.All, Network.player, 0);
         int i = 0;
         foreach (NetworkPlayer networkPlayer in Network.connections) {
             i++;
             x += 20;
             GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
             playerObject.GetComponent<PlayerScript>().player.owner = networkPlayer;
-            networkView.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.networkView.viewID, networkPlayer);
+            GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, networkPlayer);
             if (round == 0)
-                networkView.RPC("SetColor", RPCMode.All, Network.player, i);
+                GetComponent<NetworkView>().RPC("SetColor", RPCMode.All, Network.player, i);
         }
-        networkView.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
+        GetComponent<NetworkView>().RPC("SetState", RPCMode.All, (int)GameState.Ingame);
     }
 
     [RPC]
@@ -229,9 +229,9 @@ public class GameManager : MonoBehaviour {
                     Clear();
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                         NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
-                        networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
+                        GetComponent<NetworkView>().RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
                     }
-                    networkView.RPC("SetState", RPCMode.All, (int)GameState.Scores);
+                    GetComponent<NetworkView>().RPC("SetState", RPCMode.All, (int)GameState.Scores);
                 }
             } else if (state == GameState.Scores || state == GameState.Shop) {
                 if (remainingIntermissionDuration <= 0) {

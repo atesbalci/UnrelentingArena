@@ -43,15 +43,15 @@ public class PlayerSkill : MonoBehaviour {
                     casting = -1;
                     return;
                 }
-                networkView.RPC("InitiateCasting", RPCMode.All);
+                GetComponent<NetworkView>().RPC("InitiateCasting", RPCMode.All);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
 
-                if (playerPlane.Raycast(ray, out hitdist) && networkView.isMine)
+                if (playerPlane.Raycast(ray, out hitdist) && GetComponent<NetworkView>().isMine)
                     targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                GetComponent<PlayerMove>().networkView.RPC("Move", RPCMode.All, transform.position, targetRotation);
+                GetComponent<PlayerMove>().GetComponent<NetworkView>().RPC("Move", RPCMode.All, transform.position, targetRotation);
                 player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
             }
         }
@@ -59,7 +59,7 @@ public class PlayerSkill : MonoBehaviour {
 
     public void InstantiateSkill(string prefab, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
         GameObject skillObject = Network.Instantiate(Resources.Load(prefab), position, rotation, 0) as GameObject;
-        networkView.RPC("InitializeSkill", RPCMode.All, skillObject.networkView.viewID, level, targetPosition);
+        GetComponent<NetworkView>().RPC("InitializeSkill", RPCMode.All, skillObject.GetComponent<NetworkView>().viewID, level, targetPosition);
     }
 
     [RPC]

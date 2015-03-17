@@ -24,6 +24,6 @@ public class PlatformScript : MonoBehaviour {
             timer = 0.0f;
 
         }
-        renderer.material.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
+        GetComponent<Renderer>().material.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
     }
 }

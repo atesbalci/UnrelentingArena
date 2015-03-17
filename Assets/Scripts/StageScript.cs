@@ -12,9 +12,11 @@ public class StageScript : MonoBehaviour {
     public float blinkSpeed = 4;
     public float unstableTimer = 3;
 
+    private Renderer rend;
     private bool blinking;
     private float remainingUnstableTimer;
     private Color defaultColor;
+    private Color color;
 
     private StageState _state;
     public StageState state {
@@ -24,16 +26,18 @@ public class StageScript : MonoBehaviour {
         set {
             _state = value;
             if (state == StageState.normal)
-                renderer.material.color = defaultColor;
+                GetComponent<Renderer>().material.color = defaultColor;
             else if (state == StageState.damaging)
-                renderer.material.color = damagingColor;
+                GetComponent<Renderer>().material.color = damagingColor;
             else if (state == StageState.unstable)
                 remainingUnstableTimer = unstableTimer;
         }
     }
 
     void Start() {
-        defaultColor = renderer.material.color;
+        rend = GetComponent<Renderer>();
+        color = rend.material.color;
+        defaultColor = color;
         state = StageState.normal;
         blinking = false;
     }
@@ -41,14 +45,15 @@ public class StageScript : MonoBehaviour {
     void Update() {
         if (state == StageState.unstable) {
             if (blinking) {
-                renderer.material.color = Color.Lerp(renderer.material.color, warningColor, blinkSpeed * Time.deltaTime);
-                if (checkSimilarity(renderer.material.color, warningColor))
+                color = Color.Lerp(color, warningColor, blinkSpeed * Time.deltaTime);
+                if (checkSimilarity(color, warningColor))
                     blinking = false;
             } else {
-                renderer.material.color = Color.Lerp(renderer.material.color, defaultColor, blinkSpeed * Time.deltaTime);
-                if (checkSimilarity(renderer.material.color, defaultColor))
+                color = Color.Lerp(color, defaultColor, blinkSpeed * Time.deltaTime);
+                if (checkSimilarity(color, defaultColor))
                     blinking = true;
             }
+            rend.material.color = color;
             remainingUnstableTimer -= Time.deltaTime;
             if (remainingUnstableTimer <= 0)
                 state = StageState.damaging;
@@ -63,7 +68,7 @@ public class StageScript : MonoBehaviour {
             Mathf.Abs(c1.a - c2.a) < SIMILARITY;
     }
 
-    void OnTriggerStay(Collider collider) {
+    void OnCollisionStay(Collision collider) {
         if (state == StageState.damaging) {
             if (Network.isServer) {
                 if (collider.gameObject.tag == "Player") {

@@ -3,6 +3,6 @@ using System.Collections;
 
 public class StageCenterScript : MonoBehaviour {
 	void Start () {
-        renderer.material.color = Color.clear;
+        GetComponent<Renderer>().material.color = Color.clear;
 	}
 }

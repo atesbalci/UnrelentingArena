@@ -5,15 +5,14 @@ public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
-    private Color color;
-
     public PlayerScript() {
         player = new Player();
     }
 
     void Start() {
-        color = Camera.main.GetComponent<GameManager>().playerData.color;
+        Color color = Camera.main.GetComponent<GameManager>().playerData.color;
         bodyRenderer.material.color = color;
+        GetComponentInChildren<Light>().color = color;
     }
 
     void Update() {
@@ -21,7 +20,7 @@ public class PlayerScript : MonoBehaviour {
         if (Network.isServer) {
             if (player.health <= 0 && !player.dead) {
                 player.dead = true;
-                networkView.RPC("Die", RPCMode.AllBuffered);
+                GetComponent<NetworkView>().RPC("Die", RPCMode.AllBuffered);
             }
         }
     }
@@ -62,7 +61,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Knockback(Vector3 direction, float distance, float speed) {
-        networkView.RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
+        GetComponent<NetworkView>().RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
     }
 
     [RPC]

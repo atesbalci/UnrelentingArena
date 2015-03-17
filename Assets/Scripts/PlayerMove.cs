@@ -14,13 +14,13 @@ public class PlayerMove : MonoBehaviour {
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         if (player.owner == Network.player) {
-            networkView.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
+            GetComponent<NetworkView>().RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
     }
 
     [RPC]
     public void SwitchOwner(NetworkViewID newId) {
-        networkView.viewID = newId;
+        GetComponent<NetworkView>().viewID = newId;
     }
 
     void Update() {
@@ -41,7 +41,7 @@ public class PlayerMove : MonoBehaviour {
                     float hitdist = 0.0f;
 
                     if (playerPlane.Raycast(ray, out hitdist)) {
-                        networkView.RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(destinationPosition - transform.position));
+                        GetComponent<NetworkView>().RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(destinationPosition - transform.position));
                     }
                 }
                 if (destinationDistance > .5f) {

@@ -31,7 +31,7 @@ public class ShopSkillScript : MonoBehaviour {
         if (skillPreset != null) {
             GameManager game = Camera.main.GetComponent<GameManager>();
             if (game.playerData.skillPoints >= skillPreset.price) {
-                game.networkView.RPC("UpgradeSkill", RPCMode.All, Network.player, (int)skillPreset.skill);
+                game.GetComponent<NetworkView>().RPC("UpgradeSkill", RPCMode.All, Network.player, (int)skillPreset.skill);
                 Refresh();
             }
         }

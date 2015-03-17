@@ -94,7 +94,7 @@ public class Player {
     }
 
     public void Die(GameObject gameObject) {
-        gameObject.collider.isTrigger = true;
+        gameObject.GetComponent<Collider>().isTrigger = true;
         dead = true;
         gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null) {
