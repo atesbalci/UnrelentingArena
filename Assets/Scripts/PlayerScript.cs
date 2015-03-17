@@ -9,13 +9,13 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Start() {
-        
     }
 
     void Update() {
         player.Update(gameObject);
         if (Network.isServer) {
-            if (player.health <= 0) {
+            if (player.health <= 0 && !player.dead) {
+                player.dead = true;
                 networkView.RPC("Die", RPCMode.AllBuffered);
             }
         }

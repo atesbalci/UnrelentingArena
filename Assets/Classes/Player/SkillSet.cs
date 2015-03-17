@@ -35,11 +35,33 @@ public class SkillSet {
         return null;
     }
 
+    public SkillPreset TryToCast(int key) {
+        foreach (KeyValuePair<SkillType, SkillPreset> kvp in skills) {
+            if (kvp.Value.key == key) {
+                if (kvp.Value.remainingCooldown < 0.01f) {
+                    return kvp.Value;
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
     public int GetUpgradeCost(SkillType skill) {
         SkillPreset sp;
         if (skills.TryGetValue(skill, out sp)) {
             return sp.price;
         }
         return 0;
+    }
+
+    public LinkedList<SkillPreset> GetUnlockedSkills() {
+        LinkedList<SkillPreset> result = new LinkedList<SkillPreset>();
+        foreach (KeyValuePair<SkillType, SkillPreset> kvp in skills) {
+            if (kvp.Value.level > 0) {
+                result.AddLast(kvp.Value);
+            }
+        }
+        return result;
     }
 }

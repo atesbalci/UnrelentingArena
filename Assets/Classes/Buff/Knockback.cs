@@ -6,7 +6,8 @@ public class Knockback : Stun {
     public float remainingDistance { get; set; }
     public float speed { get; set; }
 
-    protected GameObject playerObject;
+    private GameObject playerObject;
+    private Animator animator;
 
     public Knockback(Player player, GameObject playerObject, Vector3 direction, float distance, float speed)
         : base(player) {
@@ -15,10 +16,12 @@ public class Knockback : Stun {
         remainingDistance = distance;
         this.speed = speed;
         this.playerObject = playerObject;
+        animator = playerObject.GetComponent<Animator>();
     }
 
     public override void Update() {
         float travel = speed * Time.deltaTime;
+        animator.SetBool("Knockback", true);
         if (remainingDistance - travel <= 0) {
             travel = remainingDistance;
             player.RemoveBuff(this);
@@ -26,5 +29,10 @@ public class Knockback : Stun {
         remainingDistance -= travel;
         playerObject.transform.position += direction * travel;
         base.Update();
+    }
+
+    public override void Unbuff() {
+        base.Unbuff();
+        animator.SetBool("Knockback", false);
     }
 }

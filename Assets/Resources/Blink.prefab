@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea8c693d7244dd4e9370ded12f9b0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillType: 1
+  skillType: 2
 --- !u!148 &14822612
 NetworkView:
   m_ObjectHideFlags: 1

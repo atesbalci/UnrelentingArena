@@ -96,6 +96,7 @@ public class Player {
     public void Die(GameObject gameObject) {
         gameObject.collider.isTrigger = true;
         dead = true;
+        gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null) {
             foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                 if (playerObject.GetComponent<PlayerScript>().player == lastHitter) {

@@ -5,6 +5,7 @@ public abstract class SkillPreset {
     public SkillType skill { get; set; }
     public float remainingCooldown { get; set; }
     public int level { get; set; }
+    public int key { get; set; }
 
     public SkillPreset(SkillType skill) {
         this.skill = skill;

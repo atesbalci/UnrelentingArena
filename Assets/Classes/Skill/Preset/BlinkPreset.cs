@@ -4,6 +4,7 @@ using System.Collections;
 public class BlinkPreset : SkillPreset {
     public BlinkPreset()
         : base(SkillType.Blink) {
+        key = 3;
     }
 
     public override string name {
@@ -14,7 +15,7 @@ public class BlinkPreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 10 - (level * 1.5f);
+            return 16.5f - (level * 1.5f);
         }
     }
 

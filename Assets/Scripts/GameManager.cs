@@ -20,15 +20,23 @@ public class GameManager : MonoBehaviour {
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
-    private Dictionary<NetworkPlayer, PlayerData> playerList;
+    public KeyCode[] keys;
 
+    private Dictionary<NetworkPlayer, PlayerData> playerList;
     private GameState _state;
     public GameState state {
         get {
             return _state;
         }
         set {
+            GameState previous = state;
             _state = value;
+            if (previous != GameState.Shop && state == GameState.Scores)
+                remainingIntermissionDuration = 30;
+            else if (state == GameState.Ingame) {
+                round++;
+                remainingIntermissionDuration = 0;
+            }
             GameObject.FindGameObjectWithTag("Stage").GetComponent<StageMainScript>().running = (state == GameState.Ingame);
             GameObject.FindGameObjectWithTag("Canvas").GetComponent<CanvasNavigator>().RefreshUI();
         }
@@ -97,9 +105,9 @@ public class GameManager : MonoBehaviour {
 
     public void Clear() {
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
-            Destroy(gameObject);
+            Network.Destroy(gameObject);
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
-            Destroy(gameObject);
+            Network.Destroy(gameObject);
     }
 
     void OnPlayerDisconnected(NetworkPlayer player) {
@@ -131,7 +139,6 @@ public class GameManager : MonoBehaviour {
             networkView.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.networkView.viewID, networkPlayer);
         }
         networkView.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
-        round++;
     }
 
     [RPC]
@@ -150,7 +157,7 @@ public class GameManager : MonoBehaviour {
     public void UpgradeSkill(NetworkPlayer player, int skill) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
-            pd.credits -= pd.skillSet.GetUpgradeCost((SkillType)skill);
+            pd.skillPoints -= pd.skillSet.GetUpgradeCost((SkillType)skill);
             pd.skillSet.Upgrade((SkillType)skill);
         }
     }
@@ -193,6 +200,8 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
+        if(remainingIntermissionDuration > 0)
+            remainingIntermissionDuration -= Time.deltaTime;
         if (Network.isServer) {
             int headCount = 0;
             if (state == GameState.Ingame) {
@@ -201,14 +210,13 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 1) {
+                if (headCount <= 0) {
                     Clear();
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                         NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
                         networkView.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
                     }
                     networkView.RPC("SetState", RPCMode.All, (int)GameState.Scores);
-                    remainingIntermissionDuration = 30;
                 }
             } else if (state == GameState.Scores || state == GameState.Shop) {
                 if (remainingIntermissionDuration <= 0) {
@@ -217,7 +225,6 @@ public class GameManager : MonoBehaviour {
                     else
                         Network.Disconnect();
                 }
-                remainingIntermissionDuration -= Time.deltaTime;
             }
         }
     }

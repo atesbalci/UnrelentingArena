@@ -5,6 +5,7 @@ public class FireballPreset : SkillPreset {
     public FireballPreset()
         : base(SkillType.Fireball) {
         level = 1;
+        key = 0;
     }
 
     public override string name {

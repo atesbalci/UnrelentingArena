@@ -8,7 +8,7 @@ public class PlayerStatusScript : MonoBehaviour {
         defaultRotation = transform.rotation;
     }
 
-    void Update() {
+    public void Update() {
         transform.rotation = defaultRotation;
     }
 }
