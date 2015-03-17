@@ -28,7 +28,7 @@ public class Player {
         maxHealth = 100;
         health = maxHealth;
         positionToBeChanged = false;
-        movementSpeed = 4;
+        movementSpeed = 3.5f;
         canCast = true;
         name = "";
         score = 0;

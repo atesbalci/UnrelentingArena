@@ -130,20 +130,15 @@ public class GameManager : MonoBehaviour {
 
     public void BeginGame() {
         int x = -20;
-        GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-        hostPlayerObject.GetComponent<PlayerScript>().player.owner = Network.player;
-        GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, hostPlayerObject.GetComponent<NetworkView>().viewID, Network.player);
-        if (round == 0)
-            GetComponent<NetworkView>().RPC("SetColor", RPCMode.All, Network.player, 0);
         int i = 0;
-        foreach (NetworkPlayer networkPlayer in Network.connections) {
+        foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
+            if (round == 0)
+                GetComponent<NetworkView>().RPC("SetColor", RPCMode.AllBuffered, kvp.Key, i);
+            GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
+            playerObject.GetComponent<PlayerScript>().player.owner = kvp.Key;
+            GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, kvp.Key);
             i++;
             x += 20;
-            GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-            playerObject.GetComponent<PlayerScript>().player.owner = networkPlayer;
-            GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, networkPlayer);
-            if (round == 0)
-                GetComponent<NetworkView>().RPC("SetColor", RPCMode.All, Network.player, i);
         }
         GetComponent<NetworkView>().RPC("SetState", RPCMode.All, (int)GameState.Ingame);
     }
@@ -165,6 +160,7 @@ public class GameManager : MonoBehaviour {
             playerScript.player.owner = owner;
             playerScript.player.skillSet = data.skillSet;
             playerScript.player.itemSet = data.itemSet;
+            playerScript.color = data.color;
         }
     }
 

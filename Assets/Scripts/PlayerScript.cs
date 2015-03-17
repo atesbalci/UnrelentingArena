@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
+    public Color color { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
     public PlayerScript() {
@@ -10,7 +11,6 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Start() {
-        Color color = Camera.main.GetComponent<GameManager>().playerData.color;
         bodyRenderer.material.color = color;
         GetComponentInChildren<Light>().color = color;
     }
