@@ -3,12 +3,17 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
+    public SkinnedMeshRenderer bodyRenderer;
+
+    private Color color;
 
     public PlayerScript() {
         player = new Player();
     }
 
     void Start() {
+        color = Camera.main.GetComponent<GameManager>().playerData.color;
+        bodyRenderer.material.color = color;
     }
 
     void Update() {

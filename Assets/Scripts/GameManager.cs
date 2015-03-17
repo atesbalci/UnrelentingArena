@@ -11,17 +11,18 @@ public enum GameState {
 }
 
 public class GameManager : MonoBehaviour {
-    private const string gameName = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
+    private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
     public const int PORT = 25002;
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
-
+    
     public HostData[] hostData { get; set; }
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
     public KeyCode[] keys;
 
+    private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f) };
     private Dictionary<NetworkPlayer, PlayerData> playerList;
     private GameState _state;
     public GameState state {
@@ -61,11 +62,11 @@ public class GameManager : MonoBehaviour {
 
     public void StartServer() {
         Network.InitializeServer(8, PORT, false);
-        MasterServer.RegisterHost(gameName, playerData.name + "'s Game");
+        MasterServer.RegisterHost(GAME_NAME, playerData.name + "'s Game");
     }
 
     public IEnumerator RefreshHosts() {
-        MasterServer.RequestHostList(gameName);
+        MasterServer.RequestHostList(GAME_NAME);
         float timeEnd = Time.time + REFRESH_LENGTH;
 
         while (Time.time < timeEnd) {
@@ -132,13 +133,27 @@ public class GameManager : MonoBehaviour {
         GameObject hostPlayerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
         hostPlayerObject.GetComponent<PlayerScript>().player.owner = Network.player;
         networkView.RPC("InitializePlayer", RPCMode.AllBuffered, hostPlayerObject.networkView.viewID, Network.player);
+        if (round == 0)
+            networkView.RPC("SetColor", RPCMode.All, Network.player, 0);
+        int i = 0;
         foreach (NetworkPlayer networkPlayer in Network.connections) {
+            i++;
             x += 20;
             GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
             playerObject.GetComponent<PlayerScript>().player.owner = networkPlayer;
             networkView.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.networkView.viewID, networkPlayer);
+            if (round == 0)
+                networkView.RPC("SetColor", RPCMode.All, Network.player, i);
         }
         networkView.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
+    }
+
+    [RPC]
+    public void SetColor(NetworkPlayer player, int index) {
+        PlayerData data;
+        if (playerList.TryGetValue(player, out data)) {
+            data.color = colors[index];
+        }
     }
 
     [RPC]

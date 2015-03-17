@@ -13,7 +13,7 @@ public class PlayerMove : MonoBehaviour {
         destinationPosition = transform.position;
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
-        if (GetComponent<PlayerScript>().player.owner == Network.player) {
+        if (player.owner == Network.player) {
             networkView.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
     }
@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour {
     void Update() {
         if (!player.dead) {
             anim.SetFloat("Speed", moveSpeed);
+            anim.speed = player.currentSpeed / player.movementSpeed;
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
                 if (destinationDistance < .5f) {
@@ -73,5 +74,6 @@ public class PlayerMove : MonoBehaviour {
             stream.Serialize(ref destination);
             destinationPosition = destination;
         }
+        GetComponentInChildren<PlayerStatusScript>().Update();
     }
 }

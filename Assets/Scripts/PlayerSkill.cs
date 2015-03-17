@@ -6,11 +6,13 @@ public class PlayerSkill : MonoBehaviour {
     private Player player;
     private Vector3 targetPoint;
     private int casting;
+    private Animator anim;
 
     void Start() {
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         casting = -1;
+        anim = GetComponent<Animator>();
     }
 
     void Update() {
@@ -41,6 +43,7 @@ public class PlayerSkill : MonoBehaviour {
                     casting = -1;
                     return;
                 }
+                networkView.RPC("InitiateCasting", RPCMode.All);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
@@ -70,5 +73,11 @@ public class PlayerSkill : MonoBehaviour {
             skill.targetPosition = targetPosition;
             skill.player = player;
         }
+        anim.SetBool("Casting", false);
+    }
+
+    [RPC]
+    public void InitiateCasting() {
+        anim.SetBool("Casting", true);
     }
 }

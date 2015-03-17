@@ -8,6 +8,7 @@ public class PlayerData {
     public int skillPoints { get; set; }
     public SkillSet skillSet { get; set; }
     public ItemSet itemSet { get; set; }
+    public Color color { get; set; }
 
     public PlayerData(string name) {
         this.name = name;
@@ -20,6 +21,7 @@ public class PlayerData {
         skillPoints = 0;
         skillSet = new SkillSet();
         itemSet = new ItemSet();
+        color = new Color();
     }
 
     public void addPoints(int points) {
