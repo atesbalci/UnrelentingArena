@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Platform
-  m_Shader: {fileID: 10, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -18,7 +18,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: d9322b88b0e4167489842f1708975c68, type: 3}
+          m_Texture: {fileID: 2800000, guid: fb26e25dcba63824bbd25f2e65f8ede1, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -53,7 +53,7 @@ Material:
         first:
           name: _EmissionMap
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: d9322b88b0e4167489842f1708975c68, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -98,11 +98,18 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 2144ff41277350f40b8c9ac174f1d796, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _Cutoff
-        second: .285714269
+        second: 0
       data:
         first:
           name: _Shininess
@@ -130,7 +137,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .453000009
+        second: 1
       data:
         first:
           name: _BumpScale
@@ -150,7 +157,7 @@ Material:
       data:
         first:
           name: _EmissionScaleUI
-        second: 0
+        second: .300000012
       data:
         first:
           name: _Mode
@@ -158,7 +165,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: 1
       data:
         first:
           name: _EmissionLM
@@ -191,7 +198,7 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: 0, g: 0, b: 0, a: 0}
+        second: {r: .300000012, g: .300000012, b: .300000012, a: .300000012}
       data:
         first:
           name: _Color

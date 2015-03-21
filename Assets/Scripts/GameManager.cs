@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
     public float remainingIntermissionDuration { get; set; }
     public KeyCode[] keys;
 
-    private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f) };
+    private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
     private Dictionary<NetworkPlayer, PlayerData> playerList;
     private GameState _state;
     public GameState state {
