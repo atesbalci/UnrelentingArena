@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Start() {
-        bodyRenderer.material.color = color;
+        bodyRenderer.material.SetColor("_EmissionColor", color);
         GetComponentInChildren<Light>().color = color;
     }
 

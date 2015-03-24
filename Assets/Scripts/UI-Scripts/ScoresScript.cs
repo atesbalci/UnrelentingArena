@@ -23,7 +23,7 @@ public class ScoresScript : MonoBehaviour {
     public void RefreshPlayers() {
         foreach (PlayerListingScript child in GetComponentsInChildren<PlayerListingScript>())
             Destroy(child.gameObject);
-        foreach (PlayerData playerData in Camera.main.GetComponent<GameManager>().ListPlayers()) {
+        foreach (PlayerData playerData in GameManager.instance.ListPlayers()) {
             GameObject playerListing = GameObject.Instantiate(Resources.Load("UI-Elements/PlayerListing")) as GameObject;
             playerListing.transform.SetParent(transform);
             playerListing.GetComponent<PlayerListingScript>().SetPlayer(playerData);

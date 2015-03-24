@@ -6,7 +6,7 @@ public class CastBarScript : MonoBehaviour {
     private Player player;
 
     void Update() {
-        if (Camera.main.GetComponent<GameManager>().state == GameState.Ingame) {
+        if (GameManager.instance.state == GameState.Ingame) {
             if (player != null) {
                 Channel channel = player.Channel;
                 if (channel != null) {

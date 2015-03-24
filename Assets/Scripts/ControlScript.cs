@@ -12,7 +12,7 @@ public class ControlScript : MonoBehaviour {
 
     void Start() {
         mine = GetComponent<PlayerScript>().player.owner == Network.player;
-        keys = Camera.main.GetComponent<GameManager>().keys;
+        keys = GameManager.instance.keys;
         skills = new bool[8];
     }
 

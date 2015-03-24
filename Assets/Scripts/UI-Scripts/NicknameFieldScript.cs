@@ -4,6 +4,6 @@ using System.Collections;
 
 public class NicknameFieldScript : MonoBehaviour {
     public void SetName() {
-        Camera.main.GetComponent<GameManager>().playerData.name = GetComponent<Text>().text;
+        GameManager.instance.playerData.name = GetComponent<Text>().text;
     }
 }

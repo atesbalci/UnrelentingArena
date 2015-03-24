@@ -19,7 +19,7 @@ public class ServerListScript : MonoBehaviour {
             foreach (Button child in GetComponentsInChildren<Button>()) {
                 GameObject.Destroy(child.gameObject);
             }
-            HostData[] hostData = Camera.main.GetComponent<GameManager>().hostData;
+            HostData[] hostData = GameManager.instance.hostData;
             if (hostData != null) {
                 foreach (HostData hd in hostData) {
                     GameObject host = Instantiate(Resources.Load("UI-Elements/HostData")) as GameObject;

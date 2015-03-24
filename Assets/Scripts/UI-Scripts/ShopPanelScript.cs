@@ -18,7 +18,7 @@ public class ShopPanelScript : MonoBehaviour {
     public void Refresh() {
         foreach (LayoutElement le in GetComponentsInChildren<LayoutElement>())
             Destroy(le.gameObject);
-        PlayerData playerData = Camera.main.GetComponent<GameManager>().playerData;
+        PlayerData playerData = GameManager.instance.playerData;
         if (state) {
             foreach (KeyValuePair<SkillType, SkillPreset> kvp in playerData.skillSet.skills) {
                 ShopSkillScript shopSkillScript = ((GameObject)Instantiate(Resources.Load("UI-Elements/ShopSkill"))).GetComponent<ShopSkillScript>();

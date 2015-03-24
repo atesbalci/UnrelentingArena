@@ -11,6 +11,8 @@ public enum GameState {
 }
 
 public class GameManager : MonoBehaviour {
+    public static GameManager instance;
+
     private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
     public const int PORT = 25002;
     private const float REFRESH_LENGTH = 10;
@@ -47,7 +49,8 @@ public class GameManager : MonoBehaviour {
         playerData.name = name;
     }
 
-    void Start() {
+    void Awake() {
+        instance = this;
         state = GameState.Menu;
         playerData = new PlayerData("");
     }
@@ -106,8 +109,6 @@ public class GameManager : MonoBehaviour {
 
     public void Clear() {
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
-            Network.Destroy(gameObject);
-        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
             Network.Destroy(gameObject);
     }
 

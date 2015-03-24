@@ -9,7 +9,7 @@ public class ScoresButtonScript : MonoBehaviour {
     void OnEnable() {
         startButton.SetActive(false);
         shopButton.SetActive(false);
-        GameManager gameManager = Camera.main.GetComponent<GameManager>();
+        GameManager gameManager = GameManager.instance;
         if (gameManager.state == GameState.Scores)
             shopButton.SetActive(true);
         else if (gameManager.state == GameState.Pregame && Network.isServer)

@@ -12,7 +12,7 @@ public class CanvasNavigator : MonoBehaviour {
         scores.SetActive(false);
         menu.SetActive(false);
         shop.SetActive(false);
-        GameState state = Camera.main.GetComponent<GameManager>().state;
+        GameState state = GameManager.instance.state;
         if (state == GameState.Ingame)
             ingame.SetActive(true);
         else if (state == GameState.Pregame || state == GameState.Scores)
