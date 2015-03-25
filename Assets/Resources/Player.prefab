@@ -1259,7 +1259,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.47782063, y: .0100000352, z: .272771269}
+  m_LocalPosition: {x: -1.54889297, y: .010000512, z: -3.09729195}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 445592}
@@ -2321,7 +2321,7 @@ Light:
   serializedVersion: 6
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 6
+  m_Intensity: 8
   m_Range: 20
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -2774,7 +2774,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingLayerID: -475260745
+  m_SortingLayerID: 415940129
   m_SortingOrder: 0
 --- !u!224 &22431956
 RectTransform:

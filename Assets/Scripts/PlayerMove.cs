@@ -26,7 +26,6 @@ public class PlayerMove : MonoBehaviour {
     void Update() {
         if (!player.dead) {
             anim.SetFloat("Speed", moveSpeed);
-            anim.speed = player.currentSpeed / player.movementSpeed;
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
                 if (destinationDistance < .5f) {
