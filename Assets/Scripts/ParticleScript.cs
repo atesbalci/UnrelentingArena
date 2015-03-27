@@ -11,12 +11,12 @@ public class ParticleScript : MonoBehaviour {
 	}
 	
 	void Update () {
-        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[100];
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[256];
         particleSystem.GetParticles(particles);
         for (int i = 0; i < particles.Length; i++) {
-            particles[i].axisOfRotation -= Vector3.up;
+            particles[i].axisOfRotation = Vector3.forward;
             particles[i].rotation = rotation.y;
         }
-        particleSystem.SetParticles(particles, 100);
+        particleSystem.SetParticles(particles, 256);
 	}
 }

@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 458342}
   - 199: {fileID: 19926586}
   - 198: {fileID: 19898772}
+  - 114: {fileID: 11402890}
   m_Layer: 0
   m_Name: Particles
   m_TagString: Untagged
@@ -56,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .0857843608, y: .0100034624, z: -19.5724335}
+  m_LocalPosition: {x: -4.51366282, y: .0100021809, z: -12.3866673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 458342}
@@ -89,6 +90,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .889999986, y: .479999989, z: .75999999}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11402890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67052721d226d29458a0a9f32bbb9c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11494048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -335,7 +347,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startRotation:
-      scalar: 1.77552354
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -467,7 +479,7 @@ ParticleSystem:
   RotationModule:
     enabled: 0
     curve:
-      scalar: .785398185
+      scalar: .785398126
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1210,7 +1222,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 0
   m_SortMode: 0
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

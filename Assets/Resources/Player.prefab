@@ -36,7 +36,6 @@ GameObject:
   - 224: {fileID: 22431956}
   - 222: {fileID: 22231956}
   - 114: {fileID: 11431956}
-  - 114: {fileID: 11411212}
   m_Layer: 0
   m_Name: LostHealth
   m_TagString: Untagged
@@ -1277,7 +1276,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.88361692, y: .0100020319, z: -11.401473}
+  m_LocalPosition: {x: -2.79999995, y: .00999999978, z: 2.41000009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 445592}
@@ -2385,18 +2384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveKey: 324
   keys: 
---- !u!114 &11411212
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2d19a8ae01e9dc40a0ed6f60b2f00ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lostHealth: {fileID: 0}
 --- !u!114 &11423228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2442,7 +2429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_Sprite: {fileID: 21300000, guid: 13813c4e48adb6c4fb9f937dde3fcd38, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
