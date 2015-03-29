@@ -10,8 +10,7 @@ public class Knockback : Stun {
     private Animator animator;
 
     public Knockback(Player player, GameObject playerObject, Vector3 direction, float distance, float speed)
-        : base(player) {
-        duration = 3;
+        : base(player, 3) {
         this.direction = direction;
         remainingDistance = distance;
         this.speed = speed;

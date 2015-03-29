@@ -24,7 +24,6 @@ public class ShopPanelScript : MonoBehaviour {
                 ShopSkillScript shopSkillScript = ((GameObject)Instantiate(Resources.Load("UI-Elements/ShopSkill"))).GetComponent<ShopSkillScript>();
                 shopSkillScript.skillPreset = kvp.Value;
                 shopSkillScript.gameObject.transform.SetParent(gameObject.transform);
-                Debug.Log("sadsdasda");
             }
         } else {
 

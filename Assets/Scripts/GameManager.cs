@@ -10,20 +10,33 @@ public enum GameState {
     Shop
 }
 
+public enum GameBindings {
+    Skill1 = 0,
+    Skill2 = 1,
+    Skill3 = 2,
+    Skill4 = 3,
+    Skill5 = 4,
+    Skill6 = 5,
+    Skill7 = 6,
+    Skill8 = 7,
+    Block = 8
+}
+
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
+    public const int PORT = 25002;
 
     private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
-    public const int PORT = 25002;
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
-    
+
     public HostData[] hostData { get; set; }
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
     public KeyCode[] keys;
 
+    private NetworkView view;
     private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
     private Dictionary<NetworkPlayer, PlayerData> playerList;
     private GameState _state;
@@ -51,6 +64,7 @@ public class GameManager : MonoBehaviour {
 
     void Awake() {
         instance = this;
+        view = GetComponent<NetworkView>();
         state = GameState.Menu;
         playerData = new PlayerData("");
     }
@@ -82,7 +96,7 @@ public class GameManager : MonoBehaviour {
         state = GameState.Pregame;
         playerData.Clear();
         playerList = new Dictionary<NetworkPlayer, PlayerData>();
-        GetComponent<NetworkView>().RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
+        view.RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
         round = 0;
     }
 
@@ -134,14 +148,14 @@ public class GameManager : MonoBehaviour {
         int i = 0;
         foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
             if (round == 0)
-                GetComponent<NetworkView>().RPC("SetColor", RPCMode.AllBuffered, kvp.Key, i);
+                view.RPC("SetColor", RPCMode.AllBuffered, kvp.Key, i);
             GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
             playerObject.GetComponent<PlayerScript>().player.owner = kvp.Key;
-            GetComponent<NetworkView>().RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, kvp.Key);
+            view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, kvp.Key);
             i++;
             x += 20;
         }
-        GetComponent<NetworkView>().RPC("SetState", RPCMode.All, (int)GameState.Ingame);
+        view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
     }
 
     [RPC]
@@ -212,7 +226,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
-        if(remainingIntermissionDuration > 0)
+        if (remainingIntermissionDuration > 0)
             remainingIntermissionDuration -= Time.deltaTime;
         if (Network.isServer) {
             int headCount = 0;
@@ -226,9 +240,9 @@ public class GameManager : MonoBehaviour {
                     Clear();
                     foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
                         NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
-                        GetComponent<NetworkView>().RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
+                        view.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
                     }
-                    GetComponent<NetworkView>().RPC("SetState", RPCMode.All, (int)GameState.Scores);
+                    view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
                 }
             } else if (state == GameState.Scores || state == GameState.Shop) {
                 if (remainingIntermissionDuration <= 0) {

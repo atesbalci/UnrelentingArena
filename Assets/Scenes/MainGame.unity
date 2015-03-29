@@ -836,7 +836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &409693380
 Transform:
   m_ObjectHideFlags: 0
@@ -1406,7 +1406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &788767028
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2146,7 +2146,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e9a51a2870065f94a8751878e532496d, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6400012, guid: e9a51a2870065f94a8751878e532496d, type: 3}
       propertyPath: m_IsTrigger
@@ -3815,7 +3815,7 @@ Transform:
   - {fileID: 788767032}
   - {fileID: 409693380}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!114 &1621129116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4096,7 +4096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403e2eda5a5d9e54190b10842b6e595e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keys: 7100000077000000650000007200000061000000730000006400000066000000
+  keys: 710000007700000065000000720000006100000073000000640000006600000030010000
 --- !u!4 &1668419213
 Transform:
   m_ObjectHideFlags: 0

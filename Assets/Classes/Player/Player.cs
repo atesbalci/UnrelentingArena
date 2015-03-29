@@ -3,21 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player {
+    //movement & health
     public float movementSpeed { get; set; }
     public float currentSpeed { get; set; }
     public float maxHealth { get; set; }
     public float health { get; set; }
+
+    //buffs/skills/items
     public SkillSet skillSet { get; set; }
     public ItemSet itemSet { get; set; }
     public LinkedList<Buff> buffs { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
+
+    //game info
     public string name { get; set; }
     public int score { get; set; }
     public Player lastHitter { get; set; }
     public bool dead { get; set; }
     public NetworkPlayer owner { get; set; }
 
+    //blocking
+    public float blockingPoints { get; set; }
+    public float maxBlockingPoints { get; set; }
+    public float blockingExhaust { get; set; }
+    public float blockingRegen { get; set; }
+
+    //position change scheduler for skills like blink
     private bool positionToBeChanged;
     private Vector3 newPosition;
 
@@ -32,6 +44,10 @@ public class Player {
         canCast = true;
         name = "";
         score = 0;
+        maxBlockingPoints = 1;
+        blockingPoints = maxBlockingPoints;
+        blockingExhaust = -1;
+        blockingRegen = 1;
     }
 
     public void Update(GameObject gameObject) {
@@ -58,7 +74,7 @@ public class Player {
         health -= damage;
         if (health < 0)
             health = 0;
-        if (hitter != null)
+        if (hitter != null && this != hitter)
             lastHitter = hitter;
     }
 
@@ -74,16 +90,20 @@ public class Player {
     }
 
     public void AddBuff(Buff buff) {
-        buffs.AddLast(buff);
-        buff.ApplyBuff();
+        if (buff != null) {
+            buffs.AddLast(buff);
+            buff.ApplyBuff();
+        }
     }
 
     public void RemoveBuff(Buff buff) {
-        buffs.Remove(buff);
-        buff.Unbuff();
+        if (buff != null) {
+            buffs.Remove(buff);
+            buff.Unbuff();
+        }
     }
 
-    public Channel Channel {
+    public Channel channel {
         get {
             foreach (Buff b in buffs) {
                 if (b.GetType() == typeof(Channel))

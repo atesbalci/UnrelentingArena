@@ -8,15 +8,13 @@ public class CastBarScript : MonoBehaviour {
     void Update() {
         if (GameManager.instance.state == GameState.Ingame) {
             if (player != null) {
-                Channel channel = player.Channel;
+                Channel channel = player.channel;
                 if (channel != null) {
-                    if (!channel.onRecoil) {
-                        foreach (Image i in GetComponentsInChildren<Image>()) {
-                            i.enabled = true;
-                            i.fillAmount = 1 - channel.remainingDuration / channel.duration;
-                        }
-                        return;
+                    foreach (Image i in GetComponentsInChildren<Image>()) {
+                        i.enabled = true;
+                        i.fillAmount = 1 - channel.remainingDuration / channel.duration;
                     }
+                    return;
                 }
             } else {
                 foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {

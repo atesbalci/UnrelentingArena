@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
-    private Vector3 destinationPosition;
+    public Vector3 destinationPosition { get; set; }
+    private NetworkView view;
     private float moveSpeed = 0;
     private ControlScript controlScript;
     private Player player;
@@ -10,17 +11,18 @@ public class PlayerMove : MonoBehaviour {
 
     void Start() {
         anim = GetComponent<Animator>();
+        view = GetComponent<NetworkView>();
         destinationPosition = transform.position;
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         if (player.owner == Network.player) {
-            GetComponent<NetworkView>().RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
+            view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
     }
 
     [RPC]
     public void SwitchOwner(NetworkViewID newId) {
-        GetComponent<NetworkView>().viewID = newId;
+        view.viewID = newId;
     }
 
     void Update() {
@@ -40,7 +42,8 @@ public class PlayerMove : MonoBehaviour {
                     float hitdist = 0.0f;
 
                     if (playerPlane.Raycast(ray, out hitdist)) {
-                        GetComponent<NetworkView>().RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(destinationPosition - transform.position));
+                        //networkView.RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
+                        Move(ray.GetPoint(hitdist), Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
                     }
                 }
                 if (destinationDistance > .5f) {

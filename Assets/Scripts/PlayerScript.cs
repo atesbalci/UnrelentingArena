@@ -6,13 +6,19 @@ public class PlayerScript : MonoBehaviour {
     public Color color { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
+    private NetworkView view;
+
     public PlayerScript() {
         player = new Player();
     }
 
     void Start() {
+        view = GetComponent<NetworkView>();
         bodyRenderer.material.SetColor("_EmissionColor", color);
-        GetComponentInChildren<Light>().color = color;
+        foreach (Light light in GetComponentsInChildren<Light>())
+            light.color = color;
+        GetComponentInChildren<LensFlare>().color = color;
+        GetComponent<ShieldScript>().shield.SetActive(false);
     }
 
     void Update() {
@@ -20,7 +26,7 @@ public class PlayerScript : MonoBehaviour {
         if (Network.isServer) {
             if (player.health <= 0 && !player.dead) {
                 player.dead = true;
-                GetComponent<NetworkView>().RPC("Die", RPCMode.AllBuffered);
+                view.RPC("Die", RPCMode.AllBuffered);
             }
         }
     }
@@ -29,25 +35,6 @@ public class PlayerScript : MonoBehaviour {
     public void Die() {
         player.Die(gameObject);
     }
-
-    //private Texture health;
-    //private Texture back;
-
-    //void OnGUI() {
-    //    Vector2 targetPos = Camera.main.WorldToScreenPoint(transform.position);
-    //    targetPos.y += 70;
-
-    //    int width = 200;
-    //    int height = 50;
-
-    //    GUIStyle style = new GUIStyle();
-    //    style.richText = true;
-    //    style.alignment = TextAnchor.MiddleCenter;
-    //    GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y - 30, width, height), "<color=#FFFFFF>" + player.name + "</color>", style);
-    //    GUI.DrawTexture(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), back, ScaleMode.ScaleAndCrop);
-    //    GUI.DrawTexture(new Rect(targetPos.x - width / 2 + 18, Screen.height - targetPos.y + 17, (player.health / player.maxHealth) * (width - 36), height - 34), health, ScaleMode.ScaleAndCrop);
-    //    GUI.Label(new Rect(targetPos.x - width / 2, Screen.height - targetPos.y, width, height), "<color=#FFFFFF>" + ((int)player.health + "/" + player.maxHealth) + "</color>", style);
-    //}
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (stream.isWriting) {
@@ -61,7 +48,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Knockback(Vector3 direction, float distance, float speed) {
-        GetComponent<NetworkView>().RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
+        view.RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
     }
 
     [RPC]

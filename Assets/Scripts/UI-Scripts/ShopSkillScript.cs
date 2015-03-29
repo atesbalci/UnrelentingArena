@@ -24,7 +24,6 @@ public class ShopSkillScript : MonoBehaviour {
         }
         button.onClick = new Button.ButtonClickedEvent();
         button.onClick.AddListener(() => { Buy(); });
-        //image algorithm goes here
     }
 
     public void Buy() {

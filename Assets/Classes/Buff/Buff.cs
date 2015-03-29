@@ -7,7 +7,8 @@ public abstract class Buff {
     public float remainingDuration { get; set; }
     public Player player { get; set; }
 
-    public Buff(Player player) {
+    public Buff(Player player, float duration) {
+        this.duration = duration;
         this.player = player;
     }
 
