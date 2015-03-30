@@ -22,7 +22,7 @@ public class FireballPreset : SkillPreset {
 
     public override float channelTime {
         get {
-            return 0.1f;
+            return 1;
         }
     }
 

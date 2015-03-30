@@ -23,7 +23,11 @@ public enum GameBindings {
 }
 
 public class GameManager : MonoBehaviour {
-    public static GameManager instance;
+    public StageMainScript stage;
+    public CanvasNavigator navigator;
+    public KeyCode[] keys;
+
+    public static GameManager instance { get; private set; }
     public const int PORT = 25002;
 
     private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
@@ -34,11 +38,10 @@ public class GameManager : MonoBehaviour {
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
-    public KeyCode[] keys;
+    public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
 
     private NetworkView view;
     private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
-    private Dictionary<NetworkPlayer, PlayerData> playerList;
     private GameState _state;
     public GameState state {
         get {
@@ -53,8 +56,8 @@ public class GameManager : MonoBehaviour {
                 round++;
                 remainingIntermissionDuration = 0;
             }
-            GameObject.FindGameObjectWithTag("Stage").GetComponent<StageMainScript>().running = (state == GameState.Ingame);
-            GameObject.FindGameObjectWithTag("Canvas").GetComponent<CanvasNavigator>().RefreshUI();
+            stage.running = (state == GameState.Ingame);
+            navigator.RefreshUI();
         }
     }
 
@@ -176,6 +179,7 @@ public class GameManager : MonoBehaviour {
             playerScript.player.skillSet = data.skillSet;
             playerScript.player.itemSet = data.itemSet;
             playerScript.color = data.color;
+            data.currentPlayer = playerScript.player;
         }
     }
 
@@ -231,16 +235,16 @@ public class GameManager : MonoBehaviour {
         if (Network.isServer) {
             int headCount = 0;
             if (state == GameState.Ingame) {
-                foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-                    if (!playerObject.GetComponent<PlayerScript>().player.dead) {
+                foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
+                    if (!pd.Value.currentPlayer.dead) {
                         headCount++;
                     }
                 }
                 if (headCount <= 0) {
                     Clear();
-                    foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-                        NetworkPlayer np = playerObject.GetComponent<PlayerScript>().player.owner;
-                        view.RPC("UpdateScore", RPCMode.AllBuffered, np, playerObject.GetComponent<PlayerScript>().player.score + 200);
+                    foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
+                        NetworkPlayer np = pd.Value.currentPlayer.owner;
+                        view.RPC("UpdateScore", RPCMode.AllBuffered, np, pd.Value.currentPlayer.score + 200);
                     }
                     view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
                 }

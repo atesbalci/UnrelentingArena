@@ -1,34 +1,29 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CastBarScript : MonoBehaviour {
+    public Image castbarIn;
+    public Image castbarBack;
+
     private Player player;
 
+    void OnEnable() {
+        player = GameManager.instance.playerData.currentPlayer;
+    }
+
     void Update() {
-        if (GameManager.instance.state == GameState.Ingame) {
-            if (player != null) {
-                Channel channel = player.channel;
-                if (channel != null) {
-                    foreach (Image i in GetComponentsInChildren<Image>()) {
-                        i.enabled = true;
-                        i.fillAmount = 1 - channel.remainingDuration / channel.duration;
-                    }
-                    return;
-                }
-            } else {
-                foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-                    PlayerScript playerScript = playerObject.GetComponent<PlayerScript>();
-                    if (playerScript.player.owner == Network.player) {
-                        player = playerScript.player;
-                        break;
-                    }
-                }
+        if (player != null) {
+            Channel channel = player.channel;
+            if (channel != null) {
+                castbarBack.enabled = true;
+                castbarIn.enabled = true;
+                castbarIn.fillAmount = 1 - channel.remainingDuration / channel.duration;
+                return;
             }
-        } else {
-            player = null;
         }
-        foreach (Image i in GetComponentsInChildren<Image>())
-            i.enabled = false;
+        castbarIn.enabled = false;
+        castbarBack.enabled = false;
     }
 }

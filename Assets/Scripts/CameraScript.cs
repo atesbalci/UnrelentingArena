@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class CameraScript : MonoBehaviour {
-    private Vector3 cPos;
-
     public float ratio = 0.025f;
     public float speed = 1.5f;
     public int xLimit = 30;
@@ -11,6 +9,7 @@ public class CameraScript : MonoBehaviour {
     public int zoomLimit = 20;
     public float zoomSpeed = 1.5f;
 
+    private Vector3 cPos;
 
     void Start() {
         cPos = new Vector3(0, 0, 0);

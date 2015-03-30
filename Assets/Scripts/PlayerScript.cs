@@ -29,6 +29,13 @@ public class PlayerScript : MonoBehaviour {
                 view.RPC("Die", RPCMode.AllBuffered);
             }
         }
+        if (Input.GetKeyDown(KeyCode.G)) {
+            GameObject obj = Instantiate(gameObject);
+            obj.GetComponent<PlayerScript>().enabled = false;
+            obj.GetComponent<ControlScript>().enabled = false;
+            Animator animator = obj.GetComponent<Animator>();
+            animator.enabled = false;
+        }
     }
 
     [RPC]

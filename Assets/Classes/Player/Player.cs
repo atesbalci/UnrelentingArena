@@ -117,13 +117,7 @@ public class Player {
         gameObject.GetComponent<Collider>().isTrigger = true;
         dead = true;
         gameObject.GetComponent<ControlScript>().mine = false;
-        if (lastHitter != null) {
-            foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-                if (playerObject.GetComponent<PlayerScript>().player == lastHitter) {
-                    playerObject.GetComponent<PlayerScript>().player.score += 100;
-                    break;
-                }
-            }
-        }
+        if (lastHitter != null)
+            lastHitter.score += 100;
     }
 }
