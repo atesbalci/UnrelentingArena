@@ -9,6 +9,7 @@ public class SkillSet {
         skills = new Dictionary<SkillType, SkillPreset>();
         skills.Add(SkillType.Fireball, new FireballPreset());
         skills.Add(SkillType.Blink, new BlinkPreset());
+        skills[SkillType.Blink].level = 1;
     }
 
     public void Update() {

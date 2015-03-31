@@ -32,6 +32,7 @@ public class Player {
     //position change scheduler for skills like blink
     private bool positionToBeChanged;
     private Vector3 newPosition;
+    public bool leaveImage { get; set; }
 
     public Player() {
         buffs = new LinkedList<Buff>();
@@ -48,11 +49,16 @@ public class Player {
         blockingPoints = maxBlockingPoints;
         blockingExhaust = -1;
         blockingRegen = 1;
+        leaveImage = false;
     }
 
     public void Update(GameObject gameObject) {
         if (dead) {
             gameObject.GetComponent<ControlScript>().mine = false;
+        }
+        if (leaveImage) {
+            gameObject.GetComponent<PlayerScript>().LeaveFadingImage();
+            leaveImage = false;
         }
         if (positionToBeChanged) {
             gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
@@ -106,7 +112,7 @@ public class Player {
     public Channel channel {
         get {
             foreach (Buff b in buffs) {
-                if (b.GetType() == typeof(Channel))
+                if (b is Channel)
                     return b as Channel;
             }
             return null;
@@ -114,7 +120,7 @@ public class Player {
     }
 
     public void Die(GameObject gameObject) {
-        gameObject.GetComponent<Collider>().isTrigger = true;
+        gameObject.GetComponent<Collider>().enabled = false;
         dead = true;
         gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null)

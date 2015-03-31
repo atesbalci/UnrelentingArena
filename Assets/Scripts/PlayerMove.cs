@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
     public Vector3 destinationPosition { get; set; }
-    private NetworkView view;
+    public NetworkView view;
     private float moveSpeed = 0;
     private ControlScript controlScript;
     private Player player;
@@ -11,18 +11,9 @@ public class PlayerMove : MonoBehaviour {
 
     void Start() {
         anim = GetComponent<Animator>();
-        view = GetComponent<NetworkView>();
         destinationPosition = transform.position;
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
-        if (player.owner == Network.player) {
-            view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
-        }
-    }
-
-    [RPC]
-    public void SwitchOwner(NetworkViewID newId) {
-        view.viewID = newId;
     }
 
     void Update() {

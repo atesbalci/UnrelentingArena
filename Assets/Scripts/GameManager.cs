@@ -147,30 +147,26 @@ public class GameManager : MonoBehaviour {
     }
 
     public void BeginGame() {
-        int x = -20;
         int i = 0;
         foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
-            if (round == 0)
-                view.RPC("SetColor", RPCMode.AllBuffered, kvp.Key, i);
-            GameObject playerObject = Network.Instantiate(Resources.Load("Player"), new Vector3(x, 0, 0), new Quaternion(), 0) as GameObject;
-            playerObject.GetComponent<PlayerScript>().player.owner = kvp.Key;
-            view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, kvp.Key);
+            if (kvp.Key == Network.player)
+                InstantiatePlayer(i);
+            else
+                view.RPC("InstantiatePlayer", kvp.Key, i);
             i++;
-            x += 20;
         }
         view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
     }
 
     [RPC]
-    public void SetColor(NetworkPlayer player, int index) {
-        PlayerData data;
-        if (playerList.TryGetValue(player, out data)) {
-            data.color = colors[index];
-        }
+    public void InstantiatePlayer(int index) {
+        Vector3 spawnPoint = new Vector3(-20 + index * 10, 0, 0);
+        GameObject playerObject = Network.Instantiate(Resources.Load("Player"), spawnPoint, Quaternion.identity, 0) as GameObject;
+        view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, Network.player, index);
     }
 
     [RPC]
-    public void InitializePlayer(NetworkViewID id, NetworkPlayer owner) {
+    public void InitializePlayer(NetworkViewID id, NetworkPlayer owner, int index) {
         PlayerScript playerScript = NetworkView.Find(id).GetComponent<PlayerScript>();
         PlayerData data;
         if (playerList.TryGetValue(owner, out data)) {
@@ -178,9 +174,10 @@ public class GameManager : MonoBehaviour {
             playerScript.player.owner = owner;
             playerScript.player.skillSet = data.skillSet;
             playerScript.player.itemSet = data.itemSet;
-            playerScript.color = data.color;
             data.currentPlayer = playerScript.player;
+            playerScript.color = colors[index];
         }
+        playerScript.Initialize();
     }
 
     [RPC]
@@ -240,7 +237,7 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 0) {
+                if (headCount <= 1) {
                     Clear();
                     foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                         NetworkPlayer np = pd.Value.currentPlayer.owner;

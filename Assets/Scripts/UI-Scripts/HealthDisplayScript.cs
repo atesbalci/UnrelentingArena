@@ -6,7 +6,6 @@ public class HealthDisplayScript : MonoBehaviour {
     public Image lostHealth;
 
     private Image health;
-
     private Player player;
 
     private Color fullHealth;

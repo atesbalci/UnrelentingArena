@@ -45,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104678}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: 0, y: 0, z: -.0839999989}
+  m_LocalPosition: {x: 0, y: 0, z: -1.53999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 488744}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.51366282, y: .0100021809, z: -12.3866673}
+  m_LocalPosition: {x: 7.4679203, y: .00999651849, z: 19.2703667}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 458342}
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillType: 1
+  view: {fileID: 14889404}
 --- !u!148 &14836590
 NetworkView:
   m_ObjectHideFlags: 1
@@ -347,7 +348,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startRotation:
-      scalar: 0
+      scalar: 1.47183621
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1222,7 +1223,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 0
   m_SortMode: 0
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

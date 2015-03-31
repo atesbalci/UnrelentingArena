@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SkillScript : MonoBehaviour {
     public SkillType skillType;
+    public NetworkView view;
     public Skill skill { get; set; }
 
     void Start() {

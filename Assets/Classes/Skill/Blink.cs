@@ -14,6 +14,7 @@ public class Blink : TargetSkill {
         base.Update(gameObject);
         if (!blinkDone) {
             player.SchedulePositionChange(gameObject.transform.position);
+            player.leaveImage = true;
             blinkDone = true;
         } else {
             timeBeforeDestruction -= Time.deltaTime;

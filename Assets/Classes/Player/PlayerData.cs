@@ -8,7 +8,6 @@ public class PlayerData {
     public int skillPoints { get; set; }
     public SkillSet skillSet { get; set; }
     public ItemSet itemSet { get; set; }
-    public Color color { get; set; }
     public Player currentPlayer { get; set; }
 
     public PlayerData(string name) {
@@ -22,7 +21,6 @@ public class PlayerData {
         skillPoints = 0;
         skillSet = new SkillSet();
         itemSet = new ItemSet();
-        color = new Color();
         currentPlayer = null;
     }
 

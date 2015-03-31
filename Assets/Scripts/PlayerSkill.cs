@@ -7,10 +7,9 @@ public class PlayerSkill : MonoBehaviour {
     private Vector3 targetPoint;
     private int casting;
     private Animator anim;
-    private NetworkView view;
+    public NetworkView view;
 
     void Start() {
-        view = GetComponent<NetworkView>();
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         casting = -1;
@@ -45,7 +44,6 @@ public class PlayerSkill : MonoBehaviour {
                     casting = -1;
                     return;
                 }
-                view.RPC("InitiateCasting", RPCMode.All);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
@@ -78,8 +76,14 @@ public class PlayerSkill : MonoBehaviour {
         anim.SetBool("Casting", false);
     }
 
-    [RPC]
-    public void InitiateCasting() {
-        anim.SetBool("Casting", true);
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+        if (stream.isWriting) {
+            bool casting = anim.GetBool("Casting");
+            stream.Serialize(ref casting);
+        } else {
+            bool casting = false;
+            stream.Serialize(ref casting);
+            anim.SetBool("Casting", casting);
+        }
     }
 }

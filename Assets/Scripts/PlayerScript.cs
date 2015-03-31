@@ -6,19 +6,30 @@ public class PlayerScript : MonoBehaviour {
     public Color color { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
-    private NetworkView view;
+    public NetworkView view;
 
     public PlayerScript() {
         player = new Player();
     }
 
-    void Start() {
-        view = GetComponent<NetworkView>();
-        bodyRenderer.material.SetColor("_EmissionColor", color);
+    public void Initialize() {
+        bodyRenderer.material.SetColor("_EmissionColor", color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = color;
         GetComponentInChildren<LensFlare>().color = color;
-        GetComponent<ShieldScript>().shield.SetActive(false);
+        GameObject shield = GetComponent<ShieldScript>().shield;
+        foreach (MeshRenderer mr in shield.GetComponentsInChildren<MeshRenderer>()) {
+            mr.material.SetColor("_EmissionColor", color);
+        }
+        shield.SetActive(false);
+        if(Network.isServer) {
+            view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
+        }
+    }
+
+    [RPC]
+    public void SwitchOwner(NetworkViewID id) {
+        view.viewID = id;
     }
 
     void Update() {
@@ -30,12 +41,15 @@ public class PlayerScript : MonoBehaviour {
             }
         }
         if (Input.GetKeyDown(KeyCode.G)) {
-            GameObject obj = Instantiate(gameObject);
-            obj.GetComponent<PlayerScript>().enabled = false;
-            obj.GetComponent<ControlScript>().enabled = false;
-            Animator animator = obj.GetComponent<Animator>();
-            animator.enabled = false;
+            LeaveFadingImage();
         }
+    }
+
+    public FaderScript LeaveFadingImage() {
+        GameObject obj = Instantiate(bodyRenderer.gameObject.transform.parent.gameObject, transform.position, transform.rotation) as GameObject;
+        FaderScript result = obj.AddComponent<FaderScript>();
+        result.fadeSpeed = 1;
+        return result;
     }
 
     [RPC]

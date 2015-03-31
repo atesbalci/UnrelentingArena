@@ -8,37 +8,33 @@ public class ShieldScript : MonoBehaviour {
     public bool blocking { get; set; }
 
     private Player player;
-    private NetworkView view;
+    public NetworkView view;
     private PlayerMove playerMove;
 
     void Start() {
         player = GetComponent<PlayerScript>().player;
         playerMove = GetComponent<PlayerMove>();
-        view = GetComponent<NetworkView>();
-        if (player.owner == Network.player) {
-            view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
-        }
         blocking = false;
-    }
-
-    [RPC]
-    public void SwitchOwner(NetworkViewID newId) {
-        view.viewID = newId;
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (stream.isWriting) {
             float bp = player.blockingPoints;
             float be = player.blockingExhaust;
+            bool bl = blocking;
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
+            stream.Serialize(ref bl);
         } else {
             float bp = 0;
             float be = 0;
+            bool bl = blocking;
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
+            stream.Serialize(ref bl);
             player.blockingPoints = bp;
             player.blockingExhaust = be;
+            blocking = bl;
         }
     }
 
@@ -66,13 +62,15 @@ public class ShieldScript : MonoBehaviour {
         }
         if (blocking) {
             shield.SetActive(true);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane playerPlane = new Plane(Vector3.up, transform.position);
-            float hitdist = 0.0f;
-            if (playerPlane.Raycast(ray, out hitdist)) {
-                playerMove.Move(transform.position, Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
+            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.blockingPoints / player.maxBlockingPoints);
+            if (view.isMine) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Plane playerPlane = new Plane(Vector3.up, transform.position);
+                float hitdist = 0.0f;
+                if (playerPlane.Raycast(ray, out hitdist)) {
+                    playerMove.Move(transform.position, Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
+                }
             }
-            flare.brightness = Mathf.Lerp(0.4f, 0.1f, player.blockingPoints / player.maxBlockingPoints);
         } else
             shield.SetActive(false);
     }

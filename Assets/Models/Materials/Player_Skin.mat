@@ -44,13 +44,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Illum
-        second:
-          m_Texture: {fileID: 2800000, guid: 5ff75fdb201251042824ed3899ad8851, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -86,6 +79,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Illum
+        second:
+          m_Texture: {fileID: 2800000, guid: 5ff75fdb201251042824ed3899ad8851, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _SpecGlossMap
         second:
           m_Texture: {fileID: 0}
@@ -117,10 +117,6 @@ Material:
         second: 0
       data:
         first:
-          name: _EmissionLM
-        second: 10
-      data:
-        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -150,16 +146,20 @@ Material:
       data:
         first:
           name: _EmissionScaleUI
-        second: 10
+        second: 2
       data:
         first:
           name: _Mode
         second: 0
+      data:
+        first:
+          name: _EmissionLM
+        second: 10
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: 10, g: 10, b: 10, a: 10}
+        second: {r: 2, g: 2, b: 2, a: 2}
       data:
         first:
           name: _Color
@@ -170,9 +170,9 @@ Material:
         second: {r: .5, g: .5, b: .5, a: 1}
       data:
         first:
-          name: _Emission
-        second: {r: 0, g: 0, b: 0, a: 0}
-      data:
-        first:
           name: _EmissionColorUI
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 0}
