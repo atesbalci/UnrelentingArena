@@ -8,12 +8,14 @@ public class PlayerMove : MonoBehaviour {
     private ControlScript controlScript;
     private Player player;
     private Animator anim;
+    private Plane playerPlane;
 
     void Start() {
         anim = GetComponent<Animator>();
         destinationPosition = transform.position;
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
+        playerPlane = new Plane(Vector3.up, transform.position);
     }
 
     void Update() {
@@ -27,22 +29,24 @@ public class PlayerMove : MonoBehaviour {
                     moveSpeed = player.currentSpeed;
                 }
 
-                if (controlScript.move) {
-                    Plane playerPlane = new Plane(Vector3.up, transform.position);
+                if (view.isMine && Input.GetKey(GameManager.instance.keys[(int)GameBindings.Move])) {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     float hitdist = 0.0f;
 
                     if (playerPlane.Raycast(ray, out hitdist)) {
                         //networkView.RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
-                        Move(ray.GetPoint(hitdist), Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
+                        Move(ray.GetPoint(hitdist));
                     }
                 }
                 if (destinationDistance > .5f) {
                     MovePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed));
                 }
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
             } else {
                 moveSpeed = 0;
-                destinationPosition = transform.position;
+                if (destinationDistance > 1)
+                    destinationPosition = transform.position;
             }
         }
     }
@@ -52,9 +56,8 @@ public class PlayerMove : MonoBehaviour {
     }
 
     [RPC]
-    public void Move(Vector3 destination, Quaternion rotation) {
+    public void Move(Vector3 destination) {
         destinationPosition = destination;
-        transform.rotation = rotation;
         GetComponentInChildren<PlayerStatusScript>().Update();
     }
 

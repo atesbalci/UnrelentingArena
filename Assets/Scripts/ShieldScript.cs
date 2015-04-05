@@ -68,7 +68,7 @@ public class ShieldScript : MonoBehaviour {
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 float hitdist = 0.0f;
                 if (playerPlane.Raycast(ray, out hitdist)) {
-                    playerMove.Move(transform.position, Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
+                    playerMove.destinationPosition = Vector3.Lerp(transform.position, ray.GetPoint(hitdist), 0.005f);
                 }
             }
         } else

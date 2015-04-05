@@ -8,25 +8,25 @@ public class PlayerSkill : MonoBehaviour {
     private int casting;
     private Animator anim;
     public NetworkView view;
+    private PlayerMove playerMove;
 
     void Start() {
         controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         casting = -1;
         anim = GetComponent<Animator>();
+        playerMove = GetComponent<PlayerMove>();
     }
 
     void Update() {
         if (!player.dead) {
             casting = -1;
-            if (player.canCast && controlScript.mine) {
-                int i = 0;
-                foreach(bool b in controlScript.skills) {
-                    if (b) {
+            if (view.isMine && player.canCast) {
+                for(int i = 0; i < 8; i++) {
+                    if (Input.GetKeyDown(GameManager.instance.keys[(int)GameBindings.Skill1 + i])) {
                         casting = i;
                         break;
                     }
-                    i++;
                 }
             }
 
@@ -47,11 +47,10 @@ public class PlayerSkill : MonoBehaviour {
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
-
                 if (playerPlane.Raycast(ray, out hitdist) && view.isMine)
                     targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                view.RPC("Move", RPCMode.All, transform.position, targetRotation);
+                playerMove.destinationPosition = Vector3.Lerp(transform.position, targetPoint, 0.005f);
                 player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
             }
         }
