@@ -5,7 +5,6 @@ public class PlayerMove : MonoBehaviour {
     public Vector3 destinationPosition { get; set; }
     public NetworkView view;
     private float moveSpeed = 0;
-    private ControlScript controlScript;
     private Player player;
     private Animator anim;
     private Plane playerPlane;
@@ -13,7 +12,6 @@ public class PlayerMove : MonoBehaviour {
     void Start() {
         anim = GetComponent<Animator>();
         destinationPosition = transform.position;
-        controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         playerPlane = new Plane(Vector3.up, transform.position);
     }

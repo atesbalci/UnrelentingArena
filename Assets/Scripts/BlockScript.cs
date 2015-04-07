@@ -9,7 +9,6 @@ public class BlockScript : MonoBehaviour {
             SkillScript ss = collider.gameObject.GetComponent<SkillScript>();
             if (ss != null) {
                 if (ss.skill is SkillShot) {
-                    SkillShot skillShot = ss.skill as SkillShot;
                     Quaternion newRotation = Quaternion.Inverse(collider.transform.rotation);
                     float angle = Quaternion.Angle(transform.rotation, newRotation);
                     newRotation = Quaternion.AngleAxis(angle * 2, newRotation * Vector3.forward);

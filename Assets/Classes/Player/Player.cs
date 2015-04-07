@@ -11,7 +11,8 @@ public class Player {
 
     //buffs/skills/items
     public SkillSet skillSet { get; set; }
-    public ItemSet itemSet { get; set; }
+    private ItemSet _itemSet;
+    public ItemSet itemSet { get { return _itemSet; } set { _itemSet = value; RefreshItemSet(); } }
     public LinkedList<Buff> buffs { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
@@ -125,5 +126,9 @@ public class Player {
         gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null)
             lastHitter.score += 100;
+    }
+
+    public void RefreshItemSet() {
+
     }
 }

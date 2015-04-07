@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class PlayerSkill : MonoBehaviour {
-    private ControlScript controlScript;
     private Player player;
     private Vector3 targetPoint;
     private int casting;
@@ -11,7 +10,6 @@ public class PlayerSkill : MonoBehaviour {
     private PlayerMove playerMove;
 
     void Start() {
-        controlScript = GetComponent<ControlScript>();
         player = GetComponent<PlayerScript>().player;
         casting = -1;
         anim = GetComponent<Animator>();
