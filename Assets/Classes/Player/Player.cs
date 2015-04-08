@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Player {
+    public StatSet statSet { get; set; }
+
     //movement & health
-    public float movementSpeed { get; set; }
     public float currentSpeed { get; set; }
-    public float maxHealth { get; set; }
     public float health { get; set; }
 
     //buffs/skills/items
     public SkillSet skillSet { get; set; }
     private ItemSet _itemSet;
-    public ItemSet itemSet { get { return _itemSet; } set { _itemSet = value; RefreshItemSet(); } }
+    public ItemSet itemSet { get { return _itemSet; } set { _itemSet = value; itemSet.Apply(this); } }
     public LinkedList<Buff> buffs { get; set; }
     public Channel toBeCast { get; set; }
     public bool canCast { get; set; }
@@ -26,9 +26,7 @@ public class Player {
 
     //blocking
     public float blockingPoints { get; set; }
-    public float maxBlockingPoints { get; set; }
     public float blockingExhaust { get; set; }
-    public float blockingRegen { get; set; }
 
     //position change scheduler for skills like blink
     private bool positionToBeChanged;
@@ -38,18 +36,15 @@ public class Player {
     public Player() {
         buffs = new LinkedList<Buff>();
         skillSet = new SkillSet();
+        statSet = new StatSet();
         dead = false;
-        maxHealth = 100;
-        health = maxHealth;
+        health = statSet.maxHealth;
         positionToBeChanged = false;
-        movementSpeed = 3.5f;
         canCast = true;
         name = "";
         score = 0;
-        maxBlockingPoints = 1;
-        blockingPoints = maxBlockingPoints;
+        blockingPoints = statSet.maxBlockingPoints;
         blockingExhaust = -1;
-        blockingRegen = 1;
         leaveImage = false;
     }
 
@@ -67,7 +62,7 @@ public class Player {
         }
 
         canCast = true;
-        currentSpeed = movementSpeed;
+        currentSpeed = statSet.movementSpeed;
         LinkedListNode<Buff> node = buffs.First;
         while (node != null) {
             var nextNode = node.Next;
@@ -87,8 +82,8 @@ public class Player {
 
     public void Heal(float heal) {
         health += heal;
-        if (health > maxHealth)
-            health = maxHealth;
+        if (health > statSet.maxHealth)
+            health = statSet.maxHealth;
     }
 
     public void SchedulePositionChange(Vector3 newPosition) {
@@ -126,9 +121,5 @@ public class Player {
         gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null)
             lastHitter.score += 100;
-    }
-
-    public void RefreshItemSet() {
-
     }
 }

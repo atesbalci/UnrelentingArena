@@ -21,7 +21,7 @@ public class HealthDisplayScript : MonoBehaviour {
     }
 
     void Update() {
-        float ratio = player.health / player.maxHealth;
+        float ratio = player.health / player.statSet.maxHealth;
         health.fillAmount = ratio;
         health.color = Color.Lerp(lowHealth, fullHealth, ratio);
         if (previous - ratio >= 0.001f) {

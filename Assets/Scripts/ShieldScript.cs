@@ -44,7 +44,7 @@ public class ShieldScript : MonoBehaviour {
                 blocking = false;
                 player.blockingExhaust = 1;
             } else if (Input.GetKeyDown(GameManager.instance.keys[(int)GameBindings.Block]) && player.canCast) {
-                if (player.blockingPoints >= player.maxBlockingPoints) {
+                if (player.blockingPoints >= player.statSet.maxBlockingPoints) {
                     blocking = true;
                 }
             }
@@ -53,16 +53,16 @@ public class ShieldScript : MonoBehaviour {
             if (blocking)
                 player.blockingPoints -= Time.deltaTime;
             else
-                player.blockingPoints += Time.deltaTime * player.blockingRegen;
+                player.blockingPoints += Time.deltaTime * player.statSet.blockingRegen;
         } else {
             player.blockingExhaust -= Time.deltaTime;
         }
-        if (player.blockingPoints >= player.maxBlockingPoints) {
-            player.blockingPoints = player.maxBlockingPoints;
+        if (player.blockingPoints >= player.statSet.maxBlockingPoints) {
+            player.blockingPoints = player.statSet.maxBlockingPoints;
         }
         if (blocking) {
             shield.SetActive(true);
-            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.blockingPoints / player.maxBlockingPoints);
+            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.blockingPoints / player.statSet.maxBlockingPoints);
             if (view.isMine) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);

@@ -15,8 +15,8 @@ public class BlockUIScript : MonoBehaviour {
     }
 
     void Update() {
-        image.fillAmount = FULL * (player.blockingPoints / player.maxBlockingPoints);
-        if (player.blockingPoints < player.maxBlockingPoints && !shieldScript.blocking)
+        image.fillAmount = FULL * (player.blockingPoints / player.statSet.maxBlockingPoints);
+        if (player.blockingPoints < player.statSet.maxBlockingPoints && !shieldScript.blocking)
             image.color = Color.red;
         else
             image.color = Color.yellow;
