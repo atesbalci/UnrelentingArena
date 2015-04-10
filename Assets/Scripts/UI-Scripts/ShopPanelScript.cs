@@ -26,10 +26,13 @@ public class ShopPanelScript : MonoBehaviour {
                 shopSkillScript.gameObject.transform.SetParent(gameObject.transform);
             }
         } else {
+            int no = 0;
             foreach (Item item in playerData.itemSet.potentialItems) {
                 ShopItemScript shopItemScript = ((GameObject)Instantiate(Resources.Load("UI-Elements/ShopItem"))).GetComponent<ShopItemScript>();
                 shopItemScript.item = item;
+                shopItemScript.no = no;
                 shopItemScript.gameObject.transform.SetParent(gameObject.transform);
+                no++;
             }
         }
     }

@@ -7,6 +7,7 @@ public class ShopItemScript : MonoBehaviour {
     public Text itemName;
     public Button button;
     public Item item { get; set; }
+    public int no { get; set; }
 
     void Start() {
         Refresh();
@@ -16,7 +17,7 @@ public class ShopItemScript : MonoBehaviour {
         itemName.text = item.name;
         image.sprite = Resources.Load<Sprite>("Icons/" + item.name);
         button.GetComponentInChildren<Text>().text = item.price + " C";
-        button.interactable = !GameManager.instance.playerData.itemSet.items.Contains(item);
+        button.interactable = !GameManager.instance.playerData.itemSet.Has(item);
         if(!button.interactable)
             button.GetComponentInChildren<Text>().text = "Owned";
         button.onClick = new Button.ButtonClickedEvent();
@@ -24,10 +25,8 @@ public class ShopItemScript : MonoBehaviour {
     }
 
     public void Buy() {
-        PlayerData playerData = GameManager.instance.playerData;
-        if (playerData.credits >= item.price) {
-            playerData.itemSet.items.Add(item);
-            playerData.credits -= item.price;
+        if (GameManager.instance.playerData.credits >= item.price) {
+            GameManager.instance.GetComponent<NetworkView>().RPC("BuyItem", RPCMode.All, Network.player, no);
             Refresh();
         }
     }

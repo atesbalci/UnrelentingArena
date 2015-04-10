@@ -190,6 +190,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    [RPC]
+    public void BuyItem(NetworkPlayer player, int item) {
+        PlayerData pd;
+        if (playerList.TryGetValue(player, out pd)) {
+            pd.credits -= pd.itemSet.potentialItems[item].price;
+            pd.itemSet.Get(item);
+        }
+    }
+
     public LinkedList<PlayerData> ListPlayers() {
         LinkedList<PlayerData> result = new LinkedList<PlayerData>();
         foreach (NetworkPlayer player in playerList.Keys) {
