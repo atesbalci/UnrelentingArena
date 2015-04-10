@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ItemSet {
-    public LinkedList<Item> items;
+    public const int CAP = 6;
+
+    public LinkedList<Item> potentialItems;
+    public List<Item> items;
 
     public ItemSet() {
-        items = new LinkedList<Item>();
+        items = new List<Item>(CAP);
+        potentialItems = new LinkedList<Item>();
+        potentialItems.AddLast(new LinkedListNode<Item>(new HealthUpgrade()));
     }
 
     public void Apply(Player player) {
