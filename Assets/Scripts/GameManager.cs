@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
         instance = this;
         view = GetComponent<NetworkView>();
         state = GameState.Menu;
-        playerData = new PlayerData("");
+        playerData = new PlayerData(PlayerPrefs.GetString("name", "Player"));
     }
 
     [RPC]
