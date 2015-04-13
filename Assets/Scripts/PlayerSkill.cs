@@ -20,7 +20,7 @@ public class PlayerSkill : MonoBehaviour {
         if (!player.dead) {
             casting = -1;
             if (view.isMine && player.canCast) {
-                for(int i = 0; i < 8; i++) {
+                for(int i = 0; i < 4; i++) {
                     if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Skill1 + i])) {
                         casting = i;
                         break;
