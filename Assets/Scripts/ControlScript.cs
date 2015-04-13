@@ -12,14 +12,14 @@ public class ControlScript : MonoBehaviour {
     void Start() {
         mine = GetComponent<PlayerScript>().player.owner == Network.player;
         skills = new bool[8];
-        keys = GameManager.instance.keys;
+        keys = GameInput.instance.keys;
     }
 
     void Update() {
         if (mine) {
-            move = Input.GetKey(keys[(int)GameBindings.Move]);
+            move = Input.GetKey(keys[(int)GameBinding.Move]);
             for (int i = 0; i < skills.Length; i++) {
-                skills[i] = Input.GetKey(keys[(int)GameBindings.Skill1 + i]);
+                skills[i] = Input.GetKey(keys[(int)GameBinding.Skill1 + i]);
             }
         }
     }

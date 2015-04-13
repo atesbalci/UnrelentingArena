@@ -9,7 +9,7 @@ public class SkillsUI : MonoBehaviour {
         SkillUIScript[] skills = GetComponentsInChildren<SkillUIScript>();
         LinkedList<SkillPreset> activeSkills = gameManager.playerData.skillSet.GetUnlockedSkills();
         foreach (SkillPreset skill in activeSkills) {
-            skills[skill.key].key.text = "" + gameManager.keys[(int)GameBindings.Skill1 + skill.key];
+            skills[skill.key].key.text = "" + GameInput.instance.keys[(int)GameBinding.Skill1 + skill.key];
             skills[skill.key].skill = skill;
         }
     }

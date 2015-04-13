@@ -10,23 +10,9 @@ public enum GameState {
     Shop
 }
 
-public enum GameBindings {
-    Skill1 = 0,
-    Skill2 = 1,
-    Skill3 = 2,
-    Skill4 = 3,
-    Skill5 = 4,
-    Skill6 = 5,
-    Skill7 = 6,
-    Skill8 = 7,
-    Block = 8,
-    Move = 9
-}
-
 public class GameManager : MonoBehaviour {
     public StageMainScript stage;
     public CanvasNavigator navigator;
-    public KeyCode[] keys;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
@@ -71,6 +57,8 @@ public class GameManager : MonoBehaviour {
         view = GetComponent<NetworkView>();
         state = GameState.Menu;
         playerData = new PlayerData(PlayerPrefs.GetString("name", "Player"));
+        if (GameInput.instance == null)
+            GameInput.instance = new GameInput();
     }
 
     [RPC]

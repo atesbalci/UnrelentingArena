@@ -21,7 +21,7 @@ public class PlayerSkill : MonoBehaviour {
             casting = -1;
             if (view.isMine && player.canCast) {
                 for(int i = 0; i < 8; i++) {
-                    if (Input.GetKeyDown(GameManager.instance.keys[(int)GameBindings.Skill1 + i])) {
+                    if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Skill1 + i])) {
                         casting = i;
                         break;
                     }

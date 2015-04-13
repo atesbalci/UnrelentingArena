@@ -8,6 +8,11 @@ public class OptionsScript : MonoBehaviour {
     public InputField height;
     public Toggle fullscreen;
 
+    void Awake() {
+        if (GameInput.instance == null)
+            GameInput.instance = new GameInput();
+    }
+
     void OnEnable() {
         nickname.text = PlayerPrefs.GetString("name", "Player");
         width.text = Screen.width + "";

@@ -14,7 +14,7 @@ public class MarkerScript : MonoBehaviour {
 	}
 	
 	void Update () {
-        if(Input.GetKeyDown(GameManager.instance.keys[(int)GameBindings.Move])) {
+        if(Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Move])) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float hitdist;
             if (plane.Raycast(ray, out hitdist)) {

@@ -40,10 +40,10 @@ public class ShieldScript : MonoBehaviour {
 
     void Update() {
         if (view.isMine) {
-            if (blocking && (Input.GetKeyUp(GameManager.instance.keys[(int)GameBindings.Block]) || player.blockingPoints < 0)) {
+            if (blocking && (Input.GetKeyUp(GameInput.instance.keys[(int)GameBinding.Block]) || player.blockingPoints < 0)) {
                 blocking = false;
                 player.blockingExhaust = 1;
-            } else if (Input.GetKeyDown(GameManager.instance.keys[(int)GameBindings.Block]) && player.canCast) {
+            } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Block]) && player.canCast) {
                 if (player.blockingPoints >= player.statSet.maxBlockingPoints) {
                     blocking = true;
                 }

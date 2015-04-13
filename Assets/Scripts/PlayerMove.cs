@@ -27,7 +27,7 @@ public class PlayerMove : MonoBehaviour {
                     moveSpeed = player.currentSpeed;
                 }
 
-                if (view.isMine && Input.GetKey(GameManager.instance.keys[(int)GameBindings.Move])) {
+                if (view.isMine && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     float hitdist = 0.0f;
 
