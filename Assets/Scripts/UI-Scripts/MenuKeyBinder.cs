@@ -12,6 +12,7 @@ public class MenuKeyBinder : MonoBehaviour {
         }
         set {
             _active = value;
+            GetComponent<Button>().interactable = !active;
             if (active)
                 GetComponentInChildren<Text>().color = Color.red;
             else
@@ -41,20 +42,27 @@ public class MenuKeyBinder : MonoBehaviour {
         if (active) {
             KeyCode key = GetPressedKey();
             if (key != KeyCode.None) {
-                GameInput.instance.keys[(int)action] = key;
-                GameInput.instance.SaveKeys();
-                Refresh();
-                active = false;
+                if (key == KeyCode.Escape)
+                    active = false;
+                else if (key == KeyCode.Mouse0 && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                    return;
+                else {
+                    GameInput.instance.keys[(int)action] = key;
+                    GameInput.instance.SaveKeys();
+                    Refresh();
+                    active = false;
+                }
             }
         }
     }
 
     private KeyCode GetPressedKey() {
-        int e = System.Enum.GetNames(typeof(KeyCode)).Length;
-        for (int i = 0; i < e; i++) {
+        for (int i = 0; i < 510; i++) {
             if (Input.GetKey((KeyCode)i)) {
                 return (KeyCode)i;
             }
+            if (i == 128)
+                i = 255;
         }
         return KeyCode.None;
     }

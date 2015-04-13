@@ -129,6 +129,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void Disconnect() {
+        Network.Disconnect();
+    }
+
     void OnPlayerConnected(NetworkPlayer player) {
         if (state != GameState.Pregame) {
             Network.CloseConnection(player, true);
@@ -248,7 +252,7 @@ public class GameManager : MonoBehaviour {
                     if (round <= ROUND_LIMIT)
                         BeginGame();
                     else
-                        Network.Disconnect();
+                        Disconnect();
                 }
             }
         }
