@@ -163,12 +163,12 @@ public class GameManager : MonoBehaviour {
         PlayerScript playerScript = NetworkView.Find(id).GetComponent<PlayerScript>();
         PlayerData data;
         if (playerList.TryGetValue(owner, out data)) {
+            playerScript.player.color = colors[index];
             playerScript.player.name = data.name;
             playerScript.player.owner = owner;
             playerScript.player.skillSet = data.skillSet;
             playerScript.player.itemSet = data.itemSet;
             data.currentPlayer = playerScript.player;
-            playerScript.color = colors[index];
         }
         playerScript.Initialize();
     }

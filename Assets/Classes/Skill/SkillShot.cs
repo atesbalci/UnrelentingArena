@@ -6,7 +6,8 @@ public abstract class SkillShot : Skill {
     public override float range { get { return base.range; } set { base.range = value; remainingDistance = value; } }
     public float remainingDistance { get; set; }
 
-    public SkillShot() {
+    public SkillShot()
+        : base() {
         speed = 16;
     }
 
@@ -26,9 +27,5 @@ public abstract class SkillShot : Skill {
 
     public override void CollisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
         Destroy(gameObject);
-    }
-
-    public override void SerializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
-        
     }
 }

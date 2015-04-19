@@ -39,7 +39,7 @@ public class MenuKeyBinder : MonoBehaviour {
     }
 
     void OnGUI() {
-        if (active) {
+        if (active && Input.anyKey) {
             KeyCode key = GetPressedKey();
             if (key != KeyCode.None) {
                 if (key == KeyCode.Escape)

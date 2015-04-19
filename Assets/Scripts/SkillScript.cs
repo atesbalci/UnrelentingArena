@@ -8,6 +8,8 @@ public class SkillScript : MonoBehaviour {
 
     void Start() {
         Initialize();
+        if (skill != null)
+            skill.Start(gameObject);
     }
 
     public void Initialize() {
@@ -18,6 +20,9 @@ public class SkillScript : MonoBehaviour {
                     break;
                 case SkillType.Blink:
                     skill = new Blink();
+                    break;
+                case SkillType.Meteor:
+                    skill = new Meteor();
                     break;
                 default:
                     skill = null;
@@ -31,7 +36,7 @@ public class SkillScript : MonoBehaviour {
             skill.Update(gameObject);
     }
 
-    void OnTriggerEnter(Collider collider) {
+    void OnTriggerStay(Collider collider) {
         if (skill != null && Network.isServer) {
             SkillScript skillScript = collider.gameObject.GetComponent<SkillScript>();
             PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();

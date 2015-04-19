@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum SkillType {
+    None, Fireball, Blink, Meteor
+};
+
 public abstract class Skill {
     private float _range;
     public virtual float range { get { return _range; } set { _range = value; } }
@@ -13,6 +17,9 @@ public abstract class Skill {
         range = 10;
         damage = 20;
         level = 1;
+    }
+
+    public virtual void Start(GameObject gameObject) {
     }
 
     public virtual void Update(GameObject gameObject) {

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum BuffType {
+    Channel, Knockback, Stun
+}
+
 public abstract class Buff {
     private float _duration;
     public float duration { get { return _duration; } set { _duration = value; remainingDuration = value; } }

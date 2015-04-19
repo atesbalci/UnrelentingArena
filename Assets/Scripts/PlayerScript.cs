@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
-    public Color color { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
     public NetworkView view;
@@ -13,13 +12,13 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Initialize() {
-        bodyRenderer.material.SetColor("_EmissionColor", color * Mathf.LinearToGammaSpace(4f));
+        bodyRenderer.material.SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
-            light.color = color;
-        GetComponentInChildren<LensFlare>().color = color;
+            light.color = player.color;
+        GetComponentInChildren<LensFlare>().color = player.color;
         GameObject shield = GetComponent<ShieldScript>().shield;
         foreach (MeshRenderer mr in shield.GetComponentsInChildren<MeshRenderer>()) {
-            mr.material.SetColor("_EmissionColor", color);
+            mr.material.SetColor("_EmissionColor", player.color);
         }
         shield.SetActive(false);
         if(Network.isServer) {

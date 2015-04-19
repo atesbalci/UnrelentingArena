@@ -33,6 +33,8 @@ public class Player {
     private Vector3 newPosition;
     public bool leaveImage { get; set; }
 
+    public Color color;
+
     public Player() {
         buffs = new LinkedList<Buff>();
         skillSet = new SkillSet();
