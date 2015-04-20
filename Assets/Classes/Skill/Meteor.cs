@@ -7,23 +7,24 @@ public class Meteor : Skill {
     }
 
     private GameObject meteor;
-    private GameObject explosion;
+    private ParticleSystem explosion;
     private MeteorState state;
     private float animation;
 
     public Meteor()
         : base() {
         state = MeteorState.Predamage;
-        animation = 2;
+        animation = 6;
     }
 
     public override void Start(GameObject gameObject) {
         Transform[] children = gameObject.GetComponentsInChildren<Transform>();
         meteor = children[1].gameObject;
-        explosion = children[2].gameObject;
+        explosion = children[2].GetComponent<ParticleSystem>();
         meteor.transform.Translate(-100, 0, 0);
-        explosion.GetComponent<ParticleSystem>().GetComponent<Renderer>().material.SetColor("_EmissionColor", player.color);
-        explosion.SetActive(false);
+        explosion.GetComponent<ParticleSystem>().startColor = Color.red;
+        explosion.gameObject.SetActive(false);
+        animation = explosion.duration + explosion.startLifetime;
     }
 
     public override void Update(GameObject gameObject) {
@@ -34,8 +35,9 @@ public class Meteor : Skill {
                 state = MeteorState.Damage;
         } else if (state == MeteorState.Damage) {
             meteor.SetActive(false);
-            explosion.SetActive(true);
+            explosion.gameObject.SetActive(true);
             state = MeteorState.Postdamage;
+            explosion.GetComponent<ParticleSystem>().Stop();
         } else {
             if (animation <= 0)
                 Network.Destroy(gameObject);
