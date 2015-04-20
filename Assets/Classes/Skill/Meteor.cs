@@ -18,11 +18,15 @@ public class Meteor : Skill {
     }
 
     public override void Start(GameObject gameObject) {
+        Color color = player.color;
+        gameObject.transform.position = targetPosition;
+        gameObject.transform.rotation = Quaternion.identity;
         Transform[] children = gameObject.GetComponentsInChildren<Transform>();
-        meteor = children[1].gameObject;
-        explosion = children[2].GetComponent<ParticleSystem>();
+        meteor = children[2].gameObject;
+        meteor.GetComponentInChildren<ParticleSystem>().startColor = color;
+        explosion = children[1].GetComponent<ParticleSystem>();
         meteor.transform.Translate(-100, 0, 0);
-        explosion.GetComponent<ParticleSystem>().startColor = Color.red;
+        explosion.GetComponent<ParticleSystem>().startColor = color;
         explosion.gameObject.SetActive(false);
         animation = explosion.duration + explosion.startLifetime;
     }
@@ -30,7 +34,7 @@ public class Meteor : Skill {
     public override void Update(GameObject gameObject) {
         base.Update(gameObject);
         if (state == MeteorState.Predamage) {
-            meteor.transform.Translate(100 * Time.deltaTime, 0, 0);
+            meteor.transform.Translate(20 * Time.deltaTime, 0, 0);
             if (meteor.transform.position.y <= 0)
                 state = MeteorState.Damage;
         } else if (state == MeteorState.Damage) {

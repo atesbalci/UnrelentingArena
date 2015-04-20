@@ -4,7 +4,6 @@ using System.Collections;
 public class MeteorPreset : SkillPreset {
     public MeteorPreset()
         : base(SkillType.Meteor) {
-        level = 0;
         key = 2;
     }
 
