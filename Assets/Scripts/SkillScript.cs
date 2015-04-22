@@ -24,6 +24,9 @@ public class SkillScript : MonoBehaviour {
                 case SkillType.Meteor:
                     skill = new Meteor();
                     break;
+                case SkillType.Overcharge:
+                    skill = new Overcharge();
+                    break;
                 default:
                     skill = null;
                     break;

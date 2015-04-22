@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Meteor : Skill {
@@ -8,6 +9,7 @@ public class Meteor : Skill {
 
     private GameObject meteor;
     private ParticleSystem explosion;
+    private Image radius;
     private MeteorState state;
     private float animation;
 
@@ -29,6 +31,8 @@ public class Meteor : Skill {
         explosion.GetComponent<ParticleSystem>().startColor = color;
         explosion.gameObject.SetActive(false);
         animation = explosion.duration + explosion.startLifetime;
+        radius = gameObject.GetComponentInChildren<Image>();
+        radius.color = color;
     }
 
     public override void Update(GameObject gameObject) {
@@ -38,6 +42,7 @@ public class Meteor : Skill {
             if (meteor.transform.position.y <= 0)
                 state = MeteorState.Damage;
         } else if (state == MeteorState.Damage) {
+            radius.color = Color.clear;
             meteor.SetActive(false);
             explosion.gameObject.SetActive(true);
             state = MeteorState.Postdamage;
