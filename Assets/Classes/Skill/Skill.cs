@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum SkillType {
-    None, Fireball, Blink, Meteor, Overcharge
+    None, Fireball, Blink, Meteor, Overcharge, Orb
 };
 
 public abstract class Skill {

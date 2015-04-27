@@ -27,6 +27,9 @@ public class SkillScript : MonoBehaviour {
                 case SkillType.Overcharge:
                     skill = new Overcharge();
                     break;
+                case SkillType.Orb:
+
+                    break;
                 default:
                     skill = null;
                     break;
