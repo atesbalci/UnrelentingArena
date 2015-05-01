@@ -46,7 +46,7 @@ public class Meteor : Skill {
             meteor.SetActive(false);
             explosion.gameObject.SetActive(true);
             state = MeteorState.Postdamage;
-            explosion.GetComponent<ParticleSystem>().Stop();
+            explosion.Stop();
         } else {
             if (animation <= 0)
                 Network.Destroy(gameObject);

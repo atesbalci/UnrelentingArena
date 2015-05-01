@@ -8,11 +8,11 @@ public class SkillSet {
     public SkillSet() {
         skills = new Dictionary<SkillType, SkillPreset>();
         skills.Add(SkillType.Fireball, new FireballPreset());
-        skills.Add(SkillType.Meteor, new MeteorPreset());
+        skills.Add(SkillType.Orb, new OrbPreset());
         skills.Add(SkillType.Blink, new BlinkPreset());
         skills.Add(SkillType.Overcharge, new OverchargePreset());
         skills[SkillType.Blink].level = 1;
-        skills[SkillType.Meteor].level = 1;
+        skills[SkillType.Orb].level = 1;
         skills[SkillType.Overcharge].level = 1;
     }
 
