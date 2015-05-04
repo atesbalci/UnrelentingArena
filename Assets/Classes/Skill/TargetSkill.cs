@@ -8,7 +8,7 @@ public class TargetSkill : Skill {
         initialized = false;
     }
 
-    public override void Update(GameObject gameObject) {
+    public override void Update() {
         if (!initialized) {
             if (Vector3.Distance(gameObject.transform.position, targetPosition) <= range) {
                 gameObject.transform.position = new Vector3(targetPosition.x, gameObject.transform.position.y, targetPosition.z);

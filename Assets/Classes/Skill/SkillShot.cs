@@ -11,11 +11,11 @@ public abstract class SkillShot : Skill {
         speed = 16;
     }
 
-    public override void Update(GameObject gameObject) {
-        base.Update(gameObject);
+    public override void Update() {
+        base.Update();
         float travel = speed * Time.deltaTime;
         if (Network.isServer && remainingDistance <= 0)
-            Destroy(gameObject);
+            Network.Destroy(gameObject);
         Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         if (remainingDistance - travel <= 0) {
             travel = remainingDistance;
@@ -25,7 +25,7 @@ public abstract class SkillShot : Skill {
         remainingDistance -= travel;
     }
 
-    public override void CollisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
-        Destroy(gameObject);
+    public override void CollisionWithSkill(Collider collider, Skill skill) {
+        Network.Destroy(gameObject);
     }
 }

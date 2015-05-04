@@ -23,15 +23,11 @@ public class Player {
     public Player lastHitter { get; set; }
     public bool dead { get; set; }
     public NetworkPlayer owner { get; set; }
+    public GameObject gameObject { get; set; }
 
     //blocking
     public float blockingPoints { get; set; }
     public float blockingExhaust { get; set; }
-
-    //position change scheduler for skills like blink
-    private bool positionToBeChanged;
-    private Vector3 newPosition;
-    public bool leaveImage { get; set; }
 
     public Color color;
 
@@ -41,26 +37,20 @@ public class Player {
         statSet = new StatSet();
         dead = false;
         health = statSet.maxHealth;
-        positionToBeChanged = false;
         canCast = true;
         name = "";
         score = 0;
         blockingPoints = statSet.maxBlockingPoints;
         blockingExhaust = -1;
-        leaveImage = false;
     }
 
-    public void Update(GameObject gameObject) {
+    public void Start(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    public void Update() {
         if (dead) {
             gameObject.GetComponent<ControlScript>().mine = false;
-        }
-        if (leaveImage) {
-            gameObject.GetComponent<PlayerScript>().LeaveFadingImage();
-            leaveImage = false;
-        }
-        if (positionToBeChanged) {
-            gameObject.transform.position = new Vector3(newPosition.x, gameObject.transform.position.y, newPosition.z);
-            positionToBeChanged = false;
         }
 
         canCast = true;
@@ -86,11 +76,6 @@ public class Player {
         health += heal;
         if (health > statSet.maxHealth)
             health = statSet.maxHealth;
-    }
-
-    public void SchedulePositionChange(Vector3 newPosition) {
-        this.newPosition = newPosition;
-        positionToBeChanged = true;
     }
 
     public void AddBuff(Buff buff) {

@@ -20,6 +20,7 @@ public class Meteor : Skill {
     }
 
     public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
         Color color = player.color;
         gameObject.transform.position = targetPosition;
         gameObject.transform.rotation = Quaternion.identity;
@@ -35,8 +36,8 @@ public class Meteor : Skill {
         radius.color = color;
     }
 
-    public override void Update(GameObject gameObject) {
-        base.Update(gameObject);
+    public override void Update() {
+        base.Update();
         if (state == MeteorState.Predamage) {
             meteor.transform.Translate(20 * Time.deltaTime, 0, 0);
             if (meteor.transform.position.y <= 0)
@@ -54,7 +55,7 @@ public class Meteor : Skill {
         }
     }
 
-    public override void CollisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
+    public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == MeteorState.Damage) {
             player.Damage(damage, this.player);
             collider.gameObject.GetComponent<PlayerScript>().Knockback(collider.gameObject.transform.position - gameObject.transform.position, 10, 30);

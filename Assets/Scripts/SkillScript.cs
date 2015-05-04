@@ -30,6 +30,9 @@ public class SkillScript : MonoBehaviour {
                 case SkillType.Orb:
                     skill = new Orb();
                     break;
+                case SkillType.Charge:
+                    skill = new Charge();
+                    break;
                 default:
                     skill = null;
                     break;
@@ -39,7 +42,7 @@ public class SkillScript : MonoBehaviour {
 
     void Update() {
         if (skill != null)
-            skill.Update(gameObject);
+            skill.Update();
     }
 
     void OnTriggerStay(Collider collider) {
@@ -48,18 +51,18 @@ public class SkillScript : MonoBehaviour {
             PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
             if (playerScript != null) {
                 if (skill.player != playerScript.player)
-                    skill.CollisionWithPlayer(gameObject, collider, playerScript.player);
+                    skill.CollisionWithPlayer(collider, playerScript.player);
                 else
-                    skill.CollisionWithSelf(gameObject, collider);
+                    skill.CollisionWithSelf(collider);
             } else if (skillScript != null)
-                skill.CollisionWithSkill(gameObject, collider, skillScript.skill);
+                skill.CollisionWithSkill(collider, skillScript.skill);
             else
-                skill.CollisionWithOtherObject(gameObject, collider);
+                skill.CollisionWithOtherObject(collider);
         }
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (skill != null)
-            skill.SerializeNetworkView(gameObject, stream, info);
+            skill.SerializeNetworkView(stream, info);
     }
 }

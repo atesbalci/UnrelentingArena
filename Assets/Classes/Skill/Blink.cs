@@ -10,14 +10,15 @@ public class Blink : TargetSkill {
     }
 
     public override void Start(GameObject gameObject) {
-        player.SchedulePositionChange(targetPosition);
-        player.leaveImage = true;
+        base.Start(gameObject);
+        player.gameObject.transform.position = targetPosition;
+        player.gameObject.GetComponent<PlayerScript>().LeaveFadingImage();
     }
 
-    public override void Update(GameObject gameObject) {
-        base.Update(gameObject);
+    public override void Update() {
+        base.Update();
         timeBeforeDestruction -= Time.deltaTime;
         if (timeBeforeDestruction <= 0)
-            Destroy(gameObject);
+            Network.Destroy(gameObject);
     }
 }

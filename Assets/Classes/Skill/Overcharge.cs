@@ -7,6 +7,7 @@ public class Overcharge : Skill {
     private ParticleSystem particleSystem;
 
     public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
         damaging = true;
         done = false;
         particleSystem = gameObject.GetComponentInChildren<ParticleSystem>();
@@ -15,7 +16,7 @@ public class Overcharge : Skill {
         particleSystem.gameObject.SetActive(true);
     }
 
-    public override void Update(GameObject gameObject) {
+    public override void Update() {
         if (damaging && !done) {
             done = true;
         } else if (damaging) {
@@ -29,7 +30,7 @@ public class Overcharge : Skill {
         }
     }
 
-    public override void CollisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
+    public override void CollisionWithPlayer(Collider collider, Player player) {
         if (damaging) {
             player.Damage(damage, player);
             collider.GetComponent<PlayerScript>().Knockback(collider.gameObject.transform.position - gameObject.transform.position, 10, 30);

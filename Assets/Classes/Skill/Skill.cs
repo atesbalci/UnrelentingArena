@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum SkillType {
-    None, Fireball, Blink, Meteor, Overcharge, Orb
+    None, Fireball, Blink, Meteor, Overcharge, Orb, Charge
 };
 
 public abstract class Skill {
@@ -12,6 +12,7 @@ public abstract class Skill {
     public Vector3 targetPosition { get; set; }
     public int level { get; set; }
     public float damage { get; set; }
+    public GameObject gameObject { get; set; }
 
     public Skill() {
         range = 10;
@@ -20,27 +21,24 @@ public abstract class Skill {
     }
 
     public virtual void Start(GameObject gameObject) {
+        this.gameObject = gameObject;
     }
 
-    public virtual void Update(GameObject gameObject) {
+    public virtual void Update() {
     }
 
-    public virtual void CollisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
+    public virtual void CollisionWithPlayer(Collider collider, Player player) {
     }
 
-    public virtual void CollisionWithSelf(GameObject gameObject, Collider collider) {
+    public virtual void CollisionWithSelf(Collider collider) {
     }
 
-    public virtual void CollisionWithSkill(GameObject gameObject, Collider collider, Skill skill) {
+    public virtual void CollisionWithSkill(Collider collider, Skill skill) {
     }
 
-    public virtual void CollisionWithOtherObject(GameObject gameObject, Collider collider) {
+    public virtual void CollisionWithOtherObject(Collider collider) {
     }
 
-    public virtual void SerializeNetworkView(GameObject gameObject, BitStream stream, NetworkMessageInfo info) {
-    }
-
-    public void Destroy(GameObject gameObject) {
-        Network.Destroy(gameObject);
+    public virtual void SerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
     }
 }

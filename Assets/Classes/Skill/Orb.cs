@@ -17,6 +17,7 @@ public class Orb : Skill {
     }
 
     public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
         area = gameObject.GetComponentsInChildren<ParticleSystem>()[0];
         renderer = gameObject.GetComponent<Renderer>();
         area.startColor = player.color;
@@ -24,7 +25,7 @@ public class Orb : Skill {
         verticalTarget = new Vector3(gameObject.transform.position.x, 10, gameObject.transform.position.z);
     }
 
-    public override void Update(GameObject gameObject) {
+    public override void Update() {
         if (state == OrbState.Rising) {
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, verticalTarget, Time.deltaTime * 2);
             if (verticalTarget.y - gameObject.transform.position.y < 0.5f) {
@@ -56,7 +57,7 @@ public class Orb : Skill {
         }
     }
 
-    public override void CollisionWithPlayer(GameObject gameObject, Collider collider, Player player) {
+    public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == OrbState.Active) {
             player.Damage(damage, this.player);
             collider.gameObject.GetComponent<PlayerScript>().Knockback(gameObject.transform.position - collider.gameObject.transform.position, 10, 30);

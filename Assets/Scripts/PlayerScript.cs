@@ -31,8 +31,12 @@ public class PlayerScript : MonoBehaviour {
         view.viewID = id;
     }
 
+    void Start() {
+        player.Start(gameObject);
+    }
+
     void Update() {
-        player.Update(gameObject);
+        player.Update();
         if (Network.isServer) {
             if (player.health <= 0 && !player.dead) {
                 player.dead = true;
