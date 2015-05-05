@@ -6,5 +6,6 @@ public class Fireball : SkillShot {
         player.Damage(damage, this.player);
         Vector3 direction = gameObject.transform.rotation * Vector3.forward;
         collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+        Network.Destroy(gameObject);
     }
 }

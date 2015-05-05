@@ -58,7 +58,9 @@ public class Meteor : Skill {
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == MeteorState.Damage) {
             player.Damage(damage, this.player);
-            collider.gameObject.GetComponent<PlayerScript>().Knockback(collider.gameObject.transform.position - gameObject.transform.position, 10, 30);
+            Vector3 direction = collider.gameObject.transform.position - gameObject.transform.position;
+            direction.y = 0;
+            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
         }
     }
 }

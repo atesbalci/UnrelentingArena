@@ -11,8 +11,11 @@ public class SkillSet {
         skills.Add(SkillType.Orb, new OrbPreset());
         skills.Add(SkillType.Charge, new ChargePreset());
         skills.Add(SkillType.Overcharge, new OverchargePreset());
-        skills[SkillType.Charge].level = 1;
+        skills.Add(SkillType.Blink, new BlinkPreset());
+        skills.Add(SkillType.Meteor, new MeteorPreset());
+
         skills[SkillType.Orb].level = 1;
+        //skills[SkillType.Meteor].level = 1;
         skills[SkillType.Overcharge].level = 1;
     }
 
@@ -42,7 +45,7 @@ public class SkillSet {
 
     public SkillPreset TryToCast(int key) {
         foreach (KeyValuePair<SkillType, SkillPreset> kvp in skills) {
-            if (kvp.Value.key == key) {
+            if (kvp.Value.key == key && kvp.Value.level > 0) {
                 if (kvp.Value.remainingCooldown < 0.01f) {
                     return kvp.Value;
                 }

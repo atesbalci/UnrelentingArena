@@ -60,7 +60,9 @@ public class Orb : Skill {
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == OrbState.Active) {
             player.Damage(damage, this.player);
-            collider.gameObject.GetComponent<PlayerScript>().Knockback(gameObject.transform.position - collider.gameObject.transform.position, 10, 30);
+            Vector3 direction = gameObject.transform.position - collider.gameObject.transform.position;
+            direction.y = 0;
+            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
         }
     }
 }

@@ -19,6 +19,7 @@ public class Overcharge : Skill {
     public override void Update() {
         if (damaging && !done) {
             done = true;
+            damaging = false;
         } else if (damaging) {
             damaging = false;
             remaining = particleSystem.startLifetime;
@@ -32,8 +33,11 @@ public class Overcharge : Skill {
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (damaging) {
+            Debug.Log("collide!");
             player.Damage(damage, player);
-            collider.GetComponent<PlayerScript>().Knockback(collider.gameObject.transform.position - gameObject.transform.position, 10, 30);
+            Vector3 direction = collider.gameObject.transform.position - gameObject.transform.position;
+            direction.y = 0;
+            collider.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
         }
     }
 }
