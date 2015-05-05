@@ -15,7 +15,7 @@ public class ChargePreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 16.5f - (level * 1.5f);
+            return 2 - (level * 1.5f);
         }
     }
 

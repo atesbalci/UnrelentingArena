@@ -33,7 +33,6 @@ public class Player {
 
     public Player() {
         buffs = new LinkedList<Buff>();
-        skillSet = new SkillSet();
         statSet = new StatSet();
         dead = false;
         health = statSet.maxHealth;
@@ -52,12 +51,11 @@ public class Player {
         if (dead) {
             gameObject.GetComponent<ControlScript>().mine = false;
         }
-
         canCast = true;
         currentSpeed = statSet.movementSpeed;
         LinkedListNode<Buff> node = buffs.First;
         while (node != null) {
-            var nextNode = node.Next;
+            LinkedListNode<Buff> nextNode = node.Next;
             node.Value.Update();
             node = nextNode;
         }

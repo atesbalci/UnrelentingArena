@@ -18,29 +18,27 @@ public class PlayerMove : MonoBehaviour {
 
     void Update() {
         if (!player.dead) {
+            if (view.isMine && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float hitdist = 0.0f;
+                if (playerPlane.Raycast(ray, out hitdist)) {
+                    Move(ray.GetPoint(hitdist));
+                }
+            }
             anim.SetFloat("Speed", moveSpeed);
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
                 if (destinationDistance < .5f) {
                     moveSpeed = 0;
-                } else if (destinationDistance > .5f) {
+                } else if (destinationDistance > 0) {
                     moveSpeed = player.currentSpeed;
                 }
-
-                if (view.isMine && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    float hitdist = 0.0f;
-
-                    if (playerPlane.Raycast(ray, out hitdist)) {
-                        //networkView.RPC("Move", RPCMode.All, ray.GetPoint(hitdist), Quaternion.LookRotation(ray.GetPoint(hitdist) - transform.position));
-                        Move(ray.GetPoint(hitdist));
-                    }
-                }
                 if (destinationDistance > .5f) {
-                    MovePlayer(Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed));
+                    transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed);
                 }
-                transform.rotation = Quaternion.Lerp(transform.rotation,
-                Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
+                if (destinationPosition - transform.position != Vector3.zero)
+                    transform.rotation = Quaternion.Lerp(transform.rotation,
+                    Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
             } else {
                 moveSpeed = 0;
                 if (destinationDistance > 1)
@@ -49,11 +47,6 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
-    public void MovePlayer(Vector3 target) {
-        transform.position = Vector3.Lerp(transform.position, target, 1);
-    }
-
-    [RPC]
     public void Move(Vector3 destination) {
         destinationPosition = destination;
         GetComponentInChildren<PlayerStatusScript>().Update();

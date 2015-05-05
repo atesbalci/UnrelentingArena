@@ -15,7 +15,7 @@ public class GameInput {
     public static GameInput instance;
 
     public GameInput() {
-        keys = new KeyCode[10];
+        keys = new KeyCode[6];
         LoadKeys();
     }
 

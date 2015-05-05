@@ -48,7 +48,7 @@ public class PlayerSkill : MonoBehaviour {
                 if (playerPlane.Raycast(ray, out hitdist) && view.isMine)
                     targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                playerMove.destinationPosition = Vector3.Lerp(transform.position, targetPoint, 0.005f);
+                playerMove.destinationPosition = Vector3.Lerp(transform.position, targetPoint, 0.05f);
                 player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
             }
         }
