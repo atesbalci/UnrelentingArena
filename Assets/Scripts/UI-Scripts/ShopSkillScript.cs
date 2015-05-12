@@ -18,9 +18,12 @@ public class ShopSkillScript : MonoBehaviour {
         level.text = "Level " + skillPreset.level;
         image.sprite = Resources.Load<Sprite>("Icons/" + skillPreset.name);
         button.GetComponentInChildren<Text>().text = skillPreset.price + " SP";
-        button.interactable = skillPreset.level < skillPreset.maxLevel;
+        button.interactable = skillPreset.level < skillPreset.maxLevel && skillPreset.available;
         if (!button.interactable) {
-            button.GetComponentInChildren<Text>().text = "Max Level";
+            if (skillPreset.available)
+                button.GetComponentInChildren<Text>().text = "Max Level";
+            else
+                button.GetComponentInChildren<Text>().text = "N/A";
         }
         button.onClick = new Button.ButtonClickedEvent();
         button.onClick.AddListener(() => { Buy(); });
@@ -31,7 +34,7 @@ public class ShopSkillScript : MonoBehaviour {
             GameManager game = GameManager.instance;
             if (game.playerData.skillPoints >= skillPreset.price) {
                 game.GetComponent<NetworkView>().RPC("UpgradeSkill", RPCMode.All, Network.player, (int)skillPreset.skill);
-                Refresh();
+                GetComponentInParent<ShopPanelScript>().Refresh();
             }
         }
     }

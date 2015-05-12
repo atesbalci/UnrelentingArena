@@ -6,11 +6,13 @@ public abstract class SkillPreset {
     public float remainingCooldown { get; set; }
     public int level { get; set; }
     public int key { get; set; }
+    public bool available { get; set; }
 
     public SkillPreset(SkillType skill) {
         this.skill = skill;
         remainingCooldown = 0;
         level = 0;
+        available = true;
     }
 
     public void Update() {

@@ -24,5 +24,6 @@ public class BlockScript : MonoBehaviour {
         SkillShot ss = obj.GetComponent<SkillScript>().skill as SkillShot;
         ss.remainingDistance = ss.range;
         obj.transform.rotation = rotation;
+        ss.player = GameManager.instance.playerList[view.owner].currentPlayer;
     }
 }

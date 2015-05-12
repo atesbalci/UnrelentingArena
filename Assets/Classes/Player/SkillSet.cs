@@ -26,10 +26,13 @@ public class SkillSet {
     }
 
     public void Upgrade(SkillType skill) {
-        SkillPreset sp;
-        if (skills.TryGetValue(skill, out sp)) {
-            if (sp.maxLevel > sp.level)
-                sp.level++;
+        SkillPreset sp = skills[skill];
+        if (sp.maxLevel > sp.level) {
+            sp.level++;
+            foreach (var kvp in skills) {
+                if (kvp.Value.key == sp.key && kvp.Value != sp)
+                    kvp.Value.available = false;
+            }
         }
     }
 
