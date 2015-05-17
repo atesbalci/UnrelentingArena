@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     public void Initialize() {
-        bodyRenderer.material.SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
+        bodyRenderer.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = player.color;
         GetComponentInChildren<LensFlare>().color = player.color;

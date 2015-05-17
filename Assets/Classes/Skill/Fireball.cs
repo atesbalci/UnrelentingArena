@@ -2,6 +2,11 @@
 using System.Collections;
 
 public class Fireball : SkillShot {
+    public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
+        gameObject.GetComponent<ParticleSystem>().startColor = player.color;
+    }
+
     public override void CollisionWithPlayer(Collider collider, Player player) {
         player.Damage(damage, this.player);
         Vector3 direction = gameObject.transform.rotation * Vector3.forward;
