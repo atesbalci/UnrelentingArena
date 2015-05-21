@@ -11,6 +11,8 @@ public enum GameState {
 }
 
 public class GameManager : MonoBehaviour {
+    public static Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
+
     public StageMainScript stage;
     public CanvasNavigator navigator;
 
@@ -28,7 +30,6 @@ public class GameManager : MonoBehaviour {
     public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
 
     private NetworkView view;
-    private Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
     private GameState _state;
     public GameState state {
         get {

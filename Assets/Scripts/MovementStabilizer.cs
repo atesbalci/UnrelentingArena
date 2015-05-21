@@ -9,8 +9,8 @@ public class MovementStabilizer : MonoBehaviour {
 
     void Update() {
         if (!view.isMine) {
-            Vector3.Lerp(transform.position, position, Time.deltaTime * 10);
-            Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10);
+            transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * 10);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10);
         }
     }
 
@@ -28,6 +28,5 @@ public class MovementStabilizer : MonoBehaviour {
             position = pos;
             rotation = rot;
         }
-        GetComponentInChildren<PlayerStatusScript>().Update();
     }
 }

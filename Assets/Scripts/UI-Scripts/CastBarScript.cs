@@ -15,7 +15,7 @@ public class CastBarScript : MonoBehaviour {
 
     void Update() {
         if (player != null) {
-            Channel channel = player.channel;
+            CastChannel channel = player.castChannel;
             if (channel != null) {
                 castbarBack.enabled = true;
                 castbarIn.enabled = true;

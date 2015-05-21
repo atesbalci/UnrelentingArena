@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlatformScript : MonoBehaviour {
+public class CharacterShowcaseScript : MonoBehaviour {
+    public SkinnedMeshRenderer rend;
+
     private int currentIndex = 0;
     private int nextIndex;
     private float changeColourTime = 2.0f;
     private float timer = 0.0f;
-    private Color[] colors = { Color.red, Color.blue, Color.green, Color.yellow };
+    private Color[] colors;
 
     void Start() {
+        colors = GameManager.colors;
         nextIndex = (currentIndex + 1) % colors.Length;
     }
 
@@ -21,6 +24,6 @@ public class PlatformScript : MonoBehaviour {
             timer = 0.0f;
 
         }
-        GetComponent<Renderer>().material.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
+        rend.materials[0].SetColor("_EmissionColor", Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime) * Mathf.LinearToGammaSpace(4f));
     }
 }

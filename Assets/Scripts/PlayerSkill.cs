@@ -35,7 +35,7 @@ public class PlayerSkill : MonoBehaviour {
                     player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
                 player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
                 player.toBeCast = null;
-            } else if (player.channel == null && casting > -1) {
+            } else if (player.canCast && casting > -1) {
                 SkillPreset skill = null;
                 skill = player.skillSet.TryToCast(casting);
                 if (skill == null) {
@@ -49,7 +49,7 @@ public class PlayerSkill : MonoBehaviour {
                     targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
                 playerMove.destinationPosition = Vector3.Lerp(transform.position, targetPoint, 0.05f);
-                player.AddBuff(new Channel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+                player.AddBuff(new CastChannel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
             }
         }
     }

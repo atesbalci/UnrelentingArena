@@ -14,7 +14,7 @@ public class Player {
     private ItemSet _itemSet;
     public ItemSet itemSet { get { return _itemSet; } set { _itemSet = value; itemSet.Apply(this); } }
     public LinkedList<Buff> buffs { get; set; }
-    public Channel toBeCast { get; set; }
+    public CastChannel toBeCast { get; set; }
     public bool canCast { get; set; }
 
     //game info
@@ -90,11 +90,11 @@ public class Player {
         }
     }
 
-    public Channel channel {
+    public CastChannel castChannel {
         get {
             foreach (Buff b in buffs) {
-                if (b is Channel)
-                    return b as Channel;
+                if (b is CastChannel)
+                    return b as CastChannel;
             }
             return null;
         }

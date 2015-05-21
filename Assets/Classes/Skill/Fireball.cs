@@ -4,7 +4,16 @@ using System.Collections;
 public class Fireball : SkillShot {
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
-        gameObject.GetComponent<ParticleSystem>().startColor = player.color;
+        ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
+        ps.startColor = player.color;
+        ps.Stop();
+        ps.Play();
+    }
+
+    public override void Update() {
+        base.Update();
+        if (maxRange)
+            Network.Destroy(gameObject);
     }
 
     public override void CollisionWithPlayer(Collider collider, Player player) {

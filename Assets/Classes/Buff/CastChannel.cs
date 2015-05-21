@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Channel : Stun {
+public class CastChannel : Stun {
     public SkillPreset skill { get; set; }
     public Quaternion rotation { get; set; }
     public Vector3 position { get; set; }
     public Vector3 targetPosition { get; set; }
     public float recoilTime { get; set; }
 
-    public Channel(Player player, SkillPreset skill, Vector3 position, Quaternion rotation, Vector3 targetPosition)
+    public CastChannel(Player player, SkillPreset skill, Vector3 position, Quaternion rotation, Vector3 targetPosition)
         : base(player, skill.channelTime) {
         duration = skill.channelTime;
         this.skill = skill;

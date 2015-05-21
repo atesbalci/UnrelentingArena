@@ -13,6 +13,6 @@ public class Stun : Buff {
     }
 
     public override void ApplyBuff() {
-        player.RemoveBuff(player.channel);
+        player.RemoveBuff(player.castChannel);
     }
 }

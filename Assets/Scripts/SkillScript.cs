@@ -33,6 +33,9 @@ public class SkillScript : MonoBehaviour {
                 case SkillType.Charge:
                     skill = new Charge();
                     break;
+                case SkillType.Boomerang:
+                    skill = new Boomerang();
+                    break;
                 default:
                     skill = null;
                     break;

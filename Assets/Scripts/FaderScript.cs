@@ -7,7 +7,7 @@ public class FaderScript : MonoBehaviour {
     private float remaining;
 
     void Start() {
-        skins = GetComponentInChildren<SkinnedMeshRenderer>().materials;
+        skins = GetComponentInChildren<Renderer>().materials;
         foreach (Material skin in skins) {
             skin.SetFloat("_Mode", 4f);
             skin.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
