@@ -71,6 +71,10 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    public void Buff(BuffType buff, int duration) {
+        view.RPC("ApplyBuff", RPCMode.All, (int)buff, duration);
+    }
+
     public void Knockback(Vector3 direction, float distance, float speed) {
         view.RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
     }
@@ -78,5 +82,12 @@ public class PlayerScript : MonoBehaviour {
     [RPC]
     public void ApplyKnockback(Vector3 direction, float distance, float speed) {
         player.AddBuff(new Knockback(player, gameObject, direction, distance, speed));
+    }
+
+    [RPC]
+    public void ApplyBuff(int buff, int duration) {
+        if ((BuffType)buff == BuffType.Stun) {
+            player.AddBuff(new Stun(player, duration));
+        }
     }
 }

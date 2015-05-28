@@ -14,13 +14,15 @@ public class SkillSet {
         skills.Add(SkillType.Blink, new BlinkPreset());
         skills.Add(SkillType.Meteor, new MeteorPreset());
         skills.Add(SkillType.Boomerang, new BoomerangPreset());
+        skills.Add(SkillType.Mine, new MinePreset());
 
         skills[SkillType.Fireball].level = 0;
         skills[SkillType.Orb].level = 1;
         //skills[SkillType.Meteor].level = 1;
-        skills[SkillType.Overcharge].level = 1;
+        //skills[SkillType.Overcharge].level = 1;
         skills[SkillType.Boomerang].level = 1;
         skills[SkillType.Charge].level = 1;
+        skills[SkillType.Mine].level = 1;
     }
 
     public void Update() {

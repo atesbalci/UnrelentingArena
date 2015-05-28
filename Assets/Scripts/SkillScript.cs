@@ -36,8 +36,8 @@ public class SkillScript : MonoBehaviour {
                 case SkillType.Boomerang:
                     skill = new Boomerang();
                     break;
-                default:
-                    skill = null;
+                case SkillType.Mine:
+                    skill = new Mine();
                     break;
             }
         }
