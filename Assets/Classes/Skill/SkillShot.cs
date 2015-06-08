@@ -31,6 +31,6 @@ public abstract class SkillShot : Skill {
     }
 
     public override void CollisionWithSkill(Collider collider, Skill skill) {
-        Network.Destroy(gameObject);
+        dead = true;
     }
 }

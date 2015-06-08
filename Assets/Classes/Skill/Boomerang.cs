@@ -53,7 +53,7 @@ public class Boomerang : SkillShot {
 
     public override void CollisionWithSelf(Collider collider) {
         if (returning) {
-            Network.Destroy(gameObject);
+            dead = true;
         }
     }
 }

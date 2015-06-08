@@ -2,24 +2,36 @@
 using System.Collections;
 
 public class Fireball : SkillShot {
+    private float time;
+    private ParticleSystem[] particles;
+
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
-        ParticleSystem ps = gameObject.GetComponent<ParticleSystem>();
-        ps.startColor = player.color;
-        ps.Stop();
-        ps.Play();
+        particles = gameObject.GetComponentsInChildren<ParticleSystem>();
+        particles[0].startColor = player.color;
+        particles[0].Stop();
+        particles[0].Play();
+        time = 2;
     }
 
     public override void Update() {
         base.Update();
         if (maxRange)
-            Network.Destroy(gameObject);
+            dead = true;
     }
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         player.Damage(damage, this.player);
         Vector3 direction = gameObject.transform.rotation * Vector3.forward;
         collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
-        Network.Destroy(gameObject);
+        dead = true;
+    }
+
+    public override void UpdateEnd() {
+        foreach (ParticleSystem ps in particles)
+            ps.Stop();
+        if(time <= 0)
+            Network.Destroy(gameObject);
+        time -= Time.deltaTime;
     }
 }

@@ -44,12 +44,16 @@ public class SkillScript : MonoBehaviour {
     }
 
     void Update() {
-        if (skill != null)
-            skill.Update();
+        if (skill != null) {
+            if (!skill.dead)
+                skill.Update();
+            else
+                skill.UpdateEnd();
+        }
     }
 
     void OnTriggerStay(Collider collider) {
-        if (skill != null && Network.isServer) {
+        if (skill != null && Network.isServer && !skill.dead) {
             SkillScript skillScript = collider.gameObject.GetComponent<SkillScript>();
             PlayerScript playerScript = collider.gameObject.GetComponent<PlayerScript>();
             if (playerScript != null) {

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Orb : Skill {
     private enum OrbState {
-        Rising, Falling, Landed, Active, Ending
+        Rising, Falling, Landed, Active
     }
 
     private ParticleSystem area;
@@ -46,14 +46,8 @@ public class Orb : Skill {
         } else if (state == OrbState.Active) {
             area.gameObject.SetActive(true);
             time = area.startLifetime;
-            state = OrbState.Ending;
+            dead = true;
             area.Stop();
-        } else {
-            time -= Time.deltaTime;
-            renderer.material.color = new Color(player.color.r, player.color.g, player.color.b, Mathf.Lerp(1, 0, time / area.startLifetime));
-            if (time <= 0) {
-                Network.Destroy(gameObject);
-            }
         }
     }
 
@@ -63,6 +57,14 @@ public class Orb : Skill {
             Vector3 direction = gameObject.transform.position - collider.gameObject.transform.position;
             direction.y = 0;
             collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+        }
+    }
+
+    public override void UpdateEnd() {
+        time -= Time.deltaTime;
+        renderer.material.color = new Color(player.color.r, player.color.g, player.color.b, Mathf.Lerp(1, 0, time / area.startLifetime));
+        if (time <= 0) {
+            Network.Destroy(gameObject);
         }
     }
 }

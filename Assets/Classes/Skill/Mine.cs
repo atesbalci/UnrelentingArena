@@ -44,8 +44,10 @@ public class Mine : Skill {
         if (state == MineState.Contact || state == MineState.Explosion)
             state++;
         else if (state == MineState.Post) {
-            postRem -= Time.deltaTime;
             material.color = new Color(material.color.r, material.color.g, material.color.b, postRem / FADE_DURATION);
+            if (postRem <= 0)
+                dead = true;
+            postRem -= Time.deltaTime;
         }
     }
 

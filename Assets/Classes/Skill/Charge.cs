@@ -46,7 +46,7 @@ public class Charge : Skill {
             time -= Time.deltaTime;
             damaging = false;
             if (time <= 0)
-                Network.Destroy(gameObject);
+                dead = true;
         }
     }
 

@@ -19,6 +19,6 @@ public class Blink : TargetSkill {
         base.Update();
         timeBeforeDestruction -= Time.deltaTime;
         if (timeBeforeDestruction <= 0)
-            Network.Destroy(gameObject);
+            dead = true;
     }
 }

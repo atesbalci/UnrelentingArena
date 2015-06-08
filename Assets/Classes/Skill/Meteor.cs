@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Meteor : Skill {
     private enum MeteorState {
-        Predamage, Damage, Postdamage
+        Predamage, Damage
     }
 
     private GameObject meteor;
@@ -46,12 +46,8 @@ public class Meteor : Skill {
             radius.color = Color.clear;
             meteor.SetActive(false);
             explosion.gameObject.SetActive(true);
-            state = MeteorState.Postdamage;
+            dead = true;
             explosion.Stop();
-        } else {
-            if (animation <= 0)
-                Network.Destroy(gameObject);
-            animation -= Time.deltaTime;
         }
     }
 
@@ -62,5 +58,11 @@ public class Meteor : Skill {
             direction.y = 0;
             collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
         }
+    }
+
+    public override void UpdateEnd() {
+        if (animation <= 0)
+            Network.Destroy(gameObject);
+        animation -= Time.deltaTime;
     }
 }

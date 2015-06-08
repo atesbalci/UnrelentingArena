@@ -13,11 +13,13 @@ public abstract class Skill {
     public int level { get; set; }
     public float damage { get; set; }
     public GameObject gameObject { get; set; }
+    public bool dead { get; set; }
 
     public Skill() {
         range = 10;
         damage = 20;
         level = 1;
+        dead = false;
     }
 
     public virtual void Start(GameObject gameObject) {
@@ -40,5 +42,9 @@ public abstract class Skill {
     }
 
     public virtual void SerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+    }
+
+    public virtual void UpdateEnd() {
+        Network.Destroy(gameObject);
     }
 }

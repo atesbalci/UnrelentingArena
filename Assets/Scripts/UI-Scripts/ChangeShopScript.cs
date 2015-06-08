@@ -17,7 +17,7 @@ public class ChangeShopScript : MonoBehaviour {
         if (!isSkills)
             GetComponentInChildren<Text>().text = "Go to Skills";
         else
-            GetComponentInChildren<Text>().text = "Go to Items";
+            GetComponentInChildren<Text>().text = "Go to Upgrades";
         panel.state = isSkills;
     }
 }
