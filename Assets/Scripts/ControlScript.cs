@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ public class ControlScript : MonoBehaviour {
     public bool mine { get; set; }
 
     void Start() {
-        mine = GetComponent<PlayerScript>().player.owner == Network.player;
+        mine = GetComponent<PlayerScript>().player == GameManager.instance.playerData.currentPlayer;
         skills = new bool[8];
         keys = GameInput.instance.keys;
     }

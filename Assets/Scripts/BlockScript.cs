@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class BlockScript : MonoBehaviour {
-    public NetworkView view;
+public class BlockScript : NetworkBehaviour {
+    private Player player;
+
+    void Start() {
+        player = GetComponentInParent<PlayerScript>().player;
+    }
 
     void OnTriggerEnter(Collider collider) {
         if (Network.isServer) {
@@ -12,18 +17,18 @@ public class BlockScript : MonoBehaviour {
                     Quaternion newRotation = Quaternion.Inverse(collider.transform.rotation);
                     float angle = Quaternion.Angle(transform.rotation, newRotation);
                     newRotation = Quaternion.AngleAxis(angle * 2, newRotation * Vector3.forward);
-                    view.RPC("BlockEvent", RPCMode.All, ss.view.viewID, newRotation);
+                    RpcBlockEvent(ss.view.viewID, newRotation);
                 }
             }
         }
     }
 
-    [RPC]
-    public void BlockEvent(NetworkViewID id, Quaternion rotation) {
+    [ClientRpc]
+    public void RpcBlockEvent(NetworkViewID id, Quaternion rotation) {
         GameObject obj = NetworkView.Find(id).gameObject;
         SkillShot ss = obj.GetComponent<SkillScript>().skill as SkillShot;
         ss.remainingDistance = ss.range;
         obj.transform.rotation = rotation;
-        ss.player = GameManager.instance.playerList[view.owner].currentPlayer;
+        ss.player = GameManager.instance.playerList[player.owner].currentPlayer;
     }
 }

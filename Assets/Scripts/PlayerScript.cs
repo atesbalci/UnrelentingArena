@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : NetworkBehaviour {
     public Player player { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
 
-    public NetworkView view;
+    private NetworkIdentity identity;
+
+    [SyncVar]
+    private float health;
 
     public PlayerScript() {
         player = new Player();
@@ -21,31 +25,27 @@ public class PlayerScript : MonoBehaviour {
             mr.material.SetColor("_EmissionColor", player.color);
         }
         shield.SetActive(false);
-        if(Network.isServer) {
-            view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
-        }
-    }
-
-    [RPC]
-    public void SwitchOwner(NetworkViewID id) {
-        view.viewID = id;
     }
 
     void Start() {
         player.Start(gameObject);
+        health = player.health;
+        identity = GetComponent<NetworkIdentity>();
     }
 
     void Update() {
         player.Update();
-        if (Network.isServer) {
+        if (identity.isServer) {
+            health = player.health;
             if (player.health <= 0 && !player.dead) {
                 player.dead = true;
-                view.RPC("Die", RPCMode.AllBuffered);
+                Die();
             }
         }
         if (Input.GetKeyDown(KeyCode.G)) {
             LeaveFadingImage();
         }
+        player.health = health;
     }
 
     public FaderScript LeaveFadingImage() {
@@ -55,37 +55,26 @@ public class PlayerScript : MonoBehaviour {
         return result;
     }
 
-    [RPC]
+    [Server]
     public void Die() {
         player.Die(gameObject);
     }
 
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        if (stream.isWriting) {
-            float health = player.health;
-            stream.Serialize(ref health);
-        } else {
-            float health = -1;
-            stream.Serialize(ref health);
-            player.health = health;
-        }
-    }
-
     public void Buff(BuffType buff, int duration) {
-        view.RPC("ApplyBuff", RPCMode.All, (int)buff, duration);
+        CmdBuff((int)buff, duration);
     }
 
     public void Knockback(Vector3 direction, float distance, float speed) {
-        view.RPC("ApplyKnockback", RPCMode.AllBuffered, direction, distance, speed);
+        CmdKnockback(direction, distance, speed);
     }
 
-    [RPC]
-    public void ApplyKnockback(Vector3 direction, float distance, float speed) {
+    [Command]
+    public void CmdKnockback(Vector3 direction, float distance, float speed) {
         player.AddBuff(new Knockback(player, gameObject, direction, distance, speed));
     }
 
-    [RPC]
-    public void ApplyBuff(int buff, int duration) {
+    [Command]
+    public void CmdBuff(int buff, int duration) {
         if ((BuffType)buff == BuffType.Stun) {
             player.AddBuff(new Stun(player, duration));
         }

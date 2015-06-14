@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerMove : MonoBehaviour {
-    public Vector3 destinationPosition { get; set; }
-    public NetworkView view;
+public class PlayerMove : NetworkBehaviour {
+    [SyncVar]
+    public Vector3 destinationPosition;
+
     private float moveSpeed = 0;
     private Player player;
     private Animator anim;
@@ -18,11 +20,11 @@ public class PlayerMove : MonoBehaviour {
 
     void Update() {
         if (!player.dead) {
-            if (view.isMine && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
+            if (isLocalPlayer && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;
                 if (playerPlane.Raycast(ray, out hitdist)) {
-                    Move(ray.GetPoint(hitdist));
+                    CmdMove(ray.GetPoint(hitdist));
                 }
             }
             anim.SetFloat("Speed", moveSpeed);
@@ -47,20 +49,9 @@ public class PlayerMove : MonoBehaviour {
         }
     }
 
-    public void Move(Vector3 destination) {
+    [Command]
+    public void CmdMove(Vector3 destination) {
         destinationPosition = destination;
-        GetComponentInChildren<PlayerStatusScript>().Update();
-    }
-
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        if (stream.isWriting) {
-            Vector3 destination = destinationPosition;
-            stream.Serialize(ref destination);
-        } else {
-            Vector3 destination = new Vector3();
-            stream.Serialize(ref destination);
-            destinationPosition = destination;
-        }
         GetComponentInChildren<PlayerStatusScript>().Update();
     }
 }

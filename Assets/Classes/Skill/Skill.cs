@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public enum SkillType {
@@ -15,6 +16,8 @@ public abstract class Skill {
     public GameObject gameObject { get; set; }
     public bool dead { get; set; }
 
+    protected NetworkIdentity netId;
+
     public Skill() {
         range = 10;
         damage = 20;
@@ -24,6 +27,7 @@ public abstract class Skill {
 
     public virtual void Start(GameObject gameObject) {
         this.gameObject = gameObject;
+        netId = gameObject.GetComponent<NetworkIdentity>();
     }
 
     public virtual void Update() {
@@ -39,9 +43,6 @@ public abstract class Skill {
     }
 
     public virtual void CollisionWithOtherObject(Collider collider) {
-    }
-
-    public virtual void SerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
     }
 
     public virtual void UpdateEnd() {

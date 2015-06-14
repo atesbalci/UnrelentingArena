@@ -17,7 +17,7 @@ public abstract class SkillShot : Skill {
     public override void Update() {
         base.Update();
         float travel = speed * Time.deltaTime;
-        if (Network.isServer && remainingDistance <= 0)
+        if (netId.isServer && remainingDistance <= 0)
             maxRange = true;
         if (!maxRange) {
             Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);

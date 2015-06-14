@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,14 +11,13 @@ public enum GameState {
     Shop
 }
 
-public class GameManager : MonoBehaviour {
+public class GameManager : NetworkBehaviour {
     public static Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
 
     public StageMainScript stage;
     public CanvasNavigator navigator;
 
     public static GameManager instance { get; private set; }
-    public const int PORT = 25002;
 
     private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
     private const float REFRESH_LENGTH = 10;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
-    public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
+    public Dictionary<PlayerController, PlayerData> playerList { get; private set; }
 
     private NetworkView view;
     private GameState _state;
@@ -63,16 +63,11 @@ public class GameManager : MonoBehaviour {
     }
 
     [RPC]
-    public void UpdateScore(NetworkPlayer player, int credits) {
+    public void UpdateScore(PlayerController player, int credits) {
         PlayerData data;
         if (playerList.TryGetValue(player, out data)) {
             data.addPoints(credits);
         }
-    }
-
-    public void StartServer() {
-        Network.InitializeServer(8, PORT, false);
-        MasterServer.RegisterHost(GAME_NAME, playerData.name + "'s Game");
     }
 
     public IEnumerator RefreshHosts() {
@@ -88,30 +83,14 @@ public class GameManager : MonoBehaviour {
     public void Initialize() {
         state = GameState.Pregame;
         playerData.Clear();
-        playerList = new Dictionary<NetworkPlayer, PlayerData>();
+        playerList = new Dictionary<PlayerController, PlayerData>();
         view.RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
         round = 0;
     }
 
-    void OnConnectedToServer() {
-        Initialize();
-    }
-
     [RPC]
-    public void SendName(NetworkPlayer player, string name) {
-        if (player != Network.player)
-            playerList.Add(player, new PlayerData(name));
-        else
-            playerList.Add(player, playerData);
-    }
-
-    void OnServerInitialized() {
-        Initialize();
-    }
-
-    void OnDisconnectedFromServer(NetworkDisconnection info) {
-        Clear();
-        state = GameState.Menu;
+    public void SendName(PlayerController player, string name) {
+        playerList.Add(player, new PlayerData(name));
     }
 
     public void Clear() {
@@ -119,48 +98,24 @@ public class GameManager : MonoBehaviour {
             Network.Destroy(gameObject);
     }
 
-    void OnPlayerDisconnected(NetworkPlayer player) {
-        Network.RemoveRPCs(player);
-        playerList.Remove(player);
-        foreach (GameObject playerObject in GameObject.FindGameObjectsWithTag("Player")) {
-            if (playerObject.GetComponent<PlayerScript>().player.owner == player) {
-                Network.Destroy(playerObject);
-                break;
-            }
-        }
-    }
-
-    public void Disconnect() {
-        Network.Disconnect();
-    }
-
-    void OnPlayerConnected(NetworkPlayer player) {
-        if (state != GameState.Pregame) {
-            Network.CloseConnection(player, true);
-        }
-    }
-
     public void BeginGame() {
         int i = 0;
-        foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
-            if (kvp.Key == Network.player)
-                InstantiatePlayer(i);
-            else
-                view.RPC("InstantiatePlayer", kvp.Key, i);
+        foreach (KeyValuePair<PlayerController, PlayerData> kvp in playerList) {
+            //view.RPC("InstantiatePlayer", kvp.Key, i);
             i++;
         }
-        view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
+        //view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
     }
 
     [RPC]
     public void InstantiatePlayer(int index) {
         Vector3 spawnPoint = new Vector3(-20 + index * 10, 0, 0);
         GameObject playerObject = Network.Instantiate(Resources.Load("Player"), spawnPoint, Quaternion.identity, 0) as GameObject;
-        view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, Network.player, index);
+        //view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, Network.player, index);
     }
 
     [RPC]
-    public void InitializePlayer(NetworkViewID id, NetworkPlayer owner, int index) {
+    public void InitializePlayer(NetworkViewID id, PlayerController owner, int index) {
         PlayerScript playerScript = NetworkView.Find(id).GetComponent<PlayerScript>();
         PlayerData data;
         if (playerList.TryGetValue(owner, out data)) {
@@ -175,7 +130,7 @@ public class GameManager : MonoBehaviour {
     }
 
     [RPC]
-    public void UpgradeSkill(NetworkPlayer player, int skill) {
+    public void UpgradeSkill(PlayerController player, int skill) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
             pd.skillPoints -= pd.skillSet.GetUpgradeCost((SkillType)skill);
@@ -184,7 +139,7 @@ public class GameManager : MonoBehaviour {
     }
 
     [RPC]
-    public void BuyItem(NetworkPlayer player, int item) {
+    public void BuyItem(PlayerController player, int item) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
             pd.credits -= pd.itemSet.potentialItems[item].price;
@@ -194,7 +149,7 @@ public class GameManager : MonoBehaviour {
 
     public LinkedList<PlayerData> ListPlayers() {
         LinkedList<PlayerData> result = new LinkedList<PlayerData>();
-        foreach (NetworkPlayer player in playerList.Keys) {
+        foreach (PlayerController player in playerList.Keys) {
             PlayerData data;
             if (playerList.TryGetValue(player, out data)) {
                 result.AddFirst(new LinkedListNode<PlayerData>(data));
@@ -235,15 +190,15 @@ public class GameManager : MonoBehaviour {
         if (Network.isServer) {
             int headCount = 0;
             if (state == GameState.Ingame) {
-                foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
+                foreach (KeyValuePair<PlayerController, PlayerData> pd in playerList) {
                     if (!pd.Value.currentPlayer.dead) {
                         headCount++;
                     }
                 }
                 if (headCount <= 0) {
                     Clear();
-                    foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
-                        NetworkPlayer np = pd.Value.currentPlayer.owner;
+                    foreach (KeyValuePair<PlayerController, PlayerData> pd in playerList) {
+                        PlayerController np = pd.Value.currentPlayer.owner;
                         view.RPC("UpdateScore", RPCMode.AllBuffered, np, pd.Value.currentPlayer.score + 200);
                     }
                     view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
@@ -253,7 +208,8 @@ public class GameManager : MonoBehaviour {
                     if (round <= ROUND_LIMIT)
                         BeginGame();
                     else
-                        Disconnect();
+                        //Disconnect();
+                        ;
                 }
             }
         }

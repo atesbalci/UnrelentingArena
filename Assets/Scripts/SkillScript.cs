@@ -67,9 +67,4 @@ public class SkillScript : MonoBehaviour {
                 skill.CollisionWithOtherObject(collider);
         }
     }
-
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        if (skill != null)
-            skill.SerializeNetworkView(stream, info);
-    }
 }

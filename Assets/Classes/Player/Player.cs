@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,7 +23,7 @@ public class Player {
     public int score { get; set; }
     public Player lastHitter { get; set; }
     public bool dead { get; set; }
-    public NetworkPlayer owner { get; set; }
+    public PlayerController owner { get; set; }
     public GameObject gameObject { get; set; }
 
     //blocking
@@ -41,6 +42,8 @@ public class Player {
         score = 0;
         blockingPoints = statSet.maxBlockingPoints;
         blockingExhaust = -1;
+        skillSet = new SkillSet();
+        itemSet = new ItemSet();
     }
 
     public void Start(GameObject gameObject) {
