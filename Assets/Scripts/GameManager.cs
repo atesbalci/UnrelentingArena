@@ -19,7 +19,7 @@ public class GameManager : NetworkBehaviour {
 
     public static GameManager instance { get; private set; }
 
-    private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
+    private const string GAME_NAME = "Unrelenting Arena";
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
 
@@ -27,9 +27,8 @@ public class GameManager : NetworkBehaviour {
     public PlayerData playerData { get; set; }
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
-    public Dictionary<PlayerController, PlayerData> playerList { get; private set; }
+    public Dictionary<int, PlayerData> playerList { get; private set; }
 
-    private NetworkView view;
     private GameState _state;
     public GameState state {
         get {
@@ -55,15 +54,14 @@ public class GameManager : NetworkBehaviour {
 
     void Awake() {
         instance = this;
-        view = GetComponent<NetworkView>();
         state = GameState.Menu;
         playerData = new PlayerData(PlayerPrefs.GetString("name", "Player"));
         if (GameInput.instance == null)
             GameInput.instance = new GameInput();
     }
 
-    [RPC]
-    public void UpdateScore(PlayerController player, int credits) {
+    [ClientRpc]
+    public void RpcUpdateScore(int player, int credits) {
         PlayerData data;
         if (playerList.TryGetValue(player, out data)) {
             data.addPoints(credits);
@@ -83,13 +81,13 @@ public class GameManager : NetworkBehaviour {
     public void Initialize() {
         state = GameState.Pregame;
         playerData.Clear();
-        playerList = new Dictionary<PlayerController, PlayerData>();
-        view.RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
+        playerList = new Dictionary<int, PlayerData>();
+        //view.RPC("SendName", RPCMode.AllBuffered, Network.player, playerData.name);
         round = 0;
     }
 
-    [RPC]
-    public void SendName(PlayerController player, string name) {
+    [Command]
+    public void CmdSendName(int player, string name) {
         playerList.Add(player, new PlayerData(name));
     }
 
@@ -100,7 +98,7 @@ public class GameManager : NetworkBehaviour {
 
     public void BeginGame() {
         int i = 0;
-        foreach (KeyValuePair<PlayerController, PlayerData> kvp in playerList) {
+        foreach (KeyValuePair<int, PlayerData> kvp in playerList) {
             //view.RPC("InstantiatePlayer", kvp.Key, i);
             i++;
         }
@@ -115,7 +113,7 @@ public class GameManager : NetworkBehaviour {
     }
 
     [RPC]
-    public void InitializePlayer(NetworkViewID id, PlayerController owner, int index) {
+    public void InitializePlayer(NetworkViewID id, int owner, int index) {
         PlayerScript playerScript = NetworkView.Find(id).GetComponent<PlayerScript>();
         PlayerData data;
         if (playerList.TryGetValue(owner, out data)) {
@@ -130,7 +128,7 @@ public class GameManager : NetworkBehaviour {
     }
 
     [RPC]
-    public void UpgradeSkill(PlayerController player, int skill) {
+    public void UpgradeSkill(int player, int skill) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
             pd.skillPoints -= pd.skillSet.GetUpgradeCost((SkillType)skill);
@@ -139,7 +137,7 @@ public class GameManager : NetworkBehaviour {
     }
 
     [RPC]
-    public void BuyItem(PlayerController player, int item) {
+    public void BuyItem(int player, int item) {
         PlayerData pd;
         if (playerList.TryGetValue(player, out pd)) {
             pd.credits -= pd.itemSet.potentialItems[item].price;
@@ -149,7 +147,7 @@ public class GameManager : NetworkBehaviour {
 
     public LinkedList<PlayerData> ListPlayers() {
         LinkedList<PlayerData> result = new LinkedList<PlayerData>();
-        foreach (PlayerController player in playerList.Keys) {
+        foreach (int player in playerList.Keys) {
             PlayerData data;
             if (playerList.TryGetValue(player, out data)) {
                 result.AddFirst(new LinkedListNode<PlayerData>(data));
@@ -187,21 +185,21 @@ public class GameManager : NetworkBehaviour {
     void Update() {
         if (remainingIntermissionDuration > 0)
             remainingIntermissionDuration -= Time.deltaTime;
-        if (Network.isServer) {
+        if (isServer) {
             int headCount = 0;
             if (state == GameState.Ingame) {
-                foreach (KeyValuePair<PlayerController, PlayerData> pd in playerList) {
+                foreach (KeyValuePair<int, PlayerData> pd in playerList) {
                     if (!pd.Value.currentPlayer.dead) {
                         headCount++;
                     }
                 }
                 if (headCount <= 0) {
                     Clear();
-                    foreach (KeyValuePair<PlayerController, PlayerData> pd in playerList) {
-                        PlayerController np = pd.Value.currentPlayer.owner;
-                        view.RPC("UpdateScore", RPCMode.AllBuffered, np, pd.Value.currentPlayer.score + 200);
+                    foreach (KeyValuePair<int, PlayerData> pd in playerList) {
+                        int np = pd.Value.currentPlayer.owner;
+                        //view.RPC("UpdateScore", RPCMode.AllBuffered, np, pd.Value.currentPlayer.score + 200);
                     }
-                    view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
+                    //view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
                 }
             } else if (state == GameState.Scores || state == GameState.Shop) {
                 if (remainingIntermissionDuration <= 0) {

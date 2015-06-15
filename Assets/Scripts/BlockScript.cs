@@ -17,18 +17,17 @@ public class BlockScript : NetworkBehaviour {
                     Quaternion newRotation = Quaternion.Inverse(collider.transform.rotation);
                     float angle = Quaternion.Angle(transform.rotation, newRotation);
                     newRotation = Quaternion.AngleAxis(angle * 2, newRotation * Vector3.forward);
-                    RpcBlockEvent(ss.view.viewID, newRotation);
+                    RpcBlockEvent(newRotation);
                 }
             }
         }
     }
 
     [ClientRpc]
-    public void RpcBlockEvent(NetworkViewID id, Quaternion rotation) {
-        GameObject obj = NetworkView.Find(id).gameObject;
-        SkillShot ss = obj.GetComponent<SkillScript>().skill as SkillShot;
-        ss.remainingDistance = ss.range;
-        obj.transform.rotation = rotation;
-        ss.player = GameManager.instance.playerList[player.owner].currentPlayer;
+    public void RpcBlockEvent(Quaternion rotation) {
+        //SkillShot ss = obj.GetComponent<SkillScript>().skill as SkillShot;
+        //ss.remainingDistance = ss.range;
+        //obj.transform.rotation = rotation;
+        //ss.player = GameManager.instance.playerList[player.owner].currentPlayer;
     }
 }

@@ -3432,7 +3432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1318437431
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3662,8 +3662,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1460263075}
-        m_MethodName: Connect
+      - m_Target: {fileID: 1668419214}
+        m_MethodName: ConnectLocal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3912,7 +3912,6 @@ GameObject:
   - 222: {fileID: 1460263074}
   - 114: {fileID: 1460263073}
   - 114: {fileID: 1460263072}
-  - 114: {fileID: 1460263075}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -4025,17 +4024,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1460263070}
---- !u!114 &1460263075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1460263070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a06aec4f90d8f4a9a512f9362c7bed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1519833933
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,7 +4555,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1668419212}
+      - m_Target: {fileID: 1668419214}
         m_MethodName: CreateServer
         m_Mode: 1
         m_Arguments:
@@ -4730,6 +4718,7 @@ GameObject:
   - 114: {fileID: 1668419212}
   - 114: {fileID: 1668419211}
   - 114: {fileID: 1668419214}
+  - 114: {fileID: 1668419215}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4768,7 +4757,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &1668419212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4802,7 +4791,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1668419210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -822479833, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 345dd764a36405c4fb245000a28caaf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -4812,7 +4801,7 @@ MonoBehaviour:
   m_SendPeerInfo: 0
   m_MaxDelay: .00999999978
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 0}
+  m_PlayerPrefab: {fileID: 123184, guid: db6d848c472ed5f48b31f73d48669535, type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 
@@ -4839,7 +4828,7 @@ MonoBehaviour:
     m_MaxSentMessageQueueSize: 128
     m_IsAcksLong: 0
     m_Channels: []
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseSimulator: 0
   m_SimulatedLatency: 1
   m_PacketLossPercentage: 0
@@ -4849,6 +4838,30 @@ MonoBehaviour:
   matchMaker: {fileID: 0}
   matchName: default
   matchSize: 4
+  m_ShowLobbyGUI: 1
+  m_MaxPlayers: 6
+  m_MaxPlayersPerConnection: 2
+  m_LobbyPlayerPrefab: {fileID: 11497422, guid: f99077bc105fd9f49b21b0e5f32f995f,
+    type: 2}
+  m_GamePlayerPrefab: {fileID: 107022, guid: f99077bc105fd9f49b21b0e5f32f995f, type: 2}
+  m_LobbyScene: 
+  m_PlayScene: 
+  lobbySlots: []
+--- !u!114 &1668419215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1668419210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 227461547, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
 --- !u!1 &1686506302
 GameObject:
   m_ObjectHideFlags: 0
@@ -4866,7 +4879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1686506303
 RectTransform:
   m_ObjectHideFlags: 0

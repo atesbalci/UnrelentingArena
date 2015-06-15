@@ -6,7 +6,7 @@ public class NicknameFieldScript : MonoBehaviour {
     private InputField input;
 
     void Start() {
-        input = GetComponentInParent<InputField>();
+        input = GetComponent<InputField>();
         input.text = GameManager.instance.playerData.name;
     }
 

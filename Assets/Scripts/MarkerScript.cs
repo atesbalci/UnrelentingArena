@@ -8,13 +8,14 @@ public class MarkerScript : MonoBehaviour {
     private float marked;
     private Plane plane;
 
-	void Start () {
+    void Start() {
         sprite = GetComponent<SpriteRenderer>();
-        plane = new Plane(Vector3.up, transform.position);
-	}
-	
-	void Update () {
-        if(Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Move])) {
+        plane = new Plane(Vector3.up, transform.position); 
+        marked = 0;
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Move])) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float hitdist;
             if (plane.Raycast(ray, out hitdist)) {
@@ -30,5 +31,5 @@ public class MarkerScript : MonoBehaviour {
         } else {
             sprite.color = Color.clear;
         }
-	}
+    }
 }

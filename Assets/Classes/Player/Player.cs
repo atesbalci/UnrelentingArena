@@ -23,7 +23,7 @@ public class Player {
     public int score { get; set; }
     public Player lastHitter { get; set; }
     public bool dead { get; set; }
-    public PlayerController owner { get; set; }
+    public int owner { get; set; }
     public GameObject gameObject { get; set; }
 
     //blocking
