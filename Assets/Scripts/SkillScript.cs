@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SkillScript : MonoBehaviour {
     public SkillType skillType;
+    public NetworkView view;
     public Skill skill { get; set; }
 
     void Start() {
@@ -65,5 +66,10 @@ public class SkillScript : MonoBehaviour {
             else
                 skill.CollisionWithOtherObject(collider);
         }
+    }
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+        if (skill != null)
+            skill.SerializeNetworkView(stream, info);
     }
 }

@@ -4,9 +4,15 @@ using System.Collections;
 public class CameraSwitcherScript : MonoBehaviour {
     public GameObject game;
     public GameObject menu;
+
+    private GameManager gameManager;
+
+	void Start () {
+        gameManager = GameManager.instance;
+	}
 	
 	void Update () {
-        if (GameManager.instance.state == GameState.Ingame) {
+        if (gameManager.state == GameState.Ingame) {
             game.SetActive(true);
             menu.SetActive(false);
         } else {

@@ -12,7 +12,7 @@ public class ScoresButtonScript : MonoBehaviour {
         GameManager gameManager = GameManager.instance;
         if (gameManager.state == GameState.Scores)
             shopButton.SetActive(true);
-        else if (gameManager.state == GameState.Pregame && gameManager.isServer)
+        else if (gameManager.state == GameState.Pregame && Network.isServer)
             startButton.SetActive(true);
     }
 }

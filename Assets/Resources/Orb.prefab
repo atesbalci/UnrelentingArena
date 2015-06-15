@@ -30,8 +30,7 @@ GameObject:
   - 23: {fileID: 2347538}
   - 114: {fileID: 11433094}
   - 148: {fileID: 14810730}
-  - 114: {fileID: 11492072}
-  - 114: {fileID: 11456972}
+  - 148: {fileID: 14879654}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Untagged
@@ -108,58 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 5
   view: {fileID: 14810730}
---- !u!114 &11456972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: .100000001
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: .00100000005
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
---- !u!114 &11492072
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 71
-    i1: 111
-    i2: 1
-    i3: 255
-    i4: 235
-    i5: 156
-    i6: 176
-    i7: 116
-    i8: 248
-    i9: 141
-    i10: 55
-    i11: 174
-    i12: 68
-    i13: 253
-    i14: 64
-    i15: 91
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!135 &13546774
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -181,6 +128,18 @@ NetworkView:
   m_Enabled: 1
   m_StateSynchronization: 2
   m_Observed: {fileID: 11433094}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
+--- !u!148 &14879654
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192710}
+  m_Enabled: 1
+  m_StateSynchronization: 2
+  m_Observed: {fileID: 491360}
   m_ViewID:
     m_ID: 0
     m_Type: 0

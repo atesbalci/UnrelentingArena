@@ -1,20 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 
-public class ShieldScript : NetworkBehaviour {
+public class ShieldScript : MonoBehaviour {
     public GameObject shield;
     public LensFlare flare;
 
-    [SyncVar]
-    public bool blocking;
-
-    [SyncVar]
-    private float blockingPoints;
-    [SyncVar]
-    private float blockingExhaust;
+    public bool blocking { get; set; }
 
     private Player player;
+    public NetworkView view;
     private PlayerMove playerMove;
 
     void Start() {
@@ -23,16 +17,29 @@ public class ShieldScript : NetworkBehaviour {
         blocking = false;
     }
 
-    [Command]
-    public void CmdSync() {
-        blockingPoints = player.blockingPoints;
-        blockingExhaust = player.blockingExhaust;
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+        if (stream.isWriting) {
+            float bp = player.blockingPoints;
+            float be = player.blockingExhaust;
+            bool bl = blocking;
+            stream.Serialize(ref bp);
+            stream.Serialize(ref be);
+            stream.Serialize(ref bl);
+        } else {
+            float bp = 0;
+            float be = 0;
+            bool bl = blocking;
+            stream.Serialize(ref bp);
+            stream.Serialize(ref be);
+            stream.Serialize(ref bl);
+            player.blockingPoints = bp;
+            player.blockingExhaust = be;
+            blocking = bl;
+        }
     }
 
     void Update() {
-        player.blockingExhaust = blockingExhaust;
-        player.blockingPoints = blockingPoints;
-        if (isLocalPlayer) {
+        if (view.isMine) {
             if (blocking && (Input.GetKeyUp(GameInput.instance.keys[(int)GameBinding.Block]) || player.blockingPoints < 0)) {
                 blocking = false;
                 player.blockingExhaust = 1;
@@ -56,7 +63,7 @@ public class ShieldScript : NetworkBehaviour {
         if (blocking) {
             shield.SetActive(true);
             flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.blockingPoints / player.statSet.maxBlockingPoints);
-            if (isLocalPlayer) {
+            if (view.isMine) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);
                 float hitdist = 0.0f;
