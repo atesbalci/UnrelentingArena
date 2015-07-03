@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShieldScript : MonoBehaviour {
+public class EnergyScript : MonoBehaviour {
     public GameObject shield;
     public LensFlare flare;
+    public GameObject pulse;
 
     public bool blocking { get; set; }
 
@@ -19,8 +20,8 @@ public class ShieldScript : MonoBehaviour {
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (stream.isWriting) {
-            float bp = player.blockingPoints;
-            float be = player.blockingExhaust;
+            float bp = player.energyPoints;
+            float be = player.energyExhaust;
             bool bl = blocking;
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
@@ -32,37 +33,44 @@ public class ShieldScript : MonoBehaviour {
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
             stream.Serialize(ref bl);
-            player.blockingPoints = bp;
-            player.blockingExhaust = be;
+            player.energyPoints = bp;
+            player.energyExhaust = be;
             blocking = bl;
         }
     }
 
     void Update() {
         if (view.isMine) {
-            if (blocking && (Input.GetKeyUp(GameInput.instance.keys[(int)GameBinding.Block]) || player.blockingPoints < 0)) {
+            if (blocking && (Input.GetKeyUp(GameInput.instance.keys[(int)GameBinding.Block]) || player.energyPoints < 0)) {
                 blocking = false;
-                player.blockingExhaust = 1;
+                player.energyExhaust = 1;
             } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Block]) && player.canCast) {
-                if (player.blockingPoints >= player.statSet.maxBlockingPoints) {
+                if (player.energyPoints >= player.statSet.maxEnergyPoints) {
                     blocking = true;
                 }
+            } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Pulse]) && player.canCast && player.energyPoints >= 0.5f) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float hitdst = 0;
+                (new Plane(Vector3.up, transform.position)).Raycast(ray, out hitdst);
+                Network.Instantiate(pulse, transform.position, Quaternion.LookRotation(ray.GetPoint(hitdst) - transform.position), 0);
+                player.energyPoints -= 0.5f;
+                player.energyExhaust = 1;
             }
         }
-        if (player.blockingExhaust <= 0) {
+        if (player.energyExhaust <= 0) {
             if (blocking)
-                player.blockingPoints -= Time.deltaTime;
+                player.energyPoints -= Time.deltaTime;
             else
-                player.blockingPoints += Time.deltaTime * player.statSet.blockingRegen;
+                player.energyPoints += Time.deltaTime * player.statSet.energyRegen;
         } else {
-            player.blockingExhaust -= Time.deltaTime;
+            player.energyExhaust -= Time.deltaTime;
         }
-        if (player.blockingPoints >= player.statSet.maxBlockingPoints) {
-            player.blockingPoints = player.statSet.maxBlockingPoints;
+        if (player.energyPoints >= player.statSet.maxEnergyPoints) {
+            player.energyPoints = player.statSet.maxEnergyPoints;
         }
         if (blocking) {
             shield.SetActive(true);
-            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.blockingPoints / player.statSet.maxBlockingPoints);
+            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.energyPoints / player.statSet.maxEnergyPoints);
             if (view.isMine) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Plane playerPlane = new Plane(Vector3.up, transform.position);

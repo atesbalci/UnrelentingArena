@@ -26,8 +26,8 @@ public class Player {
     public GameObject gameObject { get; set; }
 
     //blocking
-    public float blockingPoints { get; set; }
-    public float blockingExhaust { get; set; }
+    public float energyPoints { get; set; }
+    public float energyExhaust { get; set; }
 
     public Color color;
 
@@ -39,8 +39,8 @@ public class Player {
         canCast = true;
         name = "";
         score = 0;
-        blockingPoints = statSet.maxBlockingPoints;
-        blockingExhaust = -1;
+        energyPoints = statSet.maxEnergyPoints;
+        energyExhaust = -1;
     }
 
     public void Start(GameObject gameObject) {

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class FaderScript : MonoBehaviour {
-    public float fadeSpeed { get; set; }
+    public float fadeSpeed;
     private Material[] skins;
     private float remaining;
 

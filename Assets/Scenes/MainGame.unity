@@ -4767,6 +4767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage: {fileID: 1333327518}
   navigator: {fileID: 1641687893}
+  playerPrefab: {fileID: 123184, guid: db6d848c472ed5f48b31f73d48669535, type: 2}
 --- !u!4 &1668419213
 Transform:
   m_ObjectHideFlags: 0

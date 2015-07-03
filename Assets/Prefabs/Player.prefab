@@ -89,7 +89,7 @@ GameObject:
   - 114: {fileID: 11469908}
   - 114: {fileID: 11463656}
   m_Layer: 0
-  m_Name: Block
+  m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2696,6 +2696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shield: {fileID: 147398}
   flare: {fileID: 12377280}
+  pulse: {fileID: 195270, guid: f0d3922b88bbc7d4eb64f94a18a45693, type: 2}
   view: {fileID: 14831534}
 --- !u!114 &11430800
 MonoBehaviour:
@@ -2799,7 +2800,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 132734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2d73e4eec4d5bb4e9144c35463ed967, type: 3}
+  m_Script: {fileID: 11500000, guid: 85f68dbf290d13140956b8c1f5ee1cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 11470494}

@@ -5,14 +5,14 @@ public class StatSet {
     public float maxHealth { get; set; }
     public float movementSpeed { get; set; }
     public float armor { get; set; }
-    public float maxBlockingPoints { get; set; }
-    public float blockingRegen { get; set; }
+    public float maxEnergyPoints { get; set; }
+    public float energyRegen { get; set; }
 
     public StatSet() {
         maxHealth = 100;
         movementSpeed = 3.5f;
-        maxBlockingPoints = 1;
+        maxEnergyPoints = 1;
         armor = 10;
-        blockingRegen = 1;
+        energyRegen = 1;
     }
 }

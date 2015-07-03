@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour {
 
     public StageMainScript stage;
     public CanvasNavigator navigator;
+    public GameObject playerPrefab;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviour {
     [RPC]
     public void InstantiatePlayer(int index) {
         Vector3 spawnPoint = new Vector3(-20 + index * 10, 0, 0);
-        GameObject playerObject = Network.Instantiate(Resources.Load("Player"), spawnPoint, Quaternion.identity, 0) as GameObject;
+        GameObject playerObject = Network.Instantiate(playerPrefab, spawnPoint, Quaternion.identity, 0) as GameObject;
         view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, Network.player, index);
     }
 

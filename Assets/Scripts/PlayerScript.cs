@@ -16,7 +16,7 @@ public class PlayerScript : MonoBehaviour {
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = player.color;
         GetComponentInChildren<LensFlare>().color = player.color;
-        GameObject shield = GetComponent<ShieldScript>().shield;
+        GameObject shield = GetComponent<EnergyScript>().shield;
         foreach (MeshRenderer mr in shield.GetComponentsInChildren<MeshRenderer>()) {
             mr.material.SetColor("_EmissionColor", player.color);
         }
