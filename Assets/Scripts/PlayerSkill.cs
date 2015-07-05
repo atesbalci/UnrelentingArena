@@ -20,7 +20,7 @@ public class PlayerSkill : MonoBehaviour {
         if (!player.dead) {
             casting = -1;
             if (view.isMine && player.canCast) {
-                for(int i = 0; i < 4; i++) {
+                for (int i = 0; i < 4; i++) {
                     if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Skill1 + i])) {
                         casting = i;
                         break;
@@ -48,8 +48,10 @@ public class PlayerSkill : MonoBehaviour {
                 if (playerPlane.Raycast(ray, out hitdist) && view.isMine)
                     targetPoint = ray.GetPoint(hitdist);
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                playerMove.destinationPosition = Vector3.Lerp(transform.position, targetPoint, 0.05f);
+                playerMove.destinationPosition = Vector3.MoveTowards(transform.position, targetPoint, 0.1f);
                 player.AddBuff(new CastChannel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
+                anim.speed = 1 / skill.channelTime;
+                anim.SetBool("Casting", true);
             }
         }
     }
@@ -71,16 +73,5 @@ public class PlayerSkill : MonoBehaviour {
             skill.player = player;
         }
         anim.SetBool("Casting", false);
-    }
-
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
-        if (stream.isWriting) {
-            bool casting = anim.GetBool("Casting");
-            stream.Serialize(ref casting);
-        } else {
-            bool casting = false;
-            stream.Serialize(ref casting);
-            anim.SetBool("Casting", casting);
-        }
     }
 }

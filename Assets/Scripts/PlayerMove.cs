@@ -25,9 +25,10 @@ public class PlayerMove : MonoBehaviour {
                     Move(ray.GetPoint(hitdist));
                 }
             }
-            anim.SetFloat("Speed", moveSpeed);
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
+                anim.SetFloat("Speed", moveSpeed);
+                anim.speed = moveSpeed / player.statSet.movementSpeed;
                 if (destinationDistance < .5f) {
                     moveSpeed = 0;
                 } else if (destinationDistance > 0) {
@@ -36,14 +37,14 @@ public class PlayerMove : MonoBehaviour {
                 if (destinationDistance > .5f) {
                     transform.position = Vector3.MoveTowards(transform.position, destinationPosition, Time.deltaTime * moveSpeed);
                 }
-                if (destinationPosition - transform.position != Vector3.zero)
-                    transform.rotation = Quaternion.Lerp(transform.rotation,
-                    Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
             } else {
                 moveSpeed = 0;
                 if (destinationDistance > 1)
                     destinationPosition = transform.position;
             }
+            if (destinationPosition - transform.position != Vector3.zero)
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
         }
     }
 
