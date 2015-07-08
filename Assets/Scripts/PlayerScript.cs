@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour {
         if(Network.isServer) {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
+        GetComponent<PlayerSkill>().particles.startColor = player.color;
     }
 
     [RPC]
