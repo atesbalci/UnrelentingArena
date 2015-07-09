@@ -9,6 +9,7 @@ public class PulseScript : MonoBehaviour {
     private float state;
     private float damage;
     private Material material;
+    private LensFlare flare;
 
     void Start() {
         player = GameManager.instance.playerList[view.owner].currentPlayer;
@@ -18,12 +19,15 @@ public class PulseScript : MonoBehaviour {
         damage = 20;
         material = GetComponent<Renderer>().material;
         material.SetColor("_EmissionColor", player.color);
+        flare = GetComponentInChildren<LensFlare>();
+        flare.color = player.color;
     }
 
     void Update() {
         material.color = new Color(material.color.r, material.color.g, material.color.b, state / MAX_DURATION);
         float scale = 3 - state / MAX_DURATION;
         transform.localScale = new Vector3(scale, scale, 1);
+        flare.brightness -= Time.deltaTime / 2;
         state -= Time.deltaTime;
         if (Network.isServer && state <= 0)
             Network.Destroy(gameObject);

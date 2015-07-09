@@ -22,6 +22,7 @@ public class ResolutionsScript : MonoBehaviour {
             new Resolution(1600, 900),
             new Resolution(1600, 1200),
             new Resolution(1680, 1050),
+            new Resolution(1920, 1080),
             new Resolution(1920, 1200),
             new Resolution(2560, 1440),
             new Resolution(2560, 1600),
@@ -54,8 +55,8 @@ public class ResolutionsScript : MonoBehaviour {
             activeResolution--;
         if (activeResolution >= resolutions.Length) {
             activeResolution = 0;
-        }                     
-        if(activeResolution < 0) {
+        }
+        if (activeResolution < 0) {
             activeResolution = resolutions.Length - 1;
         }
         resolutionText.text = resolutions[activeResolution].width + "x" + resolutions[activeResolution].height;

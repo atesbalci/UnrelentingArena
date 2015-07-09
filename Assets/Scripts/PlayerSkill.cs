@@ -55,6 +55,7 @@ public class PlayerSkill : MonoBehaviour {
                 player.AddBuff(new CastChannel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
                 anim.speed = 1 / skill.channelTime;
                 anim.SetBool("Casting", true);
+                particles.Play();
             }
         }
     }
@@ -76,6 +77,5 @@ public class PlayerSkill : MonoBehaviour {
             skill.player = player;
         }
         anim.SetBool("Casting", false);
-        particles.Play();
     }
 }
