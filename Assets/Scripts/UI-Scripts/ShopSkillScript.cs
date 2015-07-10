@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
-public class ShopSkillScript : MonoBehaviour {
+public class ShopSkillScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     public Image image;
     public Text skillName;
     public Text level;
@@ -27,6 +28,7 @@ public class ShopSkillScript : MonoBehaviour {
         }
         button.onClick = new Button.ButtonClickedEvent();
         button.onClick.AddListener(() => { Buy(); });
+        GameManager.instance.tooltip.gameObject.SetActive(true);
     }
 
     public void Buy() {
@@ -37,5 +39,14 @@ public class ShopSkillScript : MonoBehaviour {
                 GetComponentInParent<ShopPanelScript>().Refresh();
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        GameManager.instance.tooltip.gameObject.SetActive(true);
+        GameManager.instance.tooltip.text.text = skillPreset.tooltip;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        GameManager.instance.tooltip.gameObject.SetActive(false);
     }
 }

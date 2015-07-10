@@ -11,11 +11,11 @@ public enum GameState {
 }
 
 public class GameManager : MonoBehaviour {
-    public static Color[] colors = { Color.red, Color.blue, Color.green, new Color(255 / 255f, 165 / 255f, 0 / 255f), Color.cyan, Color.yellow };
-
     public StageMainScript stage;
     public CanvasNavigator navigator;
     public GameObject playerPrefab;
+    public TooltipScript tooltip;
+    public Color[] colors;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour {
                 round++;
                 remainingIntermissionDuration = 0;
             }
+            if (state != GameState.Shop)
+                tooltip.gameObject.SetActive(false);
             stage.running = (state == GameState.Ingame);
             navigator.RefreshUI();
         }
@@ -241,7 +243,7 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 0) {
+                if (headCount <= 1) {
                     Clear();
                     foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                         NetworkPlayer np = pd.Value.currentPlayer.owner;

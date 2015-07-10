@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class ScoresScript : MonoBehaviour {
+    public GameObject listingPrefab;
+
     private float refreshTimer;
 
     void Start() {
@@ -24,7 +26,7 @@ public class ScoresScript : MonoBehaviour {
         foreach (PlayerListingScript child in GetComponentsInChildren<PlayerListingScript>())
             Destroy(child.gameObject);
         foreach (PlayerData playerData in GameManager.instance.ListPlayers()) {
-            GameObject playerListing = GameObject.Instantiate(Resources.Load("UI-Elements/PlayerListing")) as GameObject;
+            GameObject playerListing = Instantiate(listingPrefab);
             playerListing.transform.SetParent(transform);
             playerListing.GetComponent<PlayerListingScript>().SetPlayer(playerData);
         }

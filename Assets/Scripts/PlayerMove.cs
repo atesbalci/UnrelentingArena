@@ -27,7 +27,6 @@ public class PlayerMove : MonoBehaviour {
             }
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
-                anim.SetFloat("Speed", moveSpeed);
                 anim.speed = moveSpeed / player.statSet.movementSpeed;
                 if (destinationDistance < .5f) {
                     moveSpeed = 0;
@@ -45,6 +44,7 @@ public class PlayerMove : MonoBehaviour {
             if (destinationPosition - transform.position != Vector3.zero)
                 transform.rotation = Quaternion.Lerp(transform.rotation,
                 Quaternion.LookRotation(destinationPosition - transform.position), Time.deltaTime * 10);
+            anim.SetFloat("Speed", moveSpeed);
         }
     }
 

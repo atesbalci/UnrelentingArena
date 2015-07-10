@@ -28,6 +28,6 @@ public class FaderScript : MonoBehaviour {
             return;
         }
         foreach (Material skin in skins)
-            skin.SetColor("_Color", new Color(skin.color.r, skin.color.g, skin.color.b, remaining / fadeSpeed));
+            skin.color = new Color(skin.color.r, skin.color.g, skin.color.b, remaining / fadeSpeed);
     }
 }

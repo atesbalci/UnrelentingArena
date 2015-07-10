@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class ServerListScript : MonoBehaviour {
+    public GameObject hostDataPrefab;
+
     private RectTransform rectTransform;
     private float refresh;
 
@@ -22,7 +24,7 @@ public class ServerListScript : MonoBehaviour {
             HostData[] hostData = GameManager.instance.hostData;
             if (hostData != null) {
                 foreach (HostData hd in hostData) {
-                    GameObject host = Instantiate(Resources.Load("UI-Elements/HostData")) as GameObject;
+                    GameObject host = Instantiate(hostDataPrefab);
                     host.transform.SetParent(gameObject.transform);
                     host.GetComponent<HostDataScript>().hostData = hd;
                 }

@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f606d0fc2dbc1b44aa61cc35478b537, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f606d0fc2dbc1b44aa61cc35478b537, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f606d0fc2dbc1b44aa61cc35478b537, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 31
     m_FontStyle: 1
     m_BestFit: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 4f606d0fc2dbc1b44aa61cc35478b537, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
@@ -1822,6 +1822,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rend: {fileID: 1570049507}
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: .501960814, b: 0, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
 --- !u!1 &2030440987
 GameObject:
   m_ObjectHideFlags: 0

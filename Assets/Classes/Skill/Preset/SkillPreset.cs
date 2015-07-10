@@ -73,4 +73,10 @@ public abstract class SkillPreset {
             return 0;
         }
     }
+
+    public virtual string tooltip {
+        get {
+            return "<b>N/A</b>\nN/A";
+        }
+    }
 }

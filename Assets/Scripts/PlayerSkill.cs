@@ -61,7 +61,7 @@ public class PlayerSkill : MonoBehaviour {
     }
 
     public void InstantiateSkill(string prefab, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
-        GameObject skillObject = Network.Instantiate(Resources.Load(prefab), position, rotation, 0) as GameObject;
+        GameObject skillObject = Network.Instantiate(Resources.Load<GameObject>(prefab), position, rotation, 0) as GameObject;
         view.RPC("InitializeSkill", RPCMode.All, skillObject.GetComponent<NetworkView>().viewID, level, targetPosition);
     }
 

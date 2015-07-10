@@ -3,15 +3,14 @@ using System.Collections;
 
 public class CharacterShowcaseScript : MonoBehaviour {
     public SkinnedMeshRenderer rend;
+    public Color[] colors;
 
     private int currentIndex = 0;
     private int nextIndex;
     private float changeColourTime = 2.0f;
     private float timer = 0.0f;
-    private Color[] colors;
 
     void Start() {
-        colors = GameManager.colors;
         nextIndex = (currentIndex + 1) % colors.Length;
     }
 
