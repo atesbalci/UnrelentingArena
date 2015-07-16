@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
     public void UpdateScore(NetworkPlayer player, int credits) {
         PlayerData data;
         if (playerList.TryGetValue(player, out data)) {
-            data.addPoints(credits);
+            data.AddPoints(credits);
         }
     }
 

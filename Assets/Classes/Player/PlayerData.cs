@@ -24,7 +24,7 @@ public class PlayerData {
         currentPlayer = null;
     }
 
-    public void addPoints(int points) {
+    public void AddPoints(int points) {
         score += points;
         credits += points;
         skillPoints += points;

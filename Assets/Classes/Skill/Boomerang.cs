@@ -54,6 +54,7 @@ public class Boomerang : SkillShot {
     public override void CollisionWithSelf(Collider collider) {
         if (returning) {
             dead = true;
+            player.RemoveBuff(buff);
         }
     }
 }

@@ -40,7 +40,7 @@ public class PulseScript : MonoBehaviour {
             PlayerScript ps = col.GetComponent<PlayerScript>();
             if (ps != null) {
                 ps.player.Damage(damage, player);
-                ps.ApplyKnockback(ps.transform.position - transform.position, 10, 10);
+                ps.ApplyKnockback(ps.transform.position - new Vector3(transform.position.x, 0, transform.position.z), 10, 10);
             }
         }
     }
