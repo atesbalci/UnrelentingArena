@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerMove : MonoBehaviour {
     public Vector3 destinationPosition { get; set; }
     public NetworkView view;
+
     private float moveSpeed = 0;
     private Player player;
     private Animator anim;
@@ -27,7 +28,7 @@ public class PlayerMove : MonoBehaviour {
             }
             float destinationDistance = Vector3.Distance(destinationPosition, transform.position);
             if (player.currentSpeed > 0.5f) {
-                anim.speed = moveSpeed / player.statSet.movementSpeed;
+                anim.speed = player.currentSpeed / player.statSet.movementSpeed;
                 if (destinationDistance < .5f) {
                     moveSpeed = 0;
                 } else if (destinationDistance > 0) {

@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 1) {
+                if (headCount <= 0) {
                     Clear();
                     foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                         NetworkPlayer np = pd.Value.currentPlayer.owner;

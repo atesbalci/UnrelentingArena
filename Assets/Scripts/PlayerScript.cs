@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
+    public TrailRenderer trail;
 
     public NetworkView view;
 
@@ -15,16 +16,11 @@ public class PlayerScript : MonoBehaviour {
         bodyRenderer.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = player.color;
-        GetComponentInChildren<LensFlare>().color = player.color;
-        GameObject shield = GetComponent<EnergyScript>().shield;
-        foreach (MeshRenderer mr in shield.GetComponentsInChildren<MeshRenderer>()) {
-            mr.material.SetColor("_EmissionColor", player.color);
-        }
-        shield.SetActive(false);
         if(Network.isServer) {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
         GetComponent<PlayerSkill>().particles.startColor = player.color;
+        trail.material.SetColor("_TintColor", player.color);
     }
 
     [RPC]

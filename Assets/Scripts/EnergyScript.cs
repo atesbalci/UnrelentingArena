@@ -2,52 +2,68 @@
 using System.Collections;
 
 public class EnergyScript : MonoBehaviour {
-    public GameObject shield;
-    public LensFlare flare;
+    public NetworkView view;
     public GameObject pulse;
 
-    public bool blocking { get; set; }
+    public float dodging { get; set; }
 
     private Player player;
-    public NetworkView view;
     private PlayerMove playerMove;
+    private Animator anim;
+    private Roll buff;
+    private Material[] trail;
 
     void Start() {
         player = GetComponent<PlayerScript>().player;
         playerMove = GetComponent<PlayerMove>();
-        blocking = false;
+        dodging = 0;
+        anim = GetComponent<Animator>();
+        buff = new Roll(player);
+        trail = GetComponent<PlayerScript>().trail.materials;
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (stream.isWriting) {
             float bp = player.energyPoints;
             float be = player.energyExhaust;
-            bool bl = blocking;
+            float bl = dodging;
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
             stream.Serialize(ref bl);
         } else {
             float bp = 0;
             float be = 0;
-            bool bl = blocking;
+            float bl = dodging;
             stream.Serialize(ref bp);
             stream.Serialize(ref be);
             stream.Serialize(ref bl);
             player.energyPoints = bp;
             player.energyExhaust = be;
-            blocking = bl;
+            dodging = bl;
         }
     }
 
     void Update() {
         if (view.isMine) {
-            if (blocking && (Input.GetKeyUp(GameInput.instance.keys[(int)GameBinding.Block]) || player.energyPoints < 0)) {
-                blocking = false;
+            if (dodging > 0) {
                 player.energyExhaust = 1;
-            } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Block]) && player.canCast) {
-                if (player.energyPoints >= player.statSet.maxEnergyPoints) {
-                    blocking = true;
+                anim.speed = 1;
+                dodging -= Time.deltaTime;
+                if (dodging <= 0) {
+                    dodging = 0;
                 }
+                buff.speed = Mathf.Lerp(0, 15, dodging / 0.7f - 0.2f);
+                player.AddBuff(buff);
+                playerMove.destinationPosition = transform.position + transform.rotation * Vector3.forward * 10;
+            }
+            if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Dodge]) && player.canCast && player.energyPoints >= 0.5f) {
+                dodging = 0.7f;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float hitdst = 0;
+                (new Plane(Vector3.up, transform.position)).Raycast(ray, out hitdst);
+                transform.rotation = Quaternion.LookRotation(ray.GetPoint(hitdst) - transform.position, Vector3.up);
+                player.energyPoints -= 0.5f;
+                player.energyExhaust = 1;
             } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Pulse]) && player.canCast && player.energyPoints >= 0.5f) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdst = 0;
@@ -58,28 +74,18 @@ public class EnergyScript : MonoBehaviour {
             }
         }
         if (player.energyExhaust <= 0) {
-            if (blocking)
-                player.energyPoints -= Time.deltaTime;
-            else
-                player.energyPoints += Time.deltaTime * player.statSet.energyRegen;
+            player.energyPoints += Time.deltaTime * player.statSet.energyRegen;
         } else {
             player.energyExhaust -= Time.deltaTime;
         }
         if (player.energyPoints >= player.statSet.maxEnergyPoints) {
             player.energyPoints = player.statSet.maxEnergyPoints;
         }
-        if (blocking) {
-            shield.SetActive(true);
-            flare.brightness = Mathf.Lerp(0.1f, 0.4f, player.energyPoints / player.statSet.maxEnergyPoints);
-            if (view.isMine) {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Plane playerPlane = new Plane(Vector3.up, transform.position);
-                float hitdist = 0.0f;
-                if (playerPlane.Raycast(ray, out hitdist)) {
-                    playerMove.destinationPosition = Vector3.Lerp(transform.position, ray.GetPoint(hitdist), 0.05f);
-                }
-            }
-        } else
-            shield.SetActive(false);
+        anim.SetBool("Dodging", dodging > 0);
+        bool colorDependent = false;
+        foreach (Material m in trail) {
+            m.SetColor("_TintColor", dodging > 0 ? (!colorDependent ? player.color : Color.white) : Color.Lerp(m.GetColor("_TintColor"), Color.clear, 0.1f));
+            colorDependent = true;
+        }
     }
 }

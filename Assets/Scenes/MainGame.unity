@@ -2880,7 +2880,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: e9a51a2870065f94a8751878e532496d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6400012, guid: e9a51a2870065f94a8751878e532496d, type: 3}
       propertyPath: m_IsTrigger
