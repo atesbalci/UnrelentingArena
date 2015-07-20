@@ -5,6 +5,7 @@ public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public SkinnedMeshRenderer bodyRenderer;
     public TrailRenderer trail;
+    public ParticleSystem particles;
 
     public NetworkView view;
 
@@ -19,7 +20,7 @@ public class PlayerScript : MonoBehaviour {
         if(Network.isServer) {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
-        GetComponent<PlayerSkill>().particles.startColor = player.color;
+        particles.startColor = player.color;
         trail.material.SetColor("_TintColor", player.color);
     }
 

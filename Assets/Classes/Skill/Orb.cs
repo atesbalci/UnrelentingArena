@@ -23,6 +23,7 @@ public class Orb : Skill {
         area.startColor = player.color;
         area.gameObject.SetActive(false);
         verticalTarget = new Vector3(gameObject.transform.position.x, 10, gameObject.transform.position.z);
+        renderer.material.SetColor("_EmissionColor", player.color);
     }
 
     public override void Update() {

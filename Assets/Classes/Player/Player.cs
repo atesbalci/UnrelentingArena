@@ -11,8 +11,6 @@ public class Player {
 
     //buffs/skills/items
     public SkillSet skillSet { get; set; }
-    private ItemSet _itemSet;
-    public ItemSet itemSet { get { return _itemSet; } set { _itemSet = value; itemSet.Apply(this); } }
     public LinkedList<Buff> buffs { get; set; }
     public CastChannel toBeCast { get; set; }
     public bool canCast { get; set; }

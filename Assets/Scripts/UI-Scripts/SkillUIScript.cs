@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SkillUIScript : MonoBehaviour {
+public class SkillUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     private SkillPreset _skill;
     public SkillPreset skill {
         get {
@@ -38,5 +39,14 @@ public class SkillUIScript : MonoBehaviour {
     void OnDisable() {
         skill = null;
         key.text = "";
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        GameManager.instance.tooltip.gameObject.SetActive(true);
+        GameManager.instance.tooltip.text.text = skill.tooltip;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        GameManager.instance.tooltip.gameObject.SetActive(false);
     }
 }

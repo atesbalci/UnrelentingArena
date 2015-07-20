@@ -6,18 +6,7 @@ using System.Collections.Generic;
 public class ShopPanelScript : MonoBehaviour {
     public GameObject skillGroupPrefab;
     public GameObject shopSkillPrefab;
-    public GameObject shopItemPrefab;
 
-    private bool _state;
-    public bool state {
-        get {
-            return _state;
-        }
-        set {
-            _state = value;
-            Refresh();
-        }
-    }
     private GridLayoutGroup grid;
 
     void Awake() {
@@ -28,29 +17,17 @@ public class ShopPanelScript : MonoBehaviour {
         foreach (LayoutElement le in GetComponentsInChildren<LayoutElement>())
             Destroy(le.gameObject);
         PlayerData playerData = GameManager.instance.playerData;
-        if (state) {
-            grid.cellSize = new Vector2(170, 460);
-            Transform[] skillGroups = new Transform[4];
-            for (int i = 0; i < 4; i++) {
-                skillGroups[i] = ((GameObject)Instantiate(skillGroupPrefab)).transform;
-                skillGroups[i].SetParent(gameObject.transform);
-                skillGroups[i].GetComponentInChildren<Text>().text = "" + GameInput.instance.keys[(int)GameBinding.Skill1 + i];
-            }
-            foreach (KeyValuePair<SkillType, SkillPreset> kvp in playerData.skillSet.skills) {
-                ShopSkillScript shopSkillScript = ((GameObject)Instantiate(shopSkillPrefab)).GetComponent<ShopSkillScript>();
-                shopSkillScript.skillPreset = kvp.Value;
-                shopSkillScript.gameObject.transform.SetParent(skillGroups[kvp.Value.key]);
-            }
-        } else {
-            grid.cellSize = new Vector2(150, 200);
-            int no = 0;
-            foreach (Item item in playerData.itemSet.potentialItems) {
-                ShopItemScript shopItemScript = ((GameObject)Instantiate(shopItemPrefab)).GetComponent<ShopItemScript>();
-                shopItemScript.item = item;
-                shopItemScript.no = no;
-                shopItemScript.gameObject.transform.SetParent(gameObject.transform);
-                no++;
-            }
+        grid.cellSize = new Vector2(170, 460);
+        Transform[] skillGroups = new Transform[4];
+        for (int i = 0; i < 4; i++) {
+            skillGroups[i] = ((GameObject)Instantiate(skillGroupPrefab)).transform;
+            skillGroups[i].SetParent(gameObject.transform);
+            skillGroups[i].GetComponentInChildren<Text>().text = "" + GameInput.instance.keys[(int)GameBinding.Skill1 + i];
+        }
+        foreach (KeyValuePair<SkillType, SkillPreset> kvp in playerData.skillSet.skills) {
+            ShopSkillScript shopSkillScript = ((GameObject)Instantiate(shopSkillPrefab)).GetComponent<ShopSkillScript>();
+            shopSkillScript.skillPreset = kvp.Value;
+            shopSkillScript.gameObject.transform.SetParent(skillGroups[kvp.Value.key]);
         }
     }
 }

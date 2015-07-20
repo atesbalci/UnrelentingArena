@@ -62,12 +62,6 @@ public abstract class SkillPreset {
         }
     }
 
-    public virtual Prerequisite prerequisite {
-        get {
-            return new Prerequisite(SkillType.None, 0);
-        }
-    }
-
     public virtual int price {
         get {
             return 0;

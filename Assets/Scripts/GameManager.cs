@@ -45,8 +45,7 @@ public class GameManager : MonoBehaviour {
                 round++;
                 remainingIntermissionDuration = 0;
             }
-            if (state != GameState.Shop)
-                tooltip.gameObject.SetActive(false);
+            tooltip.gameObject.SetActive(false);
             stage.running = (state == GameState.Ingame);
             navigator.RefreshUI();
         }
@@ -120,6 +119,8 @@ public class GameManager : MonoBehaviour {
     public void Clear() {
         foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
             Network.Destroy(gameObject);
+        foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
+            Network.Destroy(gameObject);
     }
 
     void OnPlayerDisconnected(NetworkPlayer player) {
@@ -171,7 +172,6 @@ public class GameManager : MonoBehaviour {
             playerScript.player.name = data.name;
             playerScript.player.owner = owner;
             playerScript.player.skillSet = data.skillSet;
-            playerScript.player.itemSet = data.itemSet;
             data.currentPlayer = playerScript.player;
         }
         playerScript.Initialize();
@@ -183,15 +183,6 @@ public class GameManager : MonoBehaviour {
         if (playerList.TryGetValue(player, out pd)) {
             pd.skillPoints -= pd.skillSet.GetUpgradeCost((SkillType)skill);
             pd.skillSet.Upgrade((SkillType)skill);
-        }
-    }
-
-    [RPC]
-    public void BuyItem(NetworkPlayer player, int item) {
-        PlayerData pd;
-        if (playerList.TryGetValue(player, out pd)) {
-            pd.credits -= pd.itemSet.potentialItems[item].price;
-            pd.itemSet.Get(item);
         }
     }
 
@@ -213,7 +204,7 @@ public class GameManager : MonoBehaviour {
         LinkedListNode<PlayerData> max = head;
         LinkedListNode<PlayerData> cur = head.Next;
         while (cur != null) {
-            if (cur.Value.credits > max.Value.credits)
+            if (cur.Value.score > max.Value.score)
                 max = cur;
             cur = cur.Next;
         }

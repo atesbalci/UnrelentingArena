@@ -13,6 +13,6 @@ public class StatSet {
         movementSpeed = 3.5f;
         maxEnergyPoints = 1;
         armor = 10;
-        energyRegen = 1;
+        energyRegen = 0.25f;
     }
 }

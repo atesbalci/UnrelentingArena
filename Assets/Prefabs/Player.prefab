@@ -2555,7 +2555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca815d603bd3f4b44bf1306946bb1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: {fileID: 19808326}
   view: {fileID: 14820632}
 --- !u!114 &11423230
 MonoBehaviour:
@@ -2755,6 +2754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyRenderer: {fileID: 13745740}
   trail: {fileID: 9699970}
+  particles: {fileID: 19808326}
   view: {fileID: 14843790}
 --- !u!114 &11499334
 MonoBehaviour:

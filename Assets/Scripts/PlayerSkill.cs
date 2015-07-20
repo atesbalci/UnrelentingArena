@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class PlayerSkill : MonoBehaviour {
-    public ParticleSystem particles;
-
+    private ParticleSystem particles;
     private Player player;
     private Vector3 targetPoint;
     private int casting;
@@ -12,6 +11,7 @@ public class PlayerSkill : MonoBehaviour {
     private PlayerMove playerMove;
 
     void Start() {
+        particles = GetComponent<PlayerScript>().particles;
         player = GetComponent<PlayerScript>().player;
         casting = -1;
         anim = GetComponent<Animator>();
