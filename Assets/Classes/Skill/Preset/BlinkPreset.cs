@@ -48,4 +48,10 @@ public class BlinkPreset : SkillPreset {
             return 0 + ((level + 1) * 50);
         }
     }
+
+    public override string tooltip {
+        get {
+            return "<b>Blink</b>\nA quick short distance teleport.";
+        }
+    }
 }

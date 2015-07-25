@@ -48,4 +48,10 @@ public class MeteorPreset : SkillPreset {
             return 0 + ((level + 1) * 50);
         }
     }
+
+    public override string tooltip {
+        get {
+            return "<b>Meteor</b>\nSummons a virtual meteor to nearby location.";
+        }
+    }
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum SkillType {
-    None, Fireball, Blink, Meteor, Overcharge, Orb, Charge, Boomerang, Mine
+    None = -1, Powerball = 0, Blink = 1, Meteor = 2, Overcharge = 3, Orb = 4, Charge = 5, Boomerang = 6, Mine = 7
 };
 
 public abstract class Skill {

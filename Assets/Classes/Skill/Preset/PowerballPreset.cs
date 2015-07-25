@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireballPreset : SkillPreset {
-    public FireballPreset()
-        : base(SkillType.Fireball) {
+public class PowerballPreset : SkillPreset {
+    public PowerballPreset()
+        : base(SkillType.Powerball) {
         key = 0;
     }
 
     public override string name {
         get {
-            return "Fireball";
+            return "Powerball";
         }
     }
 
@@ -46,6 +46,12 @@ public class FireballPreset : SkillPreset {
     public override int price {
         get {
             return 0 + ((level + 1) * 50);
+        }
+    }
+
+    public override string tooltip {
+        get {
+            return "<b>Powerball</b>\nA simple ball of energy to damage and knock back your enemies on its path.";
         }
     }
 }

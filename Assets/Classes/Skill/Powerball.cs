@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fireball : SkillShot {
+public class Powerball : SkillShot {
     private float time;
     private ParticleSystem[] particles;
 

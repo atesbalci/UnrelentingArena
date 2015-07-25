@@ -4686,6 +4686,15 @@ MonoBehaviour:
   - {r: 1, g: .498039216, b: 0, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
+  skills:
+  - {fileID: 188744, guid: 44be4689d18421842bbb9d8c6cdbf9d7, type: 2}
+  - {fileID: 117464, guid: 6df03951221396945841aab86789d797, type: 2}
+  - {fileID: 152422, guid: c15344a57752039498c50801692c70d2, type: 2}
+  - {fileID: 145550, guid: 420f94c032992134a960951ceea52f1d, type: 2}
+  - {fileID: 192710, guid: 476f01ffeb9cb074f88d37ae44fd405b, type: 2}
+  - {fileID: 102034, guid: b658786c60852b643baa71d623bb38e8, type: 2}
+  - {fileID: 196642, guid: 71938cbf53c701d4da068f15b46ba9a8, type: 2}
+  - {fileID: 184814, guid: 5dc925af1d5f0ac41a91b8c84f08b62a, type: 2}
 --- !u!4 &1668419213
 Transform:
   m_ObjectHideFlags: 0

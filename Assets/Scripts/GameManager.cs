@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public GameObject playerPrefab;
     public TooltipScript tooltip;
     public Color[] colors;
+    public GameObject[] skills;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;

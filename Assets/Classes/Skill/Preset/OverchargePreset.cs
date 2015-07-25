@@ -48,4 +48,10 @@ public class OverchargePreset : SkillPreset {
             return 0 + ((level + 1) * 50);
         }
     }
+
+    public override string tooltip {
+        get {
+            return "<b>Overcharge</b>\nA quick explosion of energy with limited range which damages and knocks back nearby enemies.";
+        }
+    }
 }

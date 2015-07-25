@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea8c693d7244dd4e9370ded12f9b0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillType: 7
+  skillType: 6
   view: {fileID: 14851666}
 --- !u!135 &13537750
 SphereCollider:

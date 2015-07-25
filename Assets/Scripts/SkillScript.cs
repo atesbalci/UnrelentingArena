@@ -15,8 +15,8 @@ public class SkillScript : MonoBehaviour {
     public void Initialize() {
         if (skill == null) {
             switch (skillType) {
-                case SkillType.Fireball:
-                    skill = new Fireball();
+                case SkillType.Powerball:
+                    skill = new Powerball();
                     break;
                 case SkillType.Blink:
                     skill = new Blink();

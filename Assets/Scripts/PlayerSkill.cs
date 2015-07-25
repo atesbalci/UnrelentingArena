@@ -34,7 +34,7 @@ public class PlayerSkill : MonoBehaviour {
             if (player.toBeCast != null) {
                 //networkView.RPC("InstantiateSkill", RPCMode.All, player.toBeCast.skill.prefab, player.toBeCast.position,
                 //    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
-                InstantiateSkill(player.toBeCast.skill.name, player.toBeCast.position,
+                InstantiateSkill(player.toBeCast.skill.skill, player.toBeCast.position,
                     player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
                 player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
                 player.toBeCast = null;
@@ -60,8 +60,8 @@ public class PlayerSkill : MonoBehaviour {
         }
     }
 
-    public void InstantiateSkill(string prefab, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
-        GameObject skillObject = Network.Instantiate(Resources.Load<GameObject>(prefab), position, rotation, 0) as GameObject;
+    public void InstantiateSkill(SkillType skill, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
+        GameObject skillObject = Network.Instantiate(GameManager.instance.skills[(int)skill], position, rotation, 0) as GameObject;
         view.RPC("InitializeSkill", RPCMode.All, skillObject.GetComponent<NetworkView>().viewID, level, targetPosition);
     }
 

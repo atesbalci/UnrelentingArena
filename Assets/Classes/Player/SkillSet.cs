@@ -7,7 +7,7 @@ public class SkillSet {
 
     public SkillSet() {
         skills = new Dictionary<SkillType, SkillPreset>();
-        skills.Add(SkillType.Fireball, new FireballPreset());
+        skills.Add(SkillType.Powerball, new PowerballPreset());
         skills.Add(SkillType.Orb, new OrbPreset());
         skills.Add(SkillType.Charge, new ChargePreset());
         skills.Add(SkillType.Overcharge, new OverchargePreset());

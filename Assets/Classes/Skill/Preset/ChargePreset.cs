@@ -48,4 +48,10 @@ public class ChargePreset : SkillPreset {
             return 0 + ((level + 1) * 50);
         }
     }
+
+    public override string tooltip {
+        get {
+            return "<b>Charge</b>\nCharge to a location with pace, while knocking back anything on destination.";
+        }
+    }
 }

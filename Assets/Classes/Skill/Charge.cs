@@ -8,6 +8,7 @@ public class Charge : Skill {
     private bool charging;
     private bool damaging;
     private ParticleSystem effect;
+    private ChargeBuff buff;
 
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
@@ -21,12 +22,19 @@ public class Charge : Skill {
         effect.startColor = player.color;
         effect.startRotation = player.gameObject.transform.eulerAngles.y * Mathf.Deg2Rad;
         effect.gameObject.SetActive(false);
+        buff = new ChargeBuff(player);
     }
 
     public override void Update() {
         if (charging) {
-            player.AddBuff(new ChargeBuff(player));
+            player.AddBuff(buff);
             time += Time.deltaTime;
+            foreach (Buff b in player.buffs) {
+                if (b != buff && b is Stun && !(b is CastChannel) && !(b is CastRecoil)) {
+                    charging = false;
+                    return;
+                }
+            }
             if (time / PERIOD >= 1) {
                 time -= PERIOD;
                 player.gameObject.GetComponent<PlayerScript>().LeaveFadingImage();

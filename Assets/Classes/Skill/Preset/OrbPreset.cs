@@ -48,4 +48,10 @@ public class OrbPreset : SkillPreset {
             return 0 + ((level + 1) * 50);
         }
     }
+
+    public override string tooltip {
+        get {
+            return "<b>Orb</b>\nSummons an orb to a nearby location which applies a momentary gravitational pull.";
+        }
+    }
 }
