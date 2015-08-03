@@ -7,9 +7,11 @@ public class PlatformScript : MonoBehaviour {
     private float changeColourTime = 2.0f;
     private float timer = 0.0f;
     private Color[] colors = { Color.red, Color.blue, Color.green, Color.yellow };
+    private Material material;
 
     void Start() {
         nextIndex = (currentIndex + 1) % colors.Length;
+        material = GetComponent<Renderer>().material;
     }
 
     void Update() {
@@ -21,6 +23,6 @@ public class PlatformScript : MonoBehaviour {
             timer = 0.0f;
 
         }
-        GetComponent<Renderer>().material.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
+        material.SetColor("_EmissionColor", Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime));
     }
 }
