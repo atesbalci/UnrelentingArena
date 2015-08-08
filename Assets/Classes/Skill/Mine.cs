@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mine : Skill {
+public class Mine : TargetSkill {
     private const float FADE_DURATION = 1;
 
     private enum MineState {
@@ -28,10 +28,12 @@ public class Mine : Skill {
         : base() {
         state = MineState.Ready;
         postRem = FADE_DURATION;
+        type = SkillType.Mine;
     }
 
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
+        gameObject.transform.position = targetPosition;
         particles = gameObject.GetComponentInChildren<ParticleSystem>();
         material = gameObject.GetComponentInChildren<Renderer>().material;
         material.SetColor("_EmissionColor", player.color);
@@ -55,7 +57,7 @@ public class Mine : Skill {
         if (state == MineState.Ready) {
             state = MineState.Contact;
         } else if (state == MineState.Explosion) {
-            player.Damage(damage, this.player);
+            player.Damage(preset.damage, this.player);
             collider.GetComponent<PlayerScript>().Buff(BuffType.Stun, 3);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Charge : Skill {
+public class Charge : TargetSkill {
     private const float PERIOD = 0.1f;
 
     private float time;
@@ -9,6 +9,11 @@ public class Charge : Skill {
     private bool damaging;
     private ParticleSystem effect;
     private ChargeBuff buff;
+
+    public Charge()
+        : base() {
+            type = SkillType.Charge;
+    }
 
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
@@ -60,7 +65,7 @@ public class Charge : Skill {
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (damaging) {
-            collider.GetComponent<PlayerScript>().Knockback(gameObject.transform.rotation * Vector3.forward, 10, 30);
+            collider.GetComponent<PlayerScript>().Knockback(gameObject.transform.rotation * Vector3.forward, preset.knockbackDistance, preset.knockbackSpeed);
         }
     }
 }

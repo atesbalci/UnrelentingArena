@@ -2,20 +2,8 @@
 using System.Collections;
 
 public class TargetSkill : Skill {
-    protected bool initialized;
-
-    public TargetSkill() {
-        initialized = false;
-    }
-
-    public override void Update() {
-        if (!initialized) {
-            if (Vector3.Distance(gameObject.transform.position, targetPosition) <= range) {
-                gameObject.transform.position = new Vector3(targetPosition.x, gameObject.transform.position.y, targetPosition.z);
-            } else {
-                gameObject.transform.Translate(0, 0, range);
-            }
-            initialized = true;
-        }
+    public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
+        targetPosition = Vector3.MoveTowards(gameObject.transform.position, targetPosition, preset.range);
     }
 }

@@ -5,6 +5,11 @@ public class Powerball : SkillShot {
     private float time;
     private ParticleSystem[] particles;
 
+    public Powerball()
+        : base() {
+        type = SkillType.Powerball;
+    }
+
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
         particles = gameObject.GetComponentsInChildren<ParticleSystem>();
@@ -21,16 +26,16 @@ public class Powerball : SkillShot {
     }
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
-        player.Damage(damage, this.player);
+        player.Damage(preset.damage, this.player);
         Vector3 direction = gameObject.transform.rotation * Vector3.forward;
-        collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+        collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, preset.knockbackDistance, preset.knockbackSpeed);
         dead = true;
     }
 
     public override void UpdateEnd() {
         foreach (ParticleSystem ps in particles)
             ps.Stop();
-        if(time <= 0)
+        if (time <= 0)
             Network.Destroy(gameObject);
         time -= Time.deltaTime;
     }

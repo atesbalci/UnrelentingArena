@@ -7,10 +7,12 @@ public class Blink : TargetSkill {
     public Blink()
         : base() {
         timeBeforeDestruction = 1.5f;
+        type = SkillType.Blink;
     }
 
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
+        gameObject.transform.position = targetPosition;
         player.gameObject.transform.position = targetPosition;
         player.gameObject.GetComponent<PlayerScript>().LeaveFadingImage();
     }

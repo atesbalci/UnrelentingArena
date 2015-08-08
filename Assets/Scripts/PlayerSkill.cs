@@ -35,7 +35,7 @@ public class PlayerSkill : MonoBehaviour {
                 //networkView.RPC("InstantiateSkill", RPCMode.All, player.toBeCast.skill.prefab, player.toBeCast.position,
                 //    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
                 InstantiateSkill(player.toBeCast.skill.skill, player.toBeCast.position,
-                    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
+                    player.toBeCast.rotation, player.toBeCast.targetPosition);
                 player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
                 player.toBeCast = null;
             } else if (player.canCast && casting > -1) {
@@ -60,19 +60,18 @@ public class PlayerSkill : MonoBehaviour {
         }
     }
 
-    public void InstantiateSkill(SkillType skill, Vector3 position, Quaternion rotation, int level, Vector3 targetPosition) {
+    public void InstantiateSkill(SkillType skill, Vector3 position, Quaternion rotation, Vector3 targetPosition) {
         GameObject skillObject = Network.Instantiate(GameManager.instance.skills[(int)skill], position, rotation, 0) as GameObject;
-        view.RPC("InitializeSkill", RPCMode.All, skillObject.GetComponent<NetworkView>().viewID, level, targetPosition);
+        view.RPC("InitializeSkill", RPCMode.All, skillObject.GetComponent<NetworkView>().viewID, targetPosition);
     }
 
     [RPC]
-    public void InitializeSkill(NetworkViewID id, int level, Vector3 targetPosition) {
+    public void InitializeSkill(NetworkViewID id, Vector3 targetPosition) {
         GameObject skillObject = NetworkView.Find(id).gameObject;
         SkillScript skillScript = skillObject.GetComponent<SkillScript>();
         skillScript.Initialize();
         Skill skill = skillScript.skill;
         if (skill != null) {
-            skill.level = level;
             skill.targetPosition = targetPosition;
             skill.player = player;
         }

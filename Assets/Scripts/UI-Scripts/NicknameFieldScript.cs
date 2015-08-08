@@ -7,13 +7,15 @@ public class NicknameFieldScript : MonoBehaviour {
 
     void Start() {
         input = GetComponentInParent<InputField>();
-        input.text = GameManager.instance.playerData.name;
+        if (GameManager.instance != null)
+            input.text = GameManager.instance.playerData.name;
     }
 
     public void SetName() {
         string name = input.text;
-        GameManager.instance.playerData.name = name;
         PlayerPrefs.SetString("name", name);
         PlayerPrefs.Save();
+        if (GameManager.instance != null)
+            GameManager.instance.playerData.name = name;
     }
 }

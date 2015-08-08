@@ -3,7 +3,6 @@ using System.Collections;
 
 public abstract class SkillShot : Skill {
     public float speed { get; set; }
-    public override float range { get { return base.range; } set { base.range = value; remainingDistance = value; } }
     public float remainingDistance { get; set; }
     
     protected bool maxRange;

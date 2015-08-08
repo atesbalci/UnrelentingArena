@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
 
-    private const string GAME_NAME = "Warlock Map Like Isometric Realtime Multiplayer Game Testing";
+    private const string GAME_NAME = "Unrelenting Arena Testing";
     private const float REFRESH_LENGTH = 10;
     private const int ROUND_LIMIT = 4;
 

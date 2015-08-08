@@ -6,24 +6,21 @@ public enum SkillType {
 };
 
 public abstract class Skill {
-    private float _range;
-    public virtual float range { get { return _range; } set { _range = value; } }
     public Player player { get; set; }
     public Vector3 targetPosition { get; set; }
-    public int level { get; set; }
-    public float damage { get; set; }
+    public SkillPreset preset { get; set; }
     public GameObject gameObject { get; set; }
     public bool dead { get; set; }
+    public SkillType type { get; set; }
 
     public Skill() {
-        range = 10;
-        damage = 20;
-        level = 1;
-        dead = false;
+        type = SkillType.None;
     }
 
     public virtual void Start(GameObject gameObject) {
         this.gameObject = gameObject;
+        preset = player.skillSet.skills[type];
+        dead = false;
     }
 
     public virtual void Update() {

@@ -16,7 +16,7 @@ public class MenuKeyBinder : MonoBehaviour {
             if (active)
                 GetComponentInChildren<Text>().color = Color.red;
             else
-                GetComponentInChildren<Text>().color = Color.black;
+                GetComponentInChildren<Text>().color = Color.white;
         }
     }
 

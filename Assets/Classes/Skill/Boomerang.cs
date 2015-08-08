@@ -8,6 +8,11 @@ public class Boomerang : SkillShot {
     private Stun buff;
     private Plane plane;
 
+    public Boomerang()
+        : base() {
+        type = SkillType.Boomerang;
+    }
+
     public override void Start(GameObject gameObject) {
         base.Start(gameObject);
         speed = 5;
@@ -30,10 +35,10 @@ public class Boomerang : SkillShot {
                 if (plane.Raycast(ray, out hitdist)) {
                     pos = ray.GetPoint(hitdist);
                 }
-                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, 
+                gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation,
                     Quaternion.LookRotation(pos - player.gameObject.transform.position), Time.deltaTime * 10);
                 gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
-                    Vector3.MoveTowards(player.gameObject.transform.position, pos, range - remainingDistance), Time.deltaTime * 10);
+                    Vector3.MoveTowards(player.gameObject.transform.position, pos, preset.range - remainingDistance), Time.deltaTime * 10);
             }
             if (maxRange)
                 returning = true;
@@ -44,9 +49,9 @@ public class Boomerang : SkillShot {
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (!returning) {
-            player.Damage(damage, this.player);
+            player.Damage(preset.damage, this.player);
             Vector3 direction = gameObject.transform.rotation * Vector3.forward;
-            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, preset.knockbackDistance, preset.knockbackSpeed);
             returning = true;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Orb : Skill {
+public class Orb : TargetSkill {
     private enum OrbState {
         Rising, Falling, Landed, Active
     }
@@ -12,8 +12,10 @@ public class Orb : Skill {
     private Vector3 verticalTarget;
     float time;
 
-    public Orb() {
+    public Orb()
+        : base() {
         state = OrbState.Rising;
+        type = SkillType.Orb;
     }
 
     public override void Start(GameObject gameObject) {
@@ -54,10 +56,10 @@ public class Orb : Skill {
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == OrbState.Active) {
-            player.Damage(damage, this.player);
+            player.Damage(preset.damage, this.player);
             Vector3 direction = gameObject.transform.position - collider.gameObject.transform.position;
             direction.y = 0;
-            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, preset.knockbackDistance, preset.knockbackSpeed);
         }
     }
 

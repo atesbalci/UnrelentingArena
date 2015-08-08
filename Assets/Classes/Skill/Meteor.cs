@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Meteor : Skill {
+public class Meteor : TargetSkill {
     private enum MeteorState {
         Predamage, Damage
     }
@@ -17,6 +17,7 @@ public class Meteor : Skill {
         : base() {
         state = MeteorState.Predamage;
         animation = 6;
+        type = SkillType.Meteor;
     }
 
     public override void Start(GameObject gameObject) {
@@ -53,10 +54,10 @@ public class Meteor : Skill {
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
         if (state == MeteorState.Damage) {
-            player.Damage(damage, this.player);
+            player.Damage(preset.damage, this.player);
             Vector3 direction = collider.gameObject.transform.position - gameObject.transform.position;
             direction.y = 0;
-            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, 10, 30);
+            collider.gameObject.GetComponent<PlayerScript>().Knockback(direction, preset.knockbackDistance, preset.knockbackSpeed);
         }
     }
 

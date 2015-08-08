@@ -73,4 +73,16 @@ public abstract class SkillPreset {
             return "<b>N/A</b>\nN/A";
         }
     }
+
+    public virtual float knockbackDistance {
+        get {
+            return 10;
+        }
+    }
+
+    public virtual float knockbackSpeed {
+        get {
+            return 30;
+        }
+    }
 }
