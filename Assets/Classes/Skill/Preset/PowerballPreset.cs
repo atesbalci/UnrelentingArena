@@ -15,13 +15,13 @@ public class PowerballPreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 10 - (level * 1.5f);
+            return 6 - (level * 0.5f);
         }
     }
 
     public override float channelTime {
         get {
-            return 0.3f;
+            return 0.1f;
         }
     }
 
@@ -33,13 +33,13 @@ public class PowerballPreset : SkillPreset {
 
     public override float damage {
         get {
-            return 20 * level;
+            return 20 + 5 * level;
         }
     }
 
     public override float range {
         get {
-            return 10 + (level * 2);
+            return 10 + level;
         }
     }
 

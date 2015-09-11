@@ -42,6 +42,7 @@ public class Boomerang : SkillShot {
             }
             if (maxRange)
                 returning = true;
+            
         } else {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, player.gameObject.transform.position, Time.deltaTime * speed * 2);
         }

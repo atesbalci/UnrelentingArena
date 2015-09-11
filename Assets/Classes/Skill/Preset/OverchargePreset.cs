@@ -15,13 +15,13 @@ public class OverchargePreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 10 - (level * 1.5f);
+            return 8 - (level * 0.5f);
         }
     }
 
     public override float channelTime {
         get {
-            return 1f;
+            return 0.05f;
         }
     }
 

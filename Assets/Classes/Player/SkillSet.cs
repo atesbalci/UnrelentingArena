@@ -17,8 +17,8 @@ public class SkillSet {
         skills.Add(SkillType.Mine, new MinePreset());
 
         //Upgrade(SkillType.Fireball);
-        Upgrade(SkillType.Orb);
-        //Upgrade(SkillType.Meteor);
+        //Upgrade(SkillType.Orb);
+        Upgrade(SkillType.Meteor);
         //Upgrade(SkillType.Overcharge);
         Upgrade(SkillType.Boomerang);
         Upgrade(SkillType.Charge);

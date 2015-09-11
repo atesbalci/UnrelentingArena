@@ -3,28 +3,30 @@ using System.Collections;
 
 public class PulseScript : MonoBehaviour {
     public NetworkView view;
+    public ParticleSystem particles;
+
     public Player player { get; set; }
 
     private const float MAX_DURATION = 1;
     private float state;
     private float damage;
-    private Material material;
     private LensFlare flare;
 
     void Start() {
         player = GameManager.instance.playerList[view.owner].currentPlayer;
-        transform.eulerAngles = new Vector3(270, transform.eulerAngles.y + 180, transform.eulerAngles.z);
+        transform.eulerAngles = new Vector3(90, transform.eulerAngles.y, transform.eulerAngles.z);
         transform.position = new Vector3(transform.position.x, 1, transform.position.z);
         state = MAX_DURATION;
         damage = 20;
-        material = GetComponent<Renderer>().material;
-        material.SetColor("_EmissionColor", player.color);
+        particles.startColor = player.color;
         flare = GetComponentInChildren<LensFlare>();
         flare.color = player.color;
+        particles.startRotation = transform.eulerAngles.y * Mathf.Deg2Rad;
+        particles.gameObject.SetActive(true);
+        particles.Stop();
     }
 
     void Update() {
-        material.color = new Color(material.color.r, material.color.g, material.color.b, state / MAX_DURATION);
         float scale = 3 - state / MAX_DURATION;
         transform.localScale = new Vector3(scale, scale, 1);
         flare.brightness -= Time.deltaTime / 2;

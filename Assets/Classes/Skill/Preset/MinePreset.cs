@@ -15,13 +15,13 @@ public class MinePreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 16.5f - (level * 1.5f);
+            return 15 - (level * 1.5f);
         }
     }
 
     public override float channelTime {
         get {
-            return 0.1f;
+            return 0.05f;
         }
     }
 

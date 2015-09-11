@@ -21,7 +21,7 @@ public class BlinkPreset : SkillPreset {
 
     public override float channelTime {
         get {
-            return 0.1f;
+            return 0.05f;
         }
     }
 
@@ -33,13 +33,13 @@ public class BlinkPreset : SkillPreset {
 
     public override float damage {
         get {
-            return 20 * level;
+            return 0;
         }
     }
 
     public override float range {
         get {
-            return 10 + (level * 2);
+            return 7 + level;
         }
     }
 
@@ -51,7 +51,7 @@ public class BlinkPreset : SkillPreset {
 
     public override string tooltip {
         get {
-            return "<b>Blink</b>\nA quick short distance teleport.";
+            return "<b>Blink</b>\nA quick limited distance teleport.";
         }
     }
 }

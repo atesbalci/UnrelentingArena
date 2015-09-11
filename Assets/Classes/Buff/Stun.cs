@@ -14,5 +14,6 @@ public class Stun : Buff {
 
     public override void ApplyBuff() {
         player.RemoveBuff(player.castChannel);
+        player.toBeCast = null;
     }
 }

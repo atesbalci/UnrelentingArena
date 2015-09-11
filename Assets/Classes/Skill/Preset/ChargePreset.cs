@@ -21,7 +21,7 @@ public class ChargePreset : SkillPreset {
 
     public override float channelTime {
         get {
-            return 0.1f;
+            return 0.05f;
         }
     }
 
@@ -33,13 +33,13 @@ public class ChargePreset : SkillPreset {
 
     public override float damage {
         get {
-            return 20 * level;
+            return 15 + level * 5;
         }
     }
 
     public override float range {
         get {
-            return 10 + (level * 2);
+            return 4 + level;
         }
     }
 

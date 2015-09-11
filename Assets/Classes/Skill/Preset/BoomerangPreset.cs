@@ -15,13 +15,13 @@ public class BoomerangPreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 10 - (level * 1.5f);
+            return 12 - level;
         }
     }
 
     public override float channelTime {
         get {
-            return 1f;
+            return 0.1f;
         }
     }
 
@@ -33,13 +33,13 @@ public class BoomerangPreset : SkillPreset {
 
     public override float damage {
         get {
-            return 20 * level;
+            return 30 + 5 * level;
         }
     }
 
     public override float range {
         get {
-            return 10 + (level * 2);
+            return 10 + level;
         }
     }
 

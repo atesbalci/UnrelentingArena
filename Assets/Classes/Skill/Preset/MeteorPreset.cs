@@ -21,7 +21,7 @@ public class MeteorPreset : SkillPreset {
 
     public override float channelTime {
         get {
-            return 1f;
+            return 0.6f - 0.1f * level;
         }
     }
 
@@ -33,7 +33,7 @@ public class MeteorPreset : SkillPreset {
 
     public override float damage {
         get {
-            return 20 * level;
+            return 40 + 5 * level;
         }
     }
 

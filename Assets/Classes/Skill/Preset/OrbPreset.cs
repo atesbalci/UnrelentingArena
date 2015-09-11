@@ -15,7 +15,7 @@ public class OrbPreset : SkillPreset {
 
     public override float cooldown {
         get {
-            return 10 - (level * 1.5f);
+            return 15 - (level * 1.5f);
         }
     }
 

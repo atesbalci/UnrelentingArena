@@ -29,7 +29,7 @@ public class Meteor : TargetSkill {
         meteor = children[2].gameObject;
         meteor.GetComponentInChildren<ParticleSystem>().startColor = color;
         explosion = children[1].GetComponent<ParticleSystem>();
-        meteor.transform.Translate(-100, 0, 0);
+        meteor.transform.Translate(-20, 0, 0);
         explosion.GetComponent<ParticleSystem>().startColor = color;
         explosion.gameObject.SetActive(false);
         animation = explosion.duration + explosion.startLifetime;

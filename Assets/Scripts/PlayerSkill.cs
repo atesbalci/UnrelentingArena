@@ -36,7 +36,6 @@ public class PlayerSkill : MonoBehaviour {
                 //    player.toBeCast.rotation, player.toBeCast.skill.level, player.toBeCast.targetPosition);
                 InstantiateSkill(player.toBeCast.skill.skill, player.toBeCast.position,
                     player.toBeCast.rotation, player.toBeCast.targetPosition);
-                player.toBeCast.skill.remainingCooldown = player.toBeCast.skill.cooldown;
                 player.toBeCast = null;
             } else if (player.canCast && casting > -1) {
                 SkillPreset skill = null;

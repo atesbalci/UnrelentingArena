@@ -24,5 +24,6 @@ public class CastChannel : Stun {
     public override void Unbuff() {
         player.toBeCast = this;
         player.AddBuff(new CastRecoil(player, recoilTime));
+        skill.remainingCooldown = skill.cooldown;
     }
 }
