@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
     public int round { get; set; }
     public float remainingIntermissionDuration { get; set; }
     public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
+    public int headCount { get; set; }
 
     private NetworkView view;
     private GameState _state;
@@ -228,7 +229,7 @@ public class GameManager : MonoBehaviour {
         if (remainingIntermissionDuration > 0)
             remainingIntermissionDuration -= Time.deltaTime;
         if (Network.isServer) {
-            int headCount = 0;
+            headCount = 0;
             if (state == GameState.Ingame) {
                 foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                     if (!pd.Value.currentPlayer.dead) {
