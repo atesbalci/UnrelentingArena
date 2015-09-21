@@ -52,11 +52,15 @@ public class PlayerSkill : MonoBehaviour {
                 Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
                 playerMove.destinationPosition = Vector3.MoveTowards(transform.position, targetPoint, 0.1f);
                 player.AddBuff(new CastChannel(player, skill, new Vector3(transform.position.x, 1, transform.position.z), targetRotation, targetPoint));
-                anim.speed = 1 / skill.channelTime;
-                anim.SetBool("Casting", true);
-                particles.Play();
+                view.RPC("Cast", RPCMode.All);
             }
         }
+    }
+
+    [RPC]
+    public void Cast() {
+        particles.Play();
+        anim.SetTrigger("Casting");
     }
 
     public void InstantiateSkill(SkillType skill, Vector3 position, Quaternion rotation, Vector3 targetPosition) {
@@ -74,6 +78,5 @@ public class PlayerSkill : MonoBehaviour {
             skill.targetPosition = targetPosition;
             skill.player = player;
         }
-        anim.SetBool("Casting", false);
     }
 }
