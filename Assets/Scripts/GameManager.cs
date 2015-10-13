@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour {
     public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
     public int headCount { get; set; }
 
+    private bool initializing;
     private NetworkView view;
     private GameState _state;
     public GameState state {
@@ -147,21 +148,29 @@ public class GameManager : MonoBehaviour {
     }
 
     public void BeginGame() {
-        int i = 0;
-        foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
-            if (kvp.Key == Network.player)
-                InstantiatePlayer(i);
-            else
-                view.RPC("InstantiatePlayer", kvp.Key, i);
-            i++;
-        }
+        StartCoroutine("BeginGameRoutine");        
+    }
+
+    IEnumerator BeginGameRoutine() {
+        initializing = true;
         view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
+        int i = 0;
+        float angle = (2 * Mathf.PI) / playerList.Count;
+        foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
+            Vector3 point = new Vector3(0 + 6 * Mathf.Cos(angle * i), 0, 6 * Mathf.Sin(angle * i));
+            if (kvp.Key == Network.player)
+                InstantiatePlayer(i, point);
+            else
+                view.RPC("InstantiatePlayer", kvp.Key, i, point);
+            i++;
+            yield return new WaitForSeconds(0.5f);
+        }
+        initializing = false;
     }
 
     [RPC]
-    public void InstantiatePlayer(int index) {
-        Vector3 spawnPoint = new Vector3(-20 + index * 10, 0, 0);
-        GameObject playerObject = Network.Instantiate(playerPrefab, spawnPoint, Quaternion.identity, 0) as GameObject;
+    public void InstantiatePlayer(int index, Vector3 point) {
+        GameObject playerObject = Network.Instantiate(playerPrefab, point, Quaternion.identity, 0) as GameObject;
         view.RPC("InitializePlayer", RPCMode.AllBuffered, playerObject.GetComponent<NetworkView>().viewID, Network.player, index);
     }
 
@@ -236,7 +245,7 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (headCount <= 0) {
+                if (!initializing && headCount <= 0) {
                     Clear();
                     foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                         NetworkPlayer np = pd.Value.currentPlayer.owner;
