@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
+    public const float PLATFORM_RADIUS = 34;
 
     private const string GAME_NAME = "Unrelenting Arena Testing";
     private const float REFRESH_LENGTH = 10;

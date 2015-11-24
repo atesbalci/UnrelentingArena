@@ -18,7 +18,7 @@ public class MarkerScript : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float hitdist;
             if (plane.Raycast(ray, out hitdist)) {
-                transform.position = ray.GetPoint(hitdist);
+                transform.position = Vector3.MoveTowards(new Vector3(0, transform.position.y, 0), ray.GetPoint(hitdist), GameManager.PLATFORM_RADIUS);
                 marked = duration;
             }
         }
