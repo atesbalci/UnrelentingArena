@@ -11,6 +11,7 @@ public abstract class SkillShot : Skill {
         : base() {
         speed = 16;
         maxRange = false;
+        remainingDistance = preset.range;
     }
 
     public override void Update() {
@@ -24,7 +25,7 @@ public abstract class SkillShot : Skill {
                 travel = remainingDistance;
             }
             gameObject.transform.Translate(0, 0, travel);
-            gameObject.transform.position = Vector3.Lerp(prev, gameObject.transform.position, 1);
+            //gameObject.transform.position = Vector3.Lerp(prev, gameObject.transform.position, 1);
             remainingDistance -= travel;
         }
     }

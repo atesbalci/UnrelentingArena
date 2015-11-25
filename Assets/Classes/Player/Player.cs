@@ -2,12 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum ComboModifier {
+    Composure = 0, Momentum = 1, Fury = 2
+}
+
 public class Player {
     public StatSet statSet { get; set; }
 
     //movement & health
     public float currentSpeed { get; set; }
     public float health { get; set; }
+
+    //combo modifier
+    public ComboModifier modifier { get; set; }
 
     //buffs/skills/items
     public SkillSet skillSet { get; set; }
