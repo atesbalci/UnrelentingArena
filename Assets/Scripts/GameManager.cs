@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public TooltipScript tooltip;
     public Color[] colors;
     public GameObject[] skills;
+    public CountdownScript countdown;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
@@ -32,8 +33,8 @@ public class GameManager : MonoBehaviour {
     public float remainingIntermissionDuration { get; set; }
     public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
     public int headCount { get; set; }
+    public bool locked { get; set; }
 
-    private bool initializing;
     private NetworkView view;
     private GameState _state;
     public GameState state {
@@ -149,11 +150,12 @@ public class GameManager : MonoBehaviour {
     }
 
     public void BeginGame() {
-        StartCoroutine("BeginGameRoutine");        
+        StartCoroutine("BeginGameRoutine");
     }
 
     IEnumerator BeginGameRoutine() {
-        initializing = true;
+        locked = true;
+        view.RPC("SetLocked", RPCMode.All, locked);
         view.RPC("SetState", RPCMode.All, (int)GameState.Ingame);
         int i = 0;
         float angle = (2 * Mathf.PI) / playerList.Count;
@@ -166,7 +168,18 @@ public class GameManager : MonoBehaviour {
             i++;
             yield return new WaitForSeconds(0.5f);
         }
-        initializing = false;
+        for (i = 3; i >= 0; i--) {
+            countdown.Countdown(i);
+            if (i > 0)
+                yield return new WaitForSeconds(1);
+        }
+        locked = false;
+        view.RPC("SetLocked", RPCMode.All, locked);
+    }
+
+    [RPC]
+    public void SetLocked(bool l) {
+        locked = l;
     }
 
     [RPC]
@@ -246,7 +259,7 @@ public class GameManager : MonoBehaviour {
                         headCount++;
                     }
                 }
-                if (!initializing && headCount <= 0) {
+                if (!locked && headCount <= 0) {
                     Clear();
                     foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
                         NetworkPlayer np = pd.Value.currentPlayer.owner;

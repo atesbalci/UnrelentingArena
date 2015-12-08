@@ -11,13 +11,17 @@ public abstract class SkillShot : Skill {
         : base() {
         speed = 16;
         maxRange = false;
+    }
+
+    public override void Start(GameObject gameObject) {
+        base.Start(gameObject);
         remainingDistance = preset.range;
     }
 
     public override void Update() {
         base.Update();
         float travel = speed * Time.deltaTime;
-        if (Network.isServer && remainingDistance <= 0)
+        if (remainingDistance <= 0)
             maxRange = true;
         if (!maxRange) {
             Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -25,7 +29,6 @@ public abstract class SkillShot : Skill {
                 travel = remainingDistance;
             }
             gameObject.transform.Translate(0, 0, travel);
-            //gameObject.transform.position = Vector3.Lerp(prev, gameObject.transform.position, 1);
             remainingDistance -= travel;
         }
     }

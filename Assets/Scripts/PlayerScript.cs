@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour {
     public SkinnedMeshRenderer bodyRenderer;
     public TrailRenderer trail;
     public ParticleSystem particles;
+    public FuryEffect furyEffect;
 
     public NetworkView view;
 
@@ -44,6 +45,8 @@ public class PlayerScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.G)) {
             LeaveFadingImage();
         }
+        furyEffect.gameObject.SetActive(player.modifier == ComboModifier.Fury);
+        Debug.Log(player.modifier);
     }
 
     public FaderScript LeaveFadingImage() {
@@ -61,11 +64,16 @@ public class PlayerScript : MonoBehaviour {
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (stream.isWriting) {
             float health = player.health;
+            int modifier = (int)player.modifier;
             stream.Serialize(ref health);
+            stream.Serialize(ref modifier);
         } else {
             float health = -1;
+            int modifier = 0;
             stream.Serialize(ref health);
+            stream.Serialize(ref modifier);
             player.health = health;
+            player.modifier = (ComboModifier)modifier;
         }
     }
 

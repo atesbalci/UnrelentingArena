@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour {
     }
 
     void Update() {
-        if (!player.dead) {
+        if (!player.dead && !GameManager.instance.locked) {
             if (view.isMine && Input.GetKey(GameInput.instance.keys[(int)GameBinding.Move])) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdist = 0.0f;

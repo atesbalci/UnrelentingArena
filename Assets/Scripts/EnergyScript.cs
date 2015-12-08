@@ -44,7 +44,7 @@ public class EnergyScript : MonoBehaviour {
     }
 
     void Update() {
-        if (view.isMine) {
+        if (view.isMine && !player.dead && !GameManager.instance.locked) {
             if (dodging > 0) {
                 player.energyExhaust = 1;
                 anim.speed = 1;
@@ -71,6 +71,7 @@ public class EnergyScript : MonoBehaviour {
                 Network.Instantiate(pulse, transform.position, Quaternion.LookRotation(ray.GetPoint(hitdst) - transform.position), 0);
                 player.energyPoints -= 0.5f;
                 player.energyExhaust = 1;
+                player.modifier = ComboModifier.Fury;
             }
         }
         if (player.energyExhaust <= 0) {

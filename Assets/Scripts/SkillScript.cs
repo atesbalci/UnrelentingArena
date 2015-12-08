@@ -6,7 +6,10 @@ public class SkillScript : MonoBehaviour {
     public NetworkView view;
     public Skill skill { get; set; }
 
+    private bool ended;
+
     void Start() {
+        ended = false;
         Initialize();
         if (skill != null)
             skill.Start(gameObject);
@@ -50,6 +53,8 @@ public class SkillScript : MonoBehaviour {
             else
                 skill.UpdateEnd();
         }
+        if (Network.isServer && !ended && skill.dead)
+            view.RPC("End", RPCMode.All);
     }
 
     void OnTriggerStay(Collider collider) {
@@ -71,5 +76,11 @@ public class SkillScript : MonoBehaviour {
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
         if (skill != null)
             skill.SerializeNetworkView(stream, info);
+    }
+
+    [RPC]
+    private void End() {
+        skill.dead = true;
+        ended = true;
     }
 }

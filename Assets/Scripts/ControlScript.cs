@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+//obselete class
 public class ControlScript : MonoBehaviour {
     public KeyCode[] keys;
     public bool move { get; set; }
@@ -10,7 +11,7 @@ public class ControlScript : MonoBehaviour {
     public bool mine { get; set; }
 
     void Start() {
-        mine = GetComponent<PlayerScript>().player.owner == Network.player;
+        mine = false;
         skills = new bool[8];
         keys = GameInput.instance.keys;
     }
