@@ -3,22 +3,25 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
-    public SkinnedMeshRenderer bodyRenderer;
     public TrailRenderer trail;
     public ParticleSystem particles;
     public FuryEffect furyEffect;
 
     public NetworkView view;
 
+    private SkinnedMeshRenderer[] bodyRenderers;
+
     public PlayerScript() {
         player = new Player();
     }
 
     public void Initialize() {
-        bodyRenderer.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
+        bodyRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer r in bodyRenderers)
+            r.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = player.color;
-        if(Network.isServer) {
+        if (Network.isServer) {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
         particles.startColor = player.color;
@@ -46,11 +49,10 @@ public class PlayerScript : MonoBehaviour {
             LeaveFadingImage();
         }
         furyEffect.gameObject.SetActive(player.modifier == ComboModifier.Fury);
-        Debug.Log(player.modifier);
     }
 
     public FaderScript LeaveFadingImage() {
-        GameObject obj = Instantiate(bodyRenderer.gameObject.transform.parent.gameObject, transform.position, transform.rotation) as GameObject;
+        GameObject obj = Instantiate(bodyRenderers[0].gameObject.transform.parent.gameObject, transform.position, transform.rotation) as GameObject;
         FaderScript result = obj.AddComponent<FaderScript>();
         result.fadeSpeed = 1;
         return result;

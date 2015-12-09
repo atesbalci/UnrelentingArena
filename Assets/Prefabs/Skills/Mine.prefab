@@ -27,7 +27,6 @@ GameObject:
   - 4: {fileID: 442716}
   - 33: {fileID: 3357846}
   - 23: {fileID: 2322336}
-  - 95: {fileID: 9503122}
   m_Layer: 0
   m_Name: mine
   m_TagString: Untagged
@@ -122,24 +121,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157328}
-  m_Mesh: {fileID: 4300000, guid: f9b189c00c0cff24c9d29d77727bb455, type: 3}
---- !u!95 &9503122
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157328}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f9b189c00c0cff24c9d29d77727bb455, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_Mesh: {fileID: 4300000, guid: b102922dae4b4cd47bdd101184a2292a, type: 3}
 --- !u!114 &11422800
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,17 +1,22 @@
 fileFormatVersion: 2
-guid: f9b189c00c0cff24c9d29d77727bb455
-timeCreated: 1432731734
+guid: 316a67c5e7ad83c49823cd620db27e6d
+timeCreated: 1449654619
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Icosphere
-    7400000: Default Take
-    9500000: //RootNode
+    100000: 3D-Boomerang
+    100002: //RootNode
+    100004: Sphere
+    400000: 3D-Boomerang
+    400002: //RootNode
+    400004: Sphere
+    2300000: 3D-Boomerang
+    2300002: Sphere
+    3300000: 3D-Boomerang
+    3300002: Sphere
+    4300000: Sphere
+    4300002: 3D-Boomerang
   materials:
     importMaterials: 1
     materialName: 0
@@ -65,7 +70,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

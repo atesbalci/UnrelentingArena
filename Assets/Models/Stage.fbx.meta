@@ -1,54 +1,47 @@
 fileFormatVersion: 2
-guid: e9a51a2870065f94a8751878e532496d
+guid: 1b06d7728cb1db54ea4fd806da9537a6
+timeCreated: 1449654841
+licenseType: Free
 ModelImporter:
-  serializedVersion: 16
+  serializedVersion: 18
   fileIDToRecycleName:
     100000: Platform
     100002: //RootNode
-    100004: Stage_1
-    100006: Stage_2
-    100008: Stage_3
-    100010: Stage_4
-    100012: Stage_5
-    100014: Stage_6
+    100004: Stage 1
+    100006: Stage 2
+    100008: Stage 3
+    100010: Stage 4
+    100012: Stage 5
+    100014: Stage 6
     400000: Platform
     400002: //RootNode
-    400004: Stage_1
-    400006: Stage_2
-    400008: Stage_3
-    400010: Stage_4
-    400012: Stage_5
-    400014: Stage_6
+    400004: Stage 1
+    400006: Stage 2
+    400008: Stage 3
+    400010: Stage 4
+    400012: Stage 5
+    400014: Stage 6
     2300000: Platform
-    2300002: Stage_1
-    2300004: Stage_2
-    2300006: Stage_3
-    2300008: Stage_4
-    2300010: Stage_5
-    2300012: Stage_6
+    2300002: Stage 1
+    2300004: Stage 2
+    2300006: Stage 3
+    2300008: Stage 4
+    2300010: Stage 5
+    2300012: Stage 6
     3300000: Platform
-    3300002: Stage_1
-    3300004: Stage_2
-    3300006: Stage_3
-    3300008: Stage_4
-    3300010: Stage_5
-    3300012: Stage_6
+    3300002: Stage 1
+    3300004: Stage 2
+    3300006: Stage 3
+    3300008: Stage 4
+    3300010: Stage 5
+    3300012: Stage 6
     4300000: Platform
-    4300002: Stage_6
-    4300004: Stage_5
-    4300006: Stage_4
-    4300008: Stage_3
-    4300010: Stage_2
-    4300012: Stage_1
-    6400000: Platform
-    6400002: Stage_1
-    6400004: Stage_2
-    6400006: Stage_3
-    6400008: Stage_4
-    6400010: Stage_5
-    6400012: Stage_6
-    7400000: Default Take
-    9500000: //RootNode
+    4300002: Stage 6
+    4300004: Stage 5
+    4300006: Stage 4
+    4300008: Stage 3
+    4300010: Stage 2
+    4300012: Stage 1
   materials:
     importMaterials: 1
     materialName: 0
@@ -70,17 +63,19 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
@@ -100,6 +95,8 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
