@@ -3,13 +3,13 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
-    public TrailRenderer trail;
     public ParticleSystem particles;
-    public FuryEffect furyEffect;
 
     public NetworkView view;
 
     private SkinnedMeshRenderer[] bodyRenderers;
+    private FuryEffect furyEffect;
+    private MomentumScript momentum;
 
     public PlayerScript() {
         player = new Player();
@@ -17,6 +17,9 @@ public class PlayerScript : MonoBehaviour {
 
     public void Initialize() {
         bodyRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        furyEffect = GetComponentInChildren<FuryEffect>();
+        furyEffect.gameObject.SetActive(false);
+        momentum = GetComponentInChildren<MomentumScript>();
         foreach (SkinnedMeshRenderer r in bodyRenderers)
             r.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
@@ -25,7 +28,6 @@ public class PlayerScript : MonoBehaviour {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
         particles.startColor = player.color;
-        trail.material.SetColor("_TintColor", player.color);
     }
 
     [RPC]
@@ -49,6 +51,7 @@ public class PlayerScript : MonoBehaviour {
             LeaveFadingImage();
         }
         furyEffect.gameObject.SetActive(player.modifier == ComboModifier.Fury);
+        momentum.GainMomentum(player.modifier == ComboModifier.Momentum);
     }
 
     public FaderScript LeaveFadingImage() {

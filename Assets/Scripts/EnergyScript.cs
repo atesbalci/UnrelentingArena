@@ -11,7 +11,6 @@ public class EnergyScript : MonoBehaviour {
     private PlayerMove playerMove;
     private Animator anim;
     private Roll buff;
-    private Material[] trail;
 
     void Start() {
         player = GetComponent<PlayerScript>().player;
@@ -19,7 +18,6 @@ public class EnergyScript : MonoBehaviour {
         dodging = 0;
         anim = GetComponent<Animator>();
         buff = new Roll(player);
-        trail = GetComponent<PlayerScript>().trail.materials;
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
@@ -64,6 +62,7 @@ public class EnergyScript : MonoBehaviour {
                 transform.rotation = Quaternion.LookRotation(ray.GetPoint(hitdst) - transform.position, Vector3.up);
                 player.energyPoints -= 0.5f;
                 player.energyExhaust = 1;
+                player.modifier = ComboModifier.Momentum;
             } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Pulse]) && player.canCast && player.energyPoints >= 0.5f) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdst = 0;
@@ -83,10 +82,5 @@ public class EnergyScript : MonoBehaviour {
             player.energyPoints = player.statSet.maxEnergyPoints;
         }
         anim.SetBool("Dodging", dodging > 0);
-        bool colorDependent = false;
-        foreach (Material m in trail) {
-            m.SetColor("_TintColor", dodging > 0 ? (!colorDependent ? player.color : Color.white) : Color.Lerp(m.GetColor("_TintColor"), Color.clear, 0.1f));
-            colorDependent = true;
-        }
     }
 }
