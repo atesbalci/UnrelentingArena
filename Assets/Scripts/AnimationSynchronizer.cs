@@ -19,7 +19,6 @@ public class AnimationSynchronizer : MonoBehaviour {
 	
 	void Update () {
         if (view.isMine) {
-            bool castingNew = anim.GetBool("Casting");
             bool knockbackNew = anim.GetBool("Knockback");
             float speedNew = anim.speed;
             if (knockback != knockbackNew) {

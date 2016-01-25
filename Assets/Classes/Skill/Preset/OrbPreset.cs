@@ -19,18 +19,6 @@ public class OrbPreset : SkillPreset {
         }
     }
 
-    public override float channelTime {
-        get {
-            return 1f;
-        }
-    }
-
-    public override float recoilTime {
-        get {
-            return 0.05f;
-        }
-    }
-
     public override float damage {
         get {
             return 20 * level;

@@ -17,6 +17,12 @@ public class Powerball : SkillShot {
         particles[0].Stop();
         particles[0].Play();
         time = 2;
+        if (modifier == ComboModifier.Momentum) {
+            remainingDistance *= 0.5f;
+            speed *= 2;
+        } else if (modifier == ComboModifier.Fury) {
+            remainingDistance *= 0.75f;
+        }
     }
 
     public override void Update() {

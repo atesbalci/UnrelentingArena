@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public ParticleSystem particles;
+    public GameObject deathPrefab;
 
     public NetworkView view;
 
@@ -47,9 +48,6 @@ public class PlayerScript : MonoBehaviour {
                 view.RPC("Die", RPCMode.AllBuffered);
             }
         }
-        if (Input.GetKeyDown(KeyCode.G)) {
-            LeaveFadingImage();
-        }
         furyEffect.gameObject.SetActive(player.modifier == ComboModifier.Fury);
         momentum.GainMomentum(player.modifier == ComboModifier.Momentum);
     }
@@ -63,7 +61,18 @@ public class PlayerScript : MonoBehaviour {
 
     [RPC]
     public void Die() {
-        player.Die(gameObject);
+        player.Die();
+        SpawnDeathAnimation();
+        Destroy(gameObject);
+    }
+
+    public void SpawnDeathAnimation() {
+        GameObject death = (GameObject)Instantiate(deathPrefab, transform.position, transform.rotation);
+        ParticleSystem ps = death.GetComponentInChildren<ParticleSystem>();
+        ps.startColor = player.color;
+        ps.Stop();
+        ps.Play();
+        death.GetComponentInChildren<LensFlare>().color = player.color;
     }
 
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {

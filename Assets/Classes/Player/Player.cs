@@ -19,7 +19,6 @@ public class Player {
     //buffs/skills/items
     public SkillSet skillSet { get; set; }
     public LinkedList<Buff> buffs { get; set; }
-    public CastChannel toBeCast { get; set; }
     public bool canCast { get; set; }
 
     //game info
@@ -34,6 +33,8 @@ public class Player {
     public float energyPoints { get; set; }
     public float energyExhaust { get; set; }
 
+    public bool casting { get; set; }
+
     public Color color;
 
     public Player() {
@@ -46,6 +47,7 @@ public class Player {
         score = 0;
         energyPoints = statSet.maxEnergyPoints;
         energyExhaust = -1;
+        casting = false;
     }
 
     public void Start(GameObject gameObject) {
@@ -95,17 +97,7 @@ public class Player {
         }
     }
 
-    public CastChannel castChannel {
-        get {
-            foreach (Buff b in buffs) {
-                if (b is CastChannel)
-                    return b as CastChannel;
-            }
-            return null;
-        }
-    }
-
-    public void Die(GameObject gameObject) {
+    public void Die() {
         gameObject.GetComponent<Collider>().enabled = false;
         dead = true;
         gameObject.GetComponent<ControlScript>().mine = false;

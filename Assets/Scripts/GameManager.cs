@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public Color[] colors;
     public GameObject[] skills;
     public CountdownScript countdown;
+    public GameObject spawnPrefab;
 
     public static GameManager instance { get; private set; }
     public const int PORT = 25002;
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartServer() {
-        Network.InitializeServer(8, PORT, false);
+        Network.InitializeServer(8, PORT, true);
         MasterServer.RegisterHost(GAME_NAME, playerData.name + "'s Game");
     }
 
@@ -161,12 +162,13 @@ public class GameManager : MonoBehaviour {
         float angle = (2 * Mathf.PI) / playerList.Count;
         foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
             Vector3 point = new Vector3(0 + 6 * Mathf.Cos(angle * i), 0, 6 * Mathf.Sin(angle * i));
+            Instantiate(spawnPrefab, point, Quaternion.identity);
+            yield return new WaitForSeconds(1f);
             if (kvp.Key == Network.player)
                 InstantiatePlayer(i, point);
             else
                 view.RPC("InstantiatePlayer", kvp.Key, i, point);
             i++;
-            yield return new WaitForSeconds(0.5f);
         }
         for (i = 3; i >= 0; i--) {
             countdown.Countdown(i);

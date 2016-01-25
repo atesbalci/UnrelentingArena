@@ -19,18 +19,6 @@ public class BoomerangPreset : SkillPreset {
         }
     }
 
-    public override float channelTime {
-        get {
-            return 0.1f;
-        }
-    }
-
-    public override float recoilTime {
-        get {
-            return 0.05f;
-        }
-    }
-
     public override float damage {
         get {
             return 30 + 5 * level;

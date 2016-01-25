@@ -35,7 +35,7 @@ public class Charge : TargetSkill {
             player.AddBuff(buff);
             time += Time.deltaTime;
             foreach (Buff b in player.buffs) {
-                if (b != buff && b is Stun && !(b is CastChannel) && !(b is CastRecoil)) {
+                if (b != buff && b is Stun) {
                     charging = false;
                     return;
                 }

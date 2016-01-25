@@ -22,6 +22,12 @@ public class Boomerang : SkillShot {
         buff = new Stun(player, 100);
         player.AddBuff(buff);
         plane = new Plane(Vector3.up, gameObject.transform.position);
+        if (modifier == ComboModifier.Momentum) {
+            remainingDistance *= 0.5f;
+            speed *= 2;
+        } else if (modifier == ComboModifier.Fury) {
+            remainingDistance *= 0.75f;
+        }
     }
 
     public override void Update() {
@@ -36,13 +42,13 @@ public class Boomerang : SkillShot {
                     pos = ray.GetPoint(hitdist);
                 }
                 gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation,
-                    Quaternion.LookRotation(pos - player.gameObject.transform.position), Time.deltaTime * 10);
+                    Quaternion.LookRotation(pos - player.gameObject.transform.position), Time.deltaTime * speed);
                 gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
                     Vector3.MoveTowards(player.gameObject.transform.position, pos, preset.range - remainingDistance), Time.deltaTime * 10);
             }
             if (maxRange)
                 returning = true;
-            
+
         } else {
             gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, player.gameObject.transform.position, Time.deltaTime * speed * 2);
         }

@@ -4,7 +4,7 @@ using System.Collections;
 public abstract class SkillShot : Skill {
     public float speed { get; set; }
     public float remainingDistance { get; set; }
-    
+
     protected bool maxRange;
 
     public SkillShot()
@@ -24,7 +24,6 @@ public abstract class SkillShot : Skill {
         if (remainingDistance <= 0)
             maxRange = true;
         if (!maxRange) {
-            Vector3 prev = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
             if (remainingDistance - travel <= 0) {
                 travel = remainingDistance;
             }

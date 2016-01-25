@@ -5200,6 +5200,7 @@ MonoBehaviour:
   - {fileID: 196642, guid: 71938cbf53c701d4da068f15b46ba9a8, type: 2}
   - {fileID: 184814, guid: 5dc925af1d5f0ac41a91b8c84f08b62a, type: 2}
   countdown: {fileID: 1936438364}
+  spawnPrefab: {fileID: 149726, guid: 87add02a68b22b44ba13f941ba25a788, type: 2}
 --- !u!4 &1668419213
 Transform:
   m_ObjectHideFlags: 0

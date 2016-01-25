@@ -62,7 +62,11 @@ public class EnergyScript : MonoBehaviour {
                 transform.rotation = Quaternion.LookRotation(ray.GetPoint(hitdst) - transform.position, Vector3.up);
                 player.energyPoints -= 0.5f;
                 player.energyExhaust = 1;
-                player.modifier = ComboModifier.Momentum;
+                if (player.modifier == ComboModifier.Momentum) {
+                    dodging *= 1.25f;
+                    player.modifier = ComboModifier.Composure;
+                } else
+                    player.modifier = ComboModifier.Momentum;
             } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Pulse]) && player.canCast && player.energyPoints >= 0.5f) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 float hitdst = 0;

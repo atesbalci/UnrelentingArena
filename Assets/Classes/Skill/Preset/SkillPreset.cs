@@ -26,18 +26,6 @@ public abstract class SkillPreset {
         }
     }
 
-    public virtual float channelTime {
-        get {
-            return 0;
-        }
-    }
-
-    public virtual float recoilTime {
-        get {
-            return 0;
-        }
-    }
-
     public virtual float damage {
         get {
             return 0;

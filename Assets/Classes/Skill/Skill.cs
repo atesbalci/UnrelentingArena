@@ -12,6 +12,7 @@ public abstract class Skill {
     public GameObject gameObject { get; set; }
     public bool dead { get; set; }
     public SkillType type { get; set; }
+    public ComboModifier modifier { get; set; }
 
     public Skill() {
         type = SkillType.None;

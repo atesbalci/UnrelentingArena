@@ -29,6 +29,7 @@ public class Orb : TargetSkill {
     }
 
     public override void Update() {
+        renderer.material.color = Color.Lerp(renderer.material.color, Color.white, Time.deltaTime * 3);
         if (state == OrbState.Rising) {
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, verticalTarget, Time.deltaTime * 2);
             if (verticalTarget.y - gameObject.transform.position.y < 0.5f) {
@@ -65,7 +66,7 @@ public class Orb : TargetSkill {
 
     public override void UpdateEnd() {
         time -= Time.deltaTime;
-        renderer.material.color = new Color(player.color.r, player.color.g, player.color.b, Mathf.Lerp(1, 0, time / area.startLifetime));
+        renderer.material.color = Color.Lerp(renderer.material.color, Color.clear, 1 - (time / area.startLifetime));
         if (time <= 0) {
             Network.Destroy(gameObject);
         }

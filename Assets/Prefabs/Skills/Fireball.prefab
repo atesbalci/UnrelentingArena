@@ -1188,13 +1188,13 @@ ParticleSystem:
   speed: 1
   randomSeed: 0
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 3.23000002
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1440,7 +1440,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 48.1399994
+      scalar: 100
       maxCurve:
         serializedVersion: 2
         m_Curve:
