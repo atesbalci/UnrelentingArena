@@ -260,7 +260,7 @@ public class GameManager : MonoBehaviour {
 			headCount = 0;
 			if (state == GameState.Ingame) {
 				foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
-					if (!pd.Value.currentPlayer.dead) {
+					if (!locked && !pd.Value.currentPlayer.dead) {
 						headCount++;
 					}
 				}

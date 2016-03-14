@@ -16,7 +16,7 @@ public class VSScript : MonoBehaviour {
             if (overlay2.transform.localScale.x > 1.5f) {
                 overlay2.transform.localScale = new Vector3(0.5f, 0.5f, overlay2.transform.localScale.z);
             }
-        } else if (GameManager.instance.headCount <= 2) {
+        } else if (!GameManager.instance.locked && GameManager.instance.headCount <= 2) {
             overlay.color = GameManager.instance.playerData.currentPlayer.color;
             overlay.gameObject.SetActive(true);
         }
