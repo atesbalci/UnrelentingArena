@@ -11,8 +11,9 @@ public class PlayerSkill : MonoBehaviour {
 	private PlayerMove playerMove;
 	public GameObject chest;
 	private bool currentlyCasting;
-	private Renderer range;
+	private MeshRenderer range;
 	private LineRenderer rangeLine;
+	private SkillPreset castingSkill;
 
 	void Start() {
 		particles = GetComponent<PlayerScript>().particles;
@@ -22,8 +23,9 @@ public class PlayerSkill : MonoBehaviour {
 		playerMove = GetComponent<PlayerMove>();
 		particles.Stop();
 		rangeLine = GetComponentInChildren<LineRenderer>();
-		range = rangeLine.gameObject.GetComponentInChildren<Renderer>();
+		range = rangeLine.gameObject.GetComponentInChildren<MeshRenderer>();
 		range.material.color = new Color(player.color.r, player.color.g, player.color.b, range.material.color.a);
+		rangeLine.SetColors(player.color, player.color);
 		rangeLine.gameObject.SetActive(false);
 		currentlyCasting = false;
 	}
@@ -41,11 +43,10 @@ public class PlayerSkill : MonoBehaviour {
 			}
 
 			if (player.canCast && casting > -1 && !currentlyCasting) {
-				SkillPreset skill = null;
-				skill = player.skillSet.TryToCast(casting);
-				if (skill != null) {
+				castingSkill = player.skillSet.TryToCast(casting);
+				if (castingSkill != null) {
 					player.casting = true;
-					StartCoroutine("CastSkill", skill);
+					StartCoroutine("CastSkill");
 				} else
 					casting = -1;
 			}
@@ -53,7 +54,8 @@ public class PlayerSkill : MonoBehaviour {
 			if (!player.casting)
 				CancelCast();
 		}
-		RefreshRangeLine(5);
+		if(castingSkill != null)
+			RefreshRangeLine(castingSkill.range);
 
 		//Vector3 forward = transform.rotation * Vector3.forward;
 		//Vector3 left = transform.rotation * Vector3.left;
@@ -62,7 +64,7 @@ public class PlayerSkill : MonoBehaviour {
 		//Debug.DrawLine(transform.position, 100 * (Quaternion.RotateTowards(Quaternion.LookRotation(forward, Vector3.up), Quaternion.LookRotation(right, Vector3.up), 60) * Vector3.forward), Color.red, 0, false);
 	}
 
-	IEnumerator CastSkill(SkillPreset skill) {
+	IEnumerator CastSkill() {
 		view.RPC("StartCast", RPCMode.All);
 		ComboModifier modifier = player.modifier;
 		player.modifier = ComboModifier.Composure;
@@ -82,7 +84,7 @@ public class PlayerSkill : MonoBehaviour {
 		targetPoint = transform.position + Quaternion.RotateTowards(Quaternion.LookRotation(forward, Vector3.up), Quaternion.LookRotation(castDir, Vector3.up), 60) * Vector3.forward * castDist;
 		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
 		//playerMove.destinationPosition = Vector3.MoveTowards(transform.position, targetPoint, 0.1f);
-		InstantiateSkill(skill.skill, new Vector3(transform.position.x, 1, transform.position.z),
+		InstantiateSkill(castingSkill.skill, new Vector3(transform.position.x, 1, transform.position.z),
 			targetRotation, targetPoint, modifier);
 		currentlyCasting = false;
 		yield return null;
