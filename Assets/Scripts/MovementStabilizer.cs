@@ -8,7 +8,7 @@ public class MovementStabilizer : MonoBehaviour {
     private Quaternion rotation;
 
     public void FixPosition() {
-        transform.position = Vector3.MoveTowards(new Vector3(0, transform.position.z, 0), transform.position, GameManager.PLATFORM_RADIUS);
+        transform.position = Vector3.MoveTowards(new Vector3(0, transform.position.y, 0), transform.position, GameManager.PLATFORM_RADIUS);
     }
 
     void Update() {

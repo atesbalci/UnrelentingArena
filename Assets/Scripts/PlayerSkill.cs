@@ -75,8 +75,10 @@ public class PlayerSkill : MonoBehaviour {
 		Plane playerPlane = new Plane(Vector3.up, transform.position);
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		float hitdist = 0.0f;
-		if (playerPlane.Raycast(ray, out hitdist) && view.isMine)
+		if (playerPlane.Raycast(ray, out hitdist) && view.isMine) {
 			targetPoint = ray.GetPoint(hitdist);
+			targetPoint = new Vector3(targetPoint.x, transform.position.y, targetPoint.z);
+		}
 		Vector3 forward = transform.rotation * Vector3.forward;
 		Vector3 castDir = (targetPoint - transform.position);
 		castDir = Vector3.Normalize(new Vector3(castDir.x, 0, castDir.z));

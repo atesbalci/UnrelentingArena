@@ -100,7 +100,6 @@ public class Player {
     public void Die() {
         gameObject.GetComponent<Collider>().enabled = false;
         dead = true;
-        gameObject.GetComponent<ControlScript>().mine = false;
         if (lastHitter != null)
             lastHitter.score += 100;
     }

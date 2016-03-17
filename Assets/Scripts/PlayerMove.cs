@@ -50,6 +50,7 @@ public class PlayerMove : MonoBehaviour {
     }
 
     public void Move(Vector3 destination) {
+		destination = new Vector3(destination.x, transform.position.y, destination.z);
         GetComponentInChildren<PlayerStatusScript>().Update();
         destinationPosition = Vector3.MoveTowards(new Vector3(0, transform.position.y, 0), destination, GameManager.PLATFORM_RADIUS);
     }
