@@ -6,8 +6,7 @@ public enum GameState {
 	Menu,
 	Pregame,
 	Ingame,
-	Scores,
-	Shop
+	Intermission
 }
 
 public class GameManager : MonoBehaviour {
@@ -45,7 +44,7 @@ public class GameManager : MonoBehaviour {
 		set {
 			GameState previous = state;
 			_state = value;
-			if (previous != GameState.Shop && state == GameState.Scores)
+			if (state == GameState.Intermission)
 				remainingIntermissionDuration = 30;
 			else if (state == GameState.Ingame) {
 				round++;
@@ -264,15 +263,15 @@ public class GameManager : MonoBehaviour {
 						headCount++;
 					}
 				}
-				if (!locked && headCount <= 0) {
+				if (!locked && headCount <= 1) {
 					Clear();
 					foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
 						NetworkPlayer np = pd.Value.currentPlayer.owner;
 						view.RPC("UpdateScore", RPCMode.AllBuffered, np, pd.Value.currentPlayer.score + 200);
 					}
-					view.RPC("SetState", RPCMode.All, (int)GameState.Scores);
+					view.RPC("SetState", RPCMode.All, (int)GameState.Intermission);
 				}
-			} else if (state == GameState.Scores || state == GameState.Shop) {
+			} else if (state == GameState.Intermission) {
 				if (remainingIntermissionDuration <= 0) {
 					if (round <= ROUND_LIMIT)
 						BeginGame();

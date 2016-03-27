@@ -7,17 +7,17 @@ public class ShopPanelScript : MonoBehaviour {
     public GameObject skillGroupPrefab;
     public GameObject shopSkillPrefab;
 
-    private GridLayoutGroup grid;
+	public List<ShopSkillScript> skills { get; set;	}
 
-    void Awake() {
-        grid = GetComponent<GridLayoutGroup>();
-    }
+	void OnEnable() {
+		Refresh();
+	}
 
     public void Refresh() {
+		skills = new List<ShopSkillScript>();
         foreach (LayoutElement le in GetComponentsInChildren<LayoutElement>())
             Destroy(le.gameObject);
         PlayerData playerData = GameManager.instance.playerData;
-        grid.cellSize = new Vector2(170, 460);
         Transform[] skillGroups = new Transform[4];
         for (int i = 0; i < 4; i++) {
             skillGroups[i] = ((GameObject)Instantiate(skillGroupPrefab)).transform;
@@ -25,9 +25,11 @@ public class ShopPanelScript : MonoBehaviour {
             skillGroups[i].GetComponentInChildren<Text>().text = "" + GameInput.instance.keys[(int)GameBinding.Skill1 + i];
         }
         foreach (KeyValuePair<SkillType, SkillPreset> kvp in playerData.skillSet.skills) {
-            ShopSkillScript shopSkillScript = ((GameObject)Instantiate(shopSkillPrefab)).GetComponent<ShopSkillScript>();
-            shopSkillScript.skillPreset = kvp.Value;
-            shopSkillScript.gameObject.transform.SetParent(skillGroups[kvp.Value.key]);
+            ShopSkillScript shopSkill = ((GameObject)Instantiate(shopSkillPrefab)).GetComponent<ShopSkillScript>();
+			shopSkill.shopPanel = this;
+			shopSkill.skillPreset = kvp.Value;
+            shopSkill.gameObject.transform.SetParent(skillGroups[kvp.Value.key]);
+			skills.Add(shopSkill);
         }
     }
 }
