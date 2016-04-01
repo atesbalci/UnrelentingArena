@@ -9,12 +9,16 @@ public class ShopSkillScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 	public Image image;
 	public Image glow;
 	public SkillPreset skillPreset { get; set; }
-	public bool selected { get; set; }
 	public bool unavailable { get; set; }
 	public ShopPanelScript shopPanel { get; set; }
 
+	public bool selected {
+		get {
+			return shopPanel.selected == this;
+		}
+	}
+
 	public ShopSkillScript() {
-		selected = false;
 		unavailable = false;
 	}
 
@@ -55,9 +59,7 @@ public class ShopSkillScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
 	public void OnPointerClick(PointerEventData eventData) {
 		if (!unavailable && skillPreset.level <= 0) {
-			foreach (ShopSkillScript ss in shopPanel.skills)
-				ss.selected = false;
-			selected = true;
+			shopPanel.selected = this;
 		}
 	}
 
