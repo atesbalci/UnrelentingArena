@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
-    public ParticleSystem particles;
     public GameObject deathPrefab;
 
     public NetworkView view;
@@ -28,7 +27,6 @@ public class PlayerScript : MonoBehaviour {
         if (Network.isServer) {
             view.RPC("SwitchOwner", RPCMode.All, Network.AllocateViewID());
         }
-        particles.startColor = player.color;
     }
 
     [RPC]

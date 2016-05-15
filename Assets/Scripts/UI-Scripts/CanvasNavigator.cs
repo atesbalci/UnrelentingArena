@@ -15,9 +15,9 @@ public class CanvasNavigator : MonoBehaviour {
         GameState state = GameManager.instance.state;
         if (state == GameState.Ingame)
             ingame.SetActive(true);
-        else if (state == GameState.Pregame || state == GameState.Intermission)
+        if (state == GameState.Pregame || state == GameState.Intermission)
             scores.SetActive(true);
-        else if (state == GameState.Menu)
+        if (state == GameState.Menu)
             menu.SetActive(true);
         if (state == GameState.Intermission)
             shop.SetActive(true);

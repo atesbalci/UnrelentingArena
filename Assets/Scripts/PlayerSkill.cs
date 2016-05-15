@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class PlayerSkill : MonoBehaviour {
-	private ParticleSystem particles;
 	private Player player;
 	private Vector3 targetPoint;
 	private int casting;
@@ -14,14 +13,17 @@ public class PlayerSkill : MonoBehaviour {
 	private MeshRenderer range;
 	private LineRenderer rangeLine;
 	private SkillPreset castingSkill;
+	private ParticleSystem castEffect;
+	public GameObject castAfterEffect;
 
 	void Start() {
-		particles = GetComponent<PlayerScript>().particles;
 		player = GetComponent<PlayerScript>().player;
+		castEffect = GetComponentInChildren<ParticleSystem>();
+		castEffect.startColor = player.color;
+		castEffect.Stop();
 		casting = -1;
 		anim = GetComponent<Animator>();
 		playerMove = GetComponent<PlayerMove>();
-		particles.Stop();
 		rangeLine = GetComponentInChildren<LineRenderer>();
 		range = rangeLine.gameObject.GetComponentInChildren<MeshRenderer>();
 		range.material.color = new Color(player.color.r, player.color.g, player.color.b, range.material.color.a);
@@ -108,12 +110,15 @@ public class PlayerSkill : MonoBehaviour {
 	public void StartCast() {
 		anim.SetTrigger("Casting");
 		rangeLine.gameObject.SetActive(true);
+		castEffect.Play();
 	}
 
 	[RPC]
 	public void Cast() {
-		particles.Play();
 		rangeLine.gameObject.SetActive(false);
+		castEffect.Stop();
+		LensFlare flare = ((GameObject)Instantiate(castAfterEffect, transform.position, Quaternion.identity)).GetComponent<LensFlare>();
+		flare.color = player.color;
 	}
 
 	public void InstantiateSkill(SkillType skill, Vector3 position, Quaternion rotation, Vector3 targetPosition, ComboModifier modifier) {
