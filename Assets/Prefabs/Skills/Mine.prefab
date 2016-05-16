@@ -46,6 +46,7 @@ GameObject:
   - 148: {fileID: 14851164}
   - 114: {fileID: 11422800}
   - 148: {fileID: 14863640}
+  - 95: {fileID: 9529178}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Skill
@@ -122,6 +123,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157328}
   m_Mesh: {fileID: 4300000, guid: b102922dae4b4cd47bdd101184a2292a, type: 3}
+--- !u!95 &9529178
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184814}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5ad9cd40cfb67a74c912bb3adb0b154d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11422800
 MonoBehaviour:
   m_ObjectHideFlags: 1

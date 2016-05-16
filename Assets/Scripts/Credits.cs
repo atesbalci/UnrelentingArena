@@ -41,6 +41,8 @@ public class Credits : MonoBehaviour {
 	}
 
 	void Update() {
+		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0))
+			Fade();
 		Vector2 target = Vector2.up * (Screen.height + textTransform.rect.height);
 		textTransform.anchoredPosition = Vector2.MoveTowards(textTransform.anchoredPosition, target, Time.deltaTime * 100);
 		if (Vector2.Distance(target, textTransform.anchoredPosition) < 0.1f)
