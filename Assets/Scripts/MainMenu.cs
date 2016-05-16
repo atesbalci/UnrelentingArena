@@ -4,6 +4,7 @@ using System.Collections;
 public class MainMenu : MonoBehaviour {
     public GameObject main;
     public GameObject settings;
+	public GameObject credits;
 
     public void PlayButton() {
         Application.LoadLevel("MainGame");
@@ -24,7 +25,11 @@ public class MainMenu : MonoBehaviour {
         NavigateTo(settings);
     }
 
-    public void BackButton() {
+	public void ShowCredits() {
+		credits.SetActive(true);
+	}
+
+	public void BackButton() {
         Application.LoadLevel("MainMenu");
     }
 
