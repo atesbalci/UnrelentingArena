@@ -1,14 +1,16 @@
 ﻿
-public class Roll : Buff {
+public class Roll : IndefinateBuff {
     public float speed { get; set; }
 
     public Roll(Player player)
-        : base(player, 0) {
+        : base(player) {
     }
 
     public override void Update() {
+        base.Update();
+        if (!active)
+            return;
         player.currentSpeed = speed;
         player.canCast = false;
-        base.Update();
     }
 }

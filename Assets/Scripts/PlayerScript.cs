@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public GameObject deathPrefab;
+    public Blade[] blades;
 
     public NetworkView view;
 
