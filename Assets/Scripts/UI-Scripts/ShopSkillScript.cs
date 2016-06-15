@@ -65,6 +65,6 @@ public class ShopSkillScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
 	void Update() {
 		glow.color = Color.Lerp(glow.color, new Color(glow.color.r, glow.color.g, glow.color.b,
-			(selected || unavailable || skillPreset.level > 0) ? 1 : 0), Time.deltaTime);
+			(selected || unavailable || skillPreset.level > 0) ? 1 : 0), Time.deltaTime * 4);
 	}
 }

@@ -1,5 +1,5 @@
 ﻿
-public class Swing : IndefinateBuff {
+public class Swing : IndefiniteBuff {
 
     public Swing(Player player)
         : base(player) {

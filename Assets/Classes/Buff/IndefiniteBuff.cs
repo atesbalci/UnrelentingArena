@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IndefinateBuff : Buff {
+public class IndefiniteBuff : Buff {
     public bool active { get; set; }
 
-    public IndefinateBuff(Player player) :
+    public IndefiniteBuff(Player player) :
         base(player, 0) {
         active = false;
     }

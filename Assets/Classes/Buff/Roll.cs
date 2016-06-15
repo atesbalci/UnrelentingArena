@@ -1,5 +1,5 @@
 ﻿
-public class Roll : IndefinateBuff {
+public class Roll : IndefiniteBuff {
     public float speed { get; set; }
 
     public Roll(Player player)

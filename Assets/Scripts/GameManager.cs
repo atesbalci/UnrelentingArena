@@ -78,8 +78,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void StartServer() {
-		Network.InitializeServer(8, PORT, true);
+		Network.InitializeServer(8, PORT, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(GAME_NAME, playerData.name + "'s Game");
+        Debug.Log(Network.TestConnection());
+        Debug.Log(Network.TestConnectionNAT());
+        Debug.Log(Network.HavePublicAddress());
 	}
 
 	public IEnumerator RefreshHosts() {
@@ -263,7 +266,7 @@ public class GameManager : MonoBehaviour {
 						headCount++;
 					}
 				}
-				if (!locked && headCount <= 0) {
+				if (!locked && headCount <= 1) {
 					Clear();
 					foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
 						NetworkPlayer np = pd.Value.currentPlayer.owner;

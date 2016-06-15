@@ -16,14 +16,14 @@ public class SkillSet {
         skills.Add(SkillType.Boomerang, new BoomerangPreset());
         skills.Add(SkillType.Mine, new MinePreset());
 
-        Upgrade(SkillType.Powerball);
-        Upgrade(SkillType.Orb);
+        //Upgrade(SkillType.Powerball);
+        //Upgrade(SkillType.Orb);
+        //Upgrade(SkillType.Mine);
+        //Upgrade(SkillType.Blink);
         //Upgrade(SkillType.Meteor);
         //Upgrade(SkillType.Overcharge);
         //Upgrade(SkillType.Boomerang);
         //Upgrade(SkillType.Charge);
-        Upgrade(SkillType.Mine);
-        Upgrade(SkillType.Blink);
     }
 
     public void Update() {
