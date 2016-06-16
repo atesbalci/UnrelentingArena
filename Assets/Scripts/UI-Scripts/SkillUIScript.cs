@@ -42,6 +42,8 @@ public class SkillUIScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
+        if (skill == null)
+            return;
         GameManager.instance.tooltip.gameObject.SetActive(true);
         GameManager.instance.tooltip.text.text = skill.tooltip;
     }
