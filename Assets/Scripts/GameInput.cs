@@ -8,7 +8,7 @@ public enum GameBinding {
     Skill4 = 3,
     Dodge = 4,
     Move = 5,
-    Pulse = 6
+    Blade = 6
 }
 
 public class GameInput {
@@ -27,7 +27,7 @@ public class GameInput {
         keys[(int)GameBinding.Skill4] = (KeyCode)PlayerPrefs.GetInt("skill4key", (int)KeyCode.R);
         keys[(int)GameBinding.Dodge] = (KeyCode)PlayerPrefs.GetInt("dodgeKey", (int)KeyCode.LeftShift);
         keys[(int)GameBinding.Move] = (KeyCode)PlayerPrefs.GetInt("moveKey", (int)KeyCode.Mouse1);
-        keys[(int)GameBinding.Pulse] = (KeyCode)PlayerPrefs.GetInt("pulseKey", (int)KeyCode.Mouse0);
+        keys[(int)GameBinding.Blade] = (KeyCode)PlayerPrefs.GetInt("pulseKey", (int)KeyCode.Mouse0);
     }
 
     public void SaveKeys() {
@@ -37,7 +37,7 @@ public class GameInput {
         PlayerPrefs.SetInt("skill4key", (int)keys[(int)GameBinding.Skill4]);
         PlayerPrefs.SetInt("dodgeKey", (int)keys[(int)GameBinding.Dodge]);
         PlayerPrefs.SetInt("moveKey", (int)keys[(int)GameBinding.Move]);
-        PlayerPrefs.SetInt("pulseKey", (int)keys[(int)GameBinding.Pulse]);
+        PlayerPrefs.SetInt("pulseKey", (int)keys[(int)GameBinding.Blade]);
         PlayerPrefs.Save();
     }
 }

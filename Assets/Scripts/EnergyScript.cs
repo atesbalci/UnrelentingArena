@@ -67,7 +67,7 @@ public class EnergyScript : MonoBehaviour {
                     player.modifier = ComboModifier.Composure;
                 } else
                     player.modifier = ComboModifier.Momentum;
-            } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Pulse]) && (player.canCast || (swingBuff.active && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f)) && player.energyPoints >= 0.2f) {
+            } else if (Input.GetKeyDown(GameInput.instance.keys[(int)GameBinding.Blade]) && (player.canCast || (swingBuff.active && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f)) && player.energyPoints >= 0.2f) {
                 //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 //float hitdst = 0;
                 //(new Plane(Vector3.up, transform.position)).Raycast(ray, out hitdst);

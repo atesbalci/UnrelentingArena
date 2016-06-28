@@ -266,7 +266,7 @@ public class GameManager : MonoBehaviour {
 						headCount++;
 					}
 				}
-				if (!locked && headCount <= 1) {
+				if (!locked && headCount <= 0) {
 					Clear();
 					foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
 						NetworkPlayer np = pd.Value.currentPlayer.owner;
