@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class CharacterShowcaseScript : MonoBehaviour {
 	public Renderer[] additionalRenderers;
     public Color[] colors;
+	public Transform head;
 
 	public Color nextColor { get; set; }
 
@@ -15,8 +16,12 @@ public class CharacterShowcaseScript : MonoBehaviour {
     private int nextIndex;
     private float changeColourTime = 2.0f;
     private float timer = 0.0f;
+	private Quaternion headRotation;
+	private Plane lookPlane;
 
     void Start() {
+		headRotation = head.transform.rotation;
+		lookPlane = new Plane(new Vector3(0, 0, 1), new Vector3(0, 0, 10));
 		SkinnedMeshRenderer[] body = GetComponentsInChildren<SkinnedMeshRenderer>();
 		List<Renderer> rendererList = new List<Renderer>();
 		foreach(SkinnedMeshRenderer smr in body)
@@ -51,5 +56,14 @@ public class CharacterShowcaseScript : MonoBehaviour {
 
 	public void ResetColor() {
 		nextColor = Color.white;
+	}
+
+	void LateUpdate() {
+		float hitdst = 0;
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		lookPlane.Raycast(ray, out hitdst);
+        head.LookAt(ray.GetPoint(hitdst));
+		head.rotation = Quaternion.Lerp(headRotation, head.rotation, 10 * Time.deltaTime);
+		headRotation = head.rotation;
 	}
 }

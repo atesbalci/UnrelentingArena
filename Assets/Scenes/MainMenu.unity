@@ -747,6 +747,7 @@ MonoBehaviour:
   - {r: 1, g: .521568656, b: 0, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
+  head: {fileID: 1583741089}
 --- !u!1 &592580678
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,19 +2282,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
       propertyPath: m_LocalRotation.x
-      value: .6392048
+      value: .63920486
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -.402503699
+      value: -.402503729
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -.344511598
+      value: -.344511628
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
       propertyPath: m_LocalRotation.w
-      value: .55742234
+      value: .5574224
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2326,6 +2327,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
   m_IsPrefabParent: 0
+--- !u!4 &1583741089 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400096, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
+  m_PrefabInternal: {fileID: 1583741088}
 --- !u!4 &1583741091 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400130, guid: 96ce6c7ec1d708c47a28918fb99b4d71, type: 3}
