@@ -46,4 +46,8 @@ public class ShopPanelScript : MonoBehaviour {
 			}
 		}
 	}
+
+    void OnDisable() {
+        selected.Buy();
+    }
 }
