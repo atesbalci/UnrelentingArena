@@ -4,6 +4,7 @@ using System.Collections;
 
 public class ManualConnectScript : MonoBehaviour {
     public void Connect() {
-        Network.Connect(GetComponent<Text>().text, GameManager.PORT);
+		string text = GetComponent<InputField>().text;
+		Network.Connect(text, GameManager.PORT);
     }
 }
