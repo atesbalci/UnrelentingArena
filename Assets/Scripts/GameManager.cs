@@ -80,9 +80,9 @@ public class GameManager : MonoBehaviour {
 	public void StartServer() {
 		Network.InitializeServer(8, PORT, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(GAME_NAME, playerData.name + "'s Game");
-        Debug.Log(Network.TestConnection());
-        Debug.Log(Network.TestConnectionNAT());
-        Debug.Log(Network.HavePublicAddress());
+        //Debug.Log(Network.TestConnection());
+        //Debug.Log(Network.TestConnectionNAT());
+        //Debug.Log(Network.HavePublicAddress());
 	}
 
 	public IEnumerator RefreshHosts() {

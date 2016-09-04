@@ -249,10 +249,7 @@ AnimatorStateTransition:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: Dodging
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 110274894}
   m_Solo: 0
@@ -1312,11 +1309,6 @@ AnimatorStateMachine:
     data:
       first: {fileID: 110736532}
       second: []
-    data:
-      first: {fileID: 0}
-      second:
-      - {fileID: 110939652}
-      - {fileID: 110923608}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -60, y: 0, z: 0}
   m_EntryPosition: {x: 12, y: 48, z: 0}
@@ -1376,13 +1368,13 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions:
     data:
+      first: {fileID: 110765872}
+      second: []
+    data:
       first: {fileID: 110737378}
       second:
       - {fileID: 110912612}
       - {fileID: 110987362}
-    data:
-      first: {fileID: 110765872}
-      second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 48, y: -36, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
