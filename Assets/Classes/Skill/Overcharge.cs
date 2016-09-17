@@ -26,7 +26,6 @@ public class Overcharge : Skill {
     }
 
     public override void CollisionWithPlayer(Collider collider, Player player) {
-        Debug.Log("collide!");
         player.Damage(preset.damage, player);
         Vector3 direction = collider.gameObject.transform.position - gameObject.transform.position;
         direction.y = 0;
