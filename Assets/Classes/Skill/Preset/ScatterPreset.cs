@@ -1,33 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MinePreset : SkillPreset {
-    public MinePreset()
-        : base(SkillType.Mine) {
-        key = 1;
+public class ScatterPreset : SkillPreset {
+    public ScatterPreset()
+        : base(SkillType.Scatter) {
+        key = 0;
     }
 
     public override string name {
         get {
-            return "Mine";
+            return "Scatter Shot";
         }
     }
 
     public override float cooldown {
         get {
-            return 15 - (level * 1.5f);
+            return 12 - level;
         }
     }
 
     public override float damage {
         get {
-            return 20 * level;
+            return 30 + 5 * level;
         }
     }
 
     public override float range {
         get {
-            return 10 + (level * 2);
+            return 5 + level;
         }
     }
 
@@ -39,7 +39,7 @@ public class MinePreset : SkillPreset {
 
     public override string tooltip {
         get {
-            return "<b>Mine</b>\nPlaces a stunning mine.";
+            return "<b>Scatter Shot</b>\nSends out three spheres with great velocity and some spread.";
         }
     }
 }

@@ -130,12 +130,10 @@ public class PlayerSkill : MonoBehaviour {
 	public void InitializeSkill(NetworkViewID id, Vector3 targetPosition, int modifier) {
 		GameObject skillObject = NetworkView.Find(id).gameObject;
 		SkillScript skillScript = skillObject.GetComponent<SkillScript>();
-		skillScript.Initialize();
-		Skill skill = skillScript.skill;
-		if (skill != null) {
-			skill.targetPosition = targetPosition;
-			skill.player = player;
-			skill.modifier = (ComboModifier)modifier;
+        if (skillScript != null) {
+            skillScript.targetPosition = targetPosition;
+            skillScript.player = player;
+            skillScript.modifier = (ComboModifier)modifier;
 		}
 	}
 

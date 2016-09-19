@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Overcharge : SkillScript {
+public class Implosion : SkillScript {
     private ParticleSystem particleSystem;
 
-    public Overcharge()
+    public Implosion()
         : base() {
-        skillType = SkillType.Overcharge;
+        skillType = SkillType.Implosion;
     }
 
     public override void Start() {
@@ -31,7 +31,7 @@ public class Overcharge : SkillScript {
         if (ps == null || ps.player == this.player)
             return;
         player.Damage(preset.damage, player);
-        Vector3 direction = collider.gameObject.transform.position - gameObject.transform.position;
+        Vector3 direction = -(collider.gameObject.transform.position - gameObject.transform.position);
         direction.y = 0;
         collider.GetComponent<PlayerScript>().Knockback(direction, preset.knockbackDistance, preset.knockbackSpeed);
     }

@@ -28,7 +28,7 @@ public class Mine : TargetSkill {
         : base() {
         state = MineState.Ready;
         postRem = FADE_DURATION;
-        type = SkillType.Mine;
+        type = SkillType.Implosion;
     }
 
     public override void Start(GameObject gameObject) {

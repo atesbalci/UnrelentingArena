@@ -1,33 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BoomerangPreset : SkillPreset {
-    public BoomerangPreset()
-        : base(SkillType.Boomerang) {
-        key = 0;
+public class ImplosionPreset : SkillPreset {
+    public ImplosionPreset()
+        : base(SkillType.Implosion) {
+        key = 1;
     }
 
     public override string name {
         get {
-            return "Boomerang";
+            return "Implosion";
         }
     }
 
     public override float cooldown {
         get {
-            return 12 - level;
+            return 15 - (level * 1.5f);
         }
     }
 
     public override float damage {
         get {
-            return 30 + 5 * level;
+            return 20 * level;
         }
     }
 
     public override float range {
         get {
-            return 10 + level;
+            return 10 + (level * 2);
         }
     }
 
@@ -39,7 +39,7 @@ public class BoomerangPreset : SkillPreset {
 
     public override string tooltip {
         get {
-            return "<b>Boomerang</b>\nMaterializes a remote controlled boomerang.";
+            return "<b>Implosion</b>\nCreates an implosion which pulls enemies.";
         }
     }
 }

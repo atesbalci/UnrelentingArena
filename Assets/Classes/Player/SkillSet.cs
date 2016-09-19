@@ -13,16 +13,16 @@ public class SkillSet {
         skills.Add(SkillType.Overcharge, new OverchargePreset());
         skills.Add(SkillType.Blink, new BlinkPreset());
         skills.Add(SkillType.Meteor, new MeteorPreset());
-        skills.Add(SkillType.Boomerang, new BoomerangPreset());
-        skills.Add(SkillType.Mine, new MinePreset());
+        skills.Add(SkillType.Scatter, new ScatterPreset());
+        skills.Add(SkillType.Implosion, new ImplosionPreset());
 
         //Upgrade(SkillType.Powerball);
         //Upgrade(SkillType.Orb);
-        //Upgrade(SkillType.Mine);
+        Upgrade(SkillType.Implosion);
         //Upgrade(SkillType.Blink);
         //Upgrade(SkillType.Meteor);
         //Upgrade(SkillType.Overcharge);
-        //Upgrade(SkillType.Boomerang);
+        //Upgrade(SkillType.Scatter);
         //Upgrade(SkillType.Charge);
     }
 
