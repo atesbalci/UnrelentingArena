@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour {
     private Player player;
     private Animator anim;
     private Plane playerPlane;
+    private bool moving;
 
     void Start() {
         anim = GetComponent<Animator>();

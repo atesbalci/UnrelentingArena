@@ -15,7 +15,7 @@ public class Orb : TargetSkill {
     public Orb()
         : base() {
         state = OrbState.Rising;
-        type = SkillType.Orb;
+        type = SkillType.SwapBeam;
     }
 
     public override void Start(GameObject gameObject) {

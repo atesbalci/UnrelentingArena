@@ -8,19 +8,19 @@ public class SkillSet {
     public SkillSet() {
         skills = new Dictionary<SkillType, SkillPreset>();
         skills.Add(SkillType.Powerball, new PowerballPreset());
-        skills.Add(SkillType.Orb, new OrbPreset());
+        skills.Add(SkillType.SwapBeam, new SwapBeamPreset());
         skills.Add(SkillType.Charge, new ChargePreset());
         skills.Add(SkillType.Overcharge, new OverchargePreset());
         skills.Add(SkillType.Blink, new BlinkPreset());
-        skills.Add(SkillType.Meteor, new MeteorPreset());
+        skills.Add(SkillType.StunArea, new StunAreaPreset());
         skills.Add(SkillType.Scatter, new ScatterPreset());
         skills.Add(SkillType.Implosion, new ImplosionPreset());
 
         //Upgrade(SkillType.Powerball);
-        //Upgrade(SkillType.Orb);
-        Upgrade(SkillType.Implosion);
+        //Upgrade(SkillType.SwapBeam);
+        //Upgrade(SkillType.Implosion);
         //Upgrade(SkillType.Blink);
-        //Upgrade(SkillType.Meteor);
+        Upgrade(SkillType.StunArea);
         //Upgrade(SkillType.Overcharge);
         //Upgrade(SkillType.Scatter);
         //Upgrade(SkillType.Charge);

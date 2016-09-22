@@ -16,6 +16,7 @@ public class Overcharge : SkillScript {
         particleSystem.gameObject.SetActive(false);
         particleSystem.gameObject.SetActive(true);
         particleSystem.Stop();
+        CollideOnce();
     }
 
     public override void Update() {

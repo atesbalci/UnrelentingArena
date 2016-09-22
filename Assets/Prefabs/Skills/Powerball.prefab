@@ -8,13 +8,14 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 488744}
-  - 148: {fileID: 14836590}
   - 135: {fileID: 13542836}
   - 23: {fileID: 2332362}
   - 33: {fileID: 3359248}
   - 96: {fileID: 9636224}
   - 114: {fileID: 11476250}
   - 148: {fileID: 14894870}
+  - 114: {fileID: 11404912}
+  - 148: {fileID: 14887804}
   m_Layer: 0
   m_Name: Powerball
   m_TagString: Skill
@@ -110,6 +111,18 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: .100000001
   m_Autodestruct: 0
+--- !u!114 &11404912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb87fd254470b84187b04448e3bda87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 14887804}
 --- !u!114 &11476250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2635364469c41924daa7ac3177bd540e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillType: 0
   view: {fileID: 14894870}
 --- !u!135 &13542836
 SphereCollider:
@@ -135,7 +147,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!148 &14836590
+--- !u!148 &14887804
 NetworkView:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -143,7 +155,7 @@ NetworkView:
   m_GameObject: {fileID: 188744}
   m_Enabled: 1
   m_StateSynchronization: 2
-  m_Observed: {fileID: 488744}
+  m_Observed: {fileID: 11404912}
   m_ViewID:
     m_ID: 0
     m_Type: 0

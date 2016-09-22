@@ -107,8 +107,8 @@ public class EnergyScript : MonoBehaviour {
         if (Network.isServer && anim.GetCurrentAnimatorStateInfo(1).IsName("Hit2"))
             view.RPC("Fury", RPCMode.All);
         anim.SetTrigger("Swing");
-        player.energyPoints -= 0.2f;
-        player.energyExhaust = 1;
+        player.energyPoints -= 1f/6f;
+        player.energyExhaust = 0.5f;
     }
 
     [RPC]
@@ -116,7 +116,7 @@ public class EnergyScript : MonoBehaviour {
         player.modifier = ComboModifier.Composure;
         anim.SetTrigger("ComboSwing");
         player.energyPoints -= 0.5f;
-        player.energyExhaust = 1;
+        player.energyExhaust = 0.5f;
     }
 
     [RPC]

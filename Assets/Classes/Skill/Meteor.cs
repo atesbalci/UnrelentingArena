@@ -17,7 +17,7 @@ public class Meteor : TargetSkill {
         : base() {
         state = MeteorState.Predamage;
         animation = 6;
-        type = SkillType.Meteor;
+        type = SkillType.StunArea;
     }
 
     public override void Start(GameObject gameObject) {

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MeteorPreset : SkillPreset {
-    public MeteorPreset()
-        : base(SkillType.Meteor) {
+public class StunAreaPreset : SkillPreset {
+    public StunAreaPreset()
+        : base(SkillType.StunArea) {
         key = 2;
     }
 
     public override string name {
         get {
-            return "Meteor";
+            return "Stun Area";
         }
     }
 
@@ -39,7 +39,7 @@ public class MeteorPreset : SkillPreset {
 
     public override string tooltip {
         get {
-            return "<b>Meteor</b>\nSummons a virtual meteor to a nearby location.";
+            return "<b>Stun Area</b>\nStuns players within a limited area.";
         }
     }
 }

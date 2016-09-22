@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OrbPreset : SkillPreset {
-    public OrbPreset()
-        : base(SkillType.Orb) {
+public class SwapBeamPreset : SkillPreset {
+    public SwapBeamPreset()
+        : base(SkillType.SwapBeam) {
         key = 2;
     }
 
     public override string name {
         get {
-            return "Orb";
+            return "Swap Beam";
         }
     }
 
@@ -39,7 +39,7 @@ public class OrbPreset : SkillPreset {
 
     public override string tooltip {
         get {
-            return "<b>Orb</b>\nSummons an orb to a nearby location which applies a momentary gravitational pull.";
+            return "<b>Swap Beam</b>\nSends a beam which makes the player swap places with the player hit.";
         }
     }
 }

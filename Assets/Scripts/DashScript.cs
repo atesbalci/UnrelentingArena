@@ -40,7 +40,7 @@ public class DashScript : MonoBehaviour {
 					if (ps.player == p)
 						return;
 				ps.player.Damage(damage, player);
-				ps.ApplyKnockback(ps.transform.position - new Vector3(transform.position.x, 0, transform.position.z), 10, 10);
+				ps.Knockback(ps.transform.position - new Vector3(transform.position.x, 0, transform.position.z), 10, 10);
 				affectedPlayers.Add(ps.player);
 			}
 		}
