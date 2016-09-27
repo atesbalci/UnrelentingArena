@@ -117,7 +117,7 @@ public class PlayerScript : MonoBehaviour {
         chaser.color = player.color;
         chaser.target = transform;
         transform.position = loc;
-        GetComponent<PlayerMove>().destinationPosition = loc;
+        //GetComponent<PlayerMove>().destinationPosition = loc;
     }
 
     public void Move(Vector3 loc) {

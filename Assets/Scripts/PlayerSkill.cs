@@ -2,19 +2,21 @@
 using System.Collections;
 
 public class PlayerSkill : MonoBehaviour {
-	private Player player;
+    public GameObject castAfterEffect;
+    public NetworkView view;
+    public GameObject chest;
+
+    public bool currentlyCasting { get; set; }
+
+    private Player player;
 	private Vector3 targetPoint;
 	private int casting;
 	private Animator anim;
-	public NetworkView view;
 	private PlayerMove playerMove;
-	public GameObject chest;
-	private bool currentlyCasting;
 	private MeshRenderer range;
 	private LineRenderer rangeLine;
 	private SkillPreset castingSkill;
 	private ParticleSystem castEffect;
-	public GameObject castAfterEffect;
 
 	void Start() {
 		player = GetComponent<PlayerScript>().player;

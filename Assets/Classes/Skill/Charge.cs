@@ -46,7 +46,7 @@ public class Charge : TargetSkill {
             }
             player.gameObject.transform.position = Vector3.MoveTowards(player.gameObject.transform.position, targetPosition, 20 * Time.deltaTime);
             if (player.gameObject.transform.position == targetPosition) {
-                player.gameObject.GetComponent<PlayerMove>().destinationPosition = player.gameObject.transform.position;
+                //player.gameObject.GetComponent<PlayerMove>().destinationPosition = player.gameObject.transform.position;
                 time = 0;
                 gameObject.transform.SetParent(null);
                 charging = false;

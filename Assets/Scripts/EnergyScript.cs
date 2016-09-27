@@ -87,7 +87,7 @@ public class EnergyScript : MonoBehaviour {
                 dodging = 0;
             }
             rollBuff.speed = 15;
-            playerMove.destinationPosition = transform.position + transform.rotation * Vector3.forward * 10;
+            //playerMove.destinationPosition = transform.position + transform.rotation * Vector3.forward * 10;
             rollBuff.active = true;
         } else
             rollBuff.active = false;

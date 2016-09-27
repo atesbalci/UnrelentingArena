@@ -14,7 +14,7 @@ public class Blink : TargetSkill {
         sprite = gameObject.GetComponentInChildren<SpriteRenderer>();
         player.gameObject.GetComponent<PlayerScript>().LeaveFadingImage();
         player.gameObject.transform.position = targetPosition;
-        player.gameObject.GetComponent<PlayerMove>().destinationPosition = targetPosition;
+        //player.gameObject.GetComponent<PlayerMove>().destinationPosition = targetPosition;
         gameObject.GetComponentInChildren<TrailRenderer>().material.SetColor("_TintColor", player.color);
         sprite.color = player.color;
     }
