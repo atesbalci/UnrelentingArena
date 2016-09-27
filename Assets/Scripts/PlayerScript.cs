@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
     public Player player { get; set; }
     public GameObject deathPrefab;
+    public GameObject chaserPrefab;
     public Blade[] blades;
 
     public NetworkView view;
@@ -112,6 +113,9 @@ public class PlayerScript : MonoBehaviour {
 
     [RPC]
     private void MovePlayer(Vector3 loc) {
+        Chaser chaser = ((GameObject)Instantiate(chaserPrefab, transform.position, Quaternion.identity)).GetComponent<Chaser>();
+        chaser.color = player.color;
+        chaser.target = transform;
         transform.position = loc;
         GetComponent<PlayerMove>().destinationPosition = loc;
     }

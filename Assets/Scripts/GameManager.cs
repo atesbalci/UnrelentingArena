@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
 		int i = 0;
 		float angle = (2 * Mathf.PI) / playerList.Count;
 		foreach (KeyValuePair<NetworkPlayer, PlayerData> kvp in playerList) {
-			Vector3 point = new Vector3(0 + 6 * Mathf.Cos(angle * i), 0, 6 * Mathf.Sin(angle * i));
+			Vector3 point = new Vector3(20 * Mathf.Cos(angle * i), 0, 20 * Mathf.Sin(angle * i));
 			Network.Instantiate(spawnPrefab, point, Quaternion.identity, 0);
 			yield return new WaitForSeconds(1f);
 			if (kvp.Key == Network.player)
@@ -266,7 +266,7 @@ public class GameManager : MonoBehaviour {
 						headCount++;
 					}
 				}
-				if (!locked && headCount <= 1) {
+				if (!locked && headCount <= 0) {
 					Clear();
 					foreach (KeyValuePair<NetworkPlayer, PlayerData> pd in playerList) {
 						NetworkPlayer np = pd.Value.currentPlayer.owner;

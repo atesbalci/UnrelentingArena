@@ -37,6 +37,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Detail
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -73,13 +80,6 @@ Material:
       data:
         first:
           name: _MetallicGlossMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Detail
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -157,7 +157,7 @@ Material:
       data:
         first:
           name: _EmissionScaleUI
-        second: .300000012
+        second: .150000006
       data:
         first:
           name: _Mode
@@ -198,7 +198,7 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: .300000012, g: .300000012, b: .300000012, a: .300000012}
+        second: {r: .150000006, g: .150000006, b: .150000006, a: .150000006}
       data:
         first:
           name: _Color

@@ -2245,9 +2245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  warningColor: {r: 1, g: .400000006, b: 0, a: 1}
   damagingColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkSpeed: 4
   unstableTimer: 3
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!23 &915630144
@@ -3349,9 +3347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  warningColor: {r: 1, g: .400000006, b: 0, a: 1}
   damagingColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkSpeed: 4
   unstableTimer: 3
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!64 &1240912196
@@ -3553,9 +3549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  warningColor: {r: 1, g: .400000006, b: 0, a: 1}
   damagingColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkSpeed: 4
   unstableTimer: 3
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!64 &1310477092
@@ -5431,9 +5425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  warningColor: {r: 1, g: .400000006, b: 0, a: 1}
   damagingColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkSpeed: 4
   unstableTimer: 3
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1760692620
@@ -5762,9 +5754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  warningColor: {r: 1, g: .400000006, b: 0, a: 1}
   damagingColor: {r: 1, g: 0, b: 0, a: 1}
-  blinkSpeed: 4
   unstableTimer: 3
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!64 &1929466476

@@ -1072,7 +1072,7 @@ GameObject:
   - 224: {fileID: 22431956}
   - 222: {fileID: 22231956}
   - 114: {fileID: 11431956}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LostHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   - 222: {fileID: 22262816}
   - 114: {fileID: 11469908}
   - 114: {fileID: 11463656}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1319,7 +1319,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 22431958}
   - 223: {fileID: 22331956}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1828,7 +1828,7 @@ GameObject:
   - 222: {fileID: 22252100}
   - 114: {fileID: 11452100}
   - 114: {fileID: 11400592}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2575,7 +2575,7 @@ GameObject:
   - 222: {fileID: 22250214}
   - 114: {fileID: 11499334}
   - 114: {fileID: 11442646}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3397,7 +3397,7 @@ GameObject:
   - 224: {fileID: 22475626}
   - 222: {fileID: 22207466}
   - 114: {fileID: 11470494}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Block-Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3821,7 +3821,7 @@ Transform:
   m_GameObject: {fileID: 186840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 495896}
   m_Father: {fileID: 423184}
@@ -7672,6 +7672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathPrefab: {fileID: 197304, guid: 1bceaae05c381074c95918adaa208638, type: 2}
+  chaserPrefab: {fileID: 103120, guid: d300997a002d7f44295b32d12056b8d4, type: 2}
   blades:
   - {fileID: 11426522}
   - {fileID: 11434242}

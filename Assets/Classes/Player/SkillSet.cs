@@ -17,10 +17,10 @@ public class SkillSet {
         skills.Add(SkillType.Implosion, new ImplosionPreset());
 
         //Upgrade(SkillType.Powerball);
-        //Upgrade(SkillType.SwapBeam);
+        Upgrade(SkillType.SwapBeam);
         //Upgrade(SkillType.Implosion);
         //Upgrade(SkillType.Blink);
-        Upgrade(SkillType.StunArea);
+        //Upgrade(SkillType.StunArea);
         //Upgrade(SkillType.Overcharge);
         //Upgrade(SkillType.Scatter);
         //Upgrade(SkillType.Charge);

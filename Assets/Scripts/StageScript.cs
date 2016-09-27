@@ -7,14 +7,11 @@ public enum StageState {
 
 public class StageScript : MonoBehaviour {
     public float damage = 20;
-    public Color warningColor = new Color(255/255.0F,102/255.0F,0/255.0F,255/255.0F);
     public Color damagingColor = Color.red;
-    public float blinkSpeed = 4;
     public float unstableTimer = 3;
     public Color defaultColor = Color.white;
 
     private Renderer rend;
-    private bool blinking;
     private float remainingUnstableTimer;
     private Color color;
 
@@ -25,12 +22,15 @@ public class StageScript : MonoBehaviour {
         }
         set {
             _state = value;
-            if (state == StageState.normal)
-                rend.material.SetColor("_EmissionColor", defaultColor);
-            else if (state == StageState.damaging)
-                rend.material.SetColor("_EmissionColor", damagingColor);
-            else if (state == StageState.unstable)
+            if (state == StageState.unstable)
                 remainingUnstableTimer = unstableTimer;
+            else if (state == StageState.damaging) {
+                color = damagingColor;
+                rend.material.SetFloat("_Cutoff", 0);
+            } else if (state == StageState.normal) {
+                color = defaultColor;
+                rend.material.SetFloat("_Cutoff", 0);
+            }
         }
     }
 
@@ -38,32 +38,23 @@ public class StageScript : MonoBehaviour {
         rend = GetComponent<Renderer>();
         color = defaultColor;
         state = StageState.normal;
-        blinking = false;
     }
 
     void Update() {
         if (state == StageState.unstable) {
-            if (blinking) {
-                color = Color.Lerp(color, warningColor, blinkSpeed * Time.deltaTime);
-                if (checkSimilarity(color, warningColor))
-                    blinking = false;
-            } else {
-                color = Color.Lerp(color, defaultColor, blinkSpeed * Time.deltaTime);
-                if (checkSimilarity(color, defaultColor))
-                    blinking = true;
-            }
-            rend.material.SetColor("_EmissionColor", color);
             remainingUnstableTimer -= Time.deltaTime;
+            rend.material.SetFloat("_Cutoff", 1 - remainingUnstableTimer / unstableTimer);
             if (remainingUnstableTimer <= 0)
                 state = StageState.damaging;
         }
+        rend.material.SetColor("_Color", Color.Lerp(rend.material.GetColor("_Color"), color, 4 * Time.deltaTime));
     }
 
     public bool checkSimilarity(Color c1, Color c2) {
         const float SIMILARITY = 0.2f;
-        return Mathf.Abs(c1.r - c2.r) < SIMILARITY && 
-            Mathf.Abs(c1.g - c2.g) < SIMILARITY && 
-            Mathf.Abs(c1.b - c2.b) < SIMILARITY && 
+        return Mathf.Abs(c1.r - c2.r) < SIMILARITY &&
+            Mathf.Abs(c1.g - c2.g) < SIMILARITY &&
+            Mathf.Abs(c1.b - c2.b) < SIMILARITY &&
             Mathf.Abs(c1.a - c2.a) < SIMILARITY;
     }
 

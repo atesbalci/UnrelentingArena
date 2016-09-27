@@ -178,8 +178,8 @@ ModelImporter:
     - serializedVersion: 16
       name: JogForward_NtrlFaceFwd
       takeName: _12_a_U1_M_P_JogForward_NtrlFaceFwd__Fb_p0_No_0_PJ_3
-      firstFrame: 230
-      lastFrame: 275
+      firstFrame: 232
+      lastFrame: 295
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
