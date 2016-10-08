@@ -127,8 +127,6 @@ public class GameManager : MonoBehaviour {
 	public void Clear() {
 		foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Player"))
 			Network.Destroy(gameObject);
-		foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Skill"))
-			Network.Destroy(gameObject);
 	}
 
 	void OnPlayerDisconnected(NetworkPlayer player) {
