@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: 63c447cc6fb0954459f35c43b5966da2
+guid: 0ef5aa25d68c01d4796cfdadde1c29b1
+timeCreated: 1476387934
+licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -154,8 +156,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack1
       takeName: Take 001
-      firstFrame: 12.6000004
-      lastFrame: 38.0999985
+      firstFrame: 0
+      lastFrame: 12.3000002
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

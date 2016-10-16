@@ -75,6 +75,8 @@ public class PlayerSkill : MonoBehaviour {
 		currentlyCasting = true;
 		targetPoint = new Vector3(0, -100, 0);
 		yield return new WaitForSeconds(0.5f);
+        while (Input.GetKey(GameInput.instance.keys[(int)GameBinding.Skill1 + castingSkill.key]))
+            yield return new WaitForEndOfFrame();
 		view.RPC("Cast", RPCMode.All);
 		Plane playerPlane = new Plane(Vector3.up, transform.position);
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -87,7 +89,10 @@ public class PlayerSkill : MonoBehaviour {
 		Vector3 castDir = (targetPoint - transform.position);
 		castDir = Vector3.Normalize(new Vector3(castDir.x, 0, castDir.z));
 		float castDist = Vector3.Distance(transform.position, targetPoint);
-		targetPoint = transform.position + Quaternion.RotateTowards(Quaternion.LookRotation(forward, Vector3.up), Quaternion.LookRotation(castDir, Vector3.up), 60) * Vector3.forward * castDist;
+		targetPoint = transform.position + Quaternion.RotateTowards(
+            Quaternion.LookRotation(forward, Vector3.up), 
+            Quaternion.LookRotation(castDir, Vector3.up), 60) * 
+            Vector3.forward * castDist;
 		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
 		//playerMove.destinationPosition = Vector3.MoveTowards(transform.position, targetPoint, 0.1f);
 		InstantiateSkill(castingSkill.skill, new Vector3(transform.position.x, 1, transform.position.z),
@@ -97,7 +102,7 @@ public class PlayerSkill : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if (anim.GetCurrentAnimatorStateInfo(1).IsName("Casting") && targetPoint != new Vector3(0, -100, 0)) {
+		if (anim.GetCurrentAnimatorStateInfo(1).IsName("Cast") && targetPoint != new Vector3(0, -100, 0)) {
 			Quaternion prev = chest.transform.rotation;
 			chest.transform.LookAt(targetPoint);
 			chest.transform.rotation = Quaternion.RotateTowards(prev, chest.transform.rotation, 60);
@@ -110,13 +115,14 @@ public class PlayerSkill : MonoBehaviour {
 
 	[RPC]
 	public void StartCast() {
-		anim.SetTrigger("Casting");
+		anim.SetTrigger("PreCasting");
 		rangeLine.gameObject.SetActive(true);
 		castEffect.Play();
 	}
 
 	[RPC]
 	public void Cast() {
+        anim.SetTrigger("Cast");
 		rangeLine.gameObject.SetActive(false);
 		castEffect.Stop();
 		LensFlare flare = ((GameObject)Instantiate(castAfterEffect, transform.position, Quaternion.identity)).GetComponent<LensFlare>();
