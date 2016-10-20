@@ -7416,9 +7416,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca815d603bd3f4b44bf1306946bb1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castAfterEffect: {fileID: 114678, guid: 12faa5cafbbe5e8499c2fa6294a73e84, type: 2}
   view: {fileID: 14820632}
   chest: {fileID: 194926}
-  castAfterEffect: {fileID: 114678, guid: 12faa5cafbbe5e8499c2fa6294a73e84, type: 2}
 --- !u!114 &11423230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9709,7 +9709,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: .200000003
+      scalar: .340000004
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10631,7 +10631,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0daebe9da0154894393d524ac875e762, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -10645,7 +10645,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
@@ -10653,7 +10653,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
