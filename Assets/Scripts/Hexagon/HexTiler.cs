@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HexTiler : MonoBehaviour {
-    public GameObject hexPrefab;
     public float hexSideLength;
     public int width;
     public int height;
@@ -39,8 +38,6 @@ public class HexTiler : MonoBehaviour {
     public void RefreshHexagons() {
         List<Hexagon> hexagons = new List<Hexagon>();
         int childCount = transform.childCount;
-        for (int i = 0; i < childCount; i++)
-            Destroy(transform.GetChild(i).gameObject);
         List<Hexagon> midLine = new List<Hexagon>();
         float curx = 0;
         for (int i = 0; i < width; i++) {
