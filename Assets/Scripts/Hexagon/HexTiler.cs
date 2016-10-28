@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class HexTiler : MonoBehaviour {
+    public GameObject hexPrefab;
     public float hexSideLength;
     public int width;
     public int height;
     public bool refresh;
-    public Material hexMat;
-    public Mesh hexMesh;
-
-    public Transform trans { get; set; }
 
     private List<RadialRiseStruct> radialRises;
     private Hexagon[] hexagons;
@@ -29,38 +26,46 @@ public class HexTiler : MonoBehaviour {
         }
     }
 
-	void Start () {
+    void Start() {
         radialRises = new List<RadialRiseStruct>();
         RefreshHexagons();
-        trans = transform;
-	}
+    }
 
     public void RefreshHexagons() {
         List<Hexagon> hexagons = new List<Hexagon>();
         int childCount = transform.childCount;
+        for (int i = 0; i < childCount; i++)
+            Destroy(transform.GetChild(i).gameObject);
         List<Hexagon> midLine = new List<Hexagon>();
         float curx = 0;
         for (int i = 0; i < width; i++) {
-            if(i % 2 == 1)
+            if (i % 2 == 1)
                 curx += (3 * hexSideLength);
-            Hexagon newHex = new Hexagon(this, new Vector3(i % 2 == 0 ? curx : -curx, 0, 0));
+            Hexagon newHex = Instantiate(hexPrefab).GetComponent<Hexagon>();
+            newHex.transform.SetParent(gameObject.transform);
+            newHex.transform.localPosition = new Vector3(i % 2 == 0 ? curx : -curx, 0, 0);
+            newHex.gameObject.name = "Hex";
             midLine.Add(newHex);
             hexagons.Add(newHex);
         }
         float xshift = Mathf.Cos(Mathf.PI / 3) * hexSideLength + hexSideLength;
         float zshift = Mathf.Sin(Mathf.PI / 3) * hexSideLength;
-        for(int i = 0; i < height; i++) {
+        for (int i = 0; i < height; i++) {
             int heightMult = (i / 2) + 1;
-            foreach(Hexagon obj in midLine) {
-                Hexagon newHex = new Hexagon(this, obj.position + new Vector3(i % 4 < 2 ? xshift : 0, 0, (i % 2 == 0 ? 1 : -1) * heightMult * zshift));
+            foreach (Hexagon obj in midLine) {
+                Hexagon newHex = Instantiate(obj.gameObject).GetComponent<Hexagon>();
+                newHex.gameObject.name = "Hex";
+                newHex.transform.SetParent(gameObject.transform);
+                newHex.transform.localPosition = newHex.transform.localPosition +
+                    new Vector3(i % 4 < 2 ? xshift : 0, 0, (i % 2 == 0 ? 1 : -1) * heightMult * zshift);
                 hexagons.Add(newHex);
             }
         }
         this.hexagons = hexagons.ToArray();
     }
-	
-	void Update () {
-	    if(refresh) {
+
+    void Update() {
+        if (refresh) {
             refresh = false;
             RefreshHexagons();
         }
@@ -68,10 +73,9 @@ public class HexTiler : MonoBehaviour {
         int radialCount = radialRises.Count;
         for (int i = 0; i < hexagons.Length; i++) {
             hexagons[i].Refresh();
-            hexagons[i].Draw();
             hexagons[i].targetHeight = 1;
             for (int n = 0; n < radialCount; n++) {
-                dist = Vector3.Distance(hexagons[i].position, radialRises[n].loc);
+                dist = Vector3.Distance(hexagons[i].trans.position, radialRises[n].loc);
                 hexagons[i].targetHeight = Mathf.Max(hexagons[i].targetHeight,
                     Mathf.Lerp(radialRises[n].closeHeight, radialRises[n].farHeight, Mathf.Min(dist / radialRises[n].radius, 1)));
             }
