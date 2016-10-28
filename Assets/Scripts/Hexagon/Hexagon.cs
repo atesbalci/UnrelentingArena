@@ -1,24 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hexagon : MonoBehaviour {
+public class Hexagon {
+    public Vector3 position;
     public float targetHeight;
 
-    public Transform trans { get; set; }
-
     private float currentHeight;
+    private HexTiler parent;
 
-	void Start () {
-        trans = transform;
-        targetHeight = trans.localScale.y;
-        currentHeight = trans.localScale.y;
+    public Hexagon(HexTiler parent, Vector3 position) {
+        this.parent = parent;
+        this.position = position;
+        targetHeight = 1;
+        currentHeight = 1;
 	}
 	
 	public void Refresh () {
         if (Mathf.Abs(currentHeight - targetHeight) > 0.01f) {
-            Vector3 scale = trans.localScale;
-            currentHeight = Mathf.Lerp(scale.y, targetHeight, Time.deltaTime * 10);
-            trans.localScale = new Vector3(scale.x, currentHeight, scale.z);
+            currentHeight = Mathf.Lerp(currentHeight, targetHeight, Time.deltaTime * 10);
         }
+    }
+
+    public void Draw() {
+        Graphics.DrawMesh(parent.hexMesh,
+            Matrix4x4.TRS(position + parent.trans.position, Quaternion.identity, new Vector3(1, currentHeight, 1)),
+            parent.hexMat, 0);
+
     }
 }
