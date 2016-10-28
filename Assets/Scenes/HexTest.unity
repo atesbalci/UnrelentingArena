@@ -220,6 +220,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1137456422}
   - 114: {fileID: 1137456421}
+  - 23: {fileID: 1137456424}
+  - 33: {fileID: 1137456423}
   m_Layer: 0
   m_Name: Hexagons
   m_TagString: Untagged
@@ -243,6 +245,8 @@ MonoBehaviour:
   width: 100
   height: 300
   refresh: 0
+  hexMat: {fileID: 2100000, guid: 300715b6e9e919b4797916608e9e4d2d, type: 2}
+  hexMesh: {fileID: 4300000, guid: 00bbb4412107ae947a8873b84f0d3ff6, type: 3}
 --- !u!4 &1137456422
 Transform:
   m_ObjectHideFlags: 0
@@ -255,6 +259,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!33 &1137456423
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137456420}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1137456424
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137456420}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!1 &1206459694
 GameObject:
   m_ObjectHideFlags: 0
