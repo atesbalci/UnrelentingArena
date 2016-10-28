@@ -238,12 +238,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c81fc5684cd984f94d8cbe75f79446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hexPrefab: {fileID: 143832, guid: a82ad1d7c34f65943a67058b4c992dde, type: 2}
   hexSideLength: 1
   width: 100
   height: 300
   refresh: 0
-  hexMat: {fileID: 2100000, guid: 300715b6e9e919b4797916608e9e4d2d, type: 2}
-  hexMesh: {fileID: 4300000, guid: 00bbb4412107ae947a8873b84f0d3ff6, type: 3}
 --- !u!4 &1137456422
 Transform:
   m_ObjectHideFlags: 0
