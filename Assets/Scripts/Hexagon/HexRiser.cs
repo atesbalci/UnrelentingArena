@@ -5,6 +5,6 @@ public class HexRiser : MonoBehaviour {
     public HexTiler hexTiler;
     	
 	void Update () {
-        hexTiler.RadialRise(transform.position, 10, 10, 1);
+        hexTiler.RadialRise(transform.position);
 	}
 }

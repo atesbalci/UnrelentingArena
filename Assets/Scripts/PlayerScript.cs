@@ -41,6 +41,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     void Update() {
+		GameManager.instance.hexTiler.RadialRise(transform.position);
         player.Update();
         if (Network.isServer) {
             if (player.health <= 0 && !player.dead) {

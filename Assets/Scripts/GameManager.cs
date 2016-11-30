@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 	public Dictionary<NetworkPlayer, PlayerData> playerList { get; private set; }
 	public int headCount { get; set; }
 	public bool locked { get; set; }
+	public HexTiler hexTiler { get; set; }
 
 	private NetworkView view;
 	private GameState _state;
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Awake() {
+		hexTiler = stage.GetComponentInChildren<HexTiler>();
 		instance = this;
 		view = GetComponent<NetworkView>();
 		state = GameState.Menu;

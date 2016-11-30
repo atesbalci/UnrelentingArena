@@ -243,6 +243,9 @@ MonoBehaviour:
   width: 100
   height: 300
   refresh: 0
+  radius: 10
+  closeHeight: 10
+  farHeight: 1
 --- !u!4 &1137456422
 Transform:
   m_ObjectHideFlags: 0

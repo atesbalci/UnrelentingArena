@@ -1,90 +1,109 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class HexTiler : MonoBehaviour {
-    public GameObject hexPrefab;
-    public float hexSideLength;
-    public int width;
-    public int height;
-    public bool refresh;
+	public GameObject hexPrefab;
+	public float hexSideLength;
+	public int width;
+	public int height;
+	public bool refresh;
 
-    private List<RadialRiseStruct> radialRises;
-    private Hexagon[] hexagons;
+	public float radius = 10;
+	public float closeHeight = 10;
+	public float farHeight = 1;
 
-    private struct RadialRiseStruct {
-        public Vector3 loc;
-        public float radius;
-        public float closeHeight;
-        public float farHeight;
+	private Vector4[] radialRises;
+	private int riseAmt;
+	private Hexagon[] hexagons;
 
-        public RadialRiseStruct(Vector3 loc, float radius, float closeHeight, float farHeight) {
-            this.loc = loc;
-            this.radius = radius;
-            this.closeHeight = closeHeight;
-            this.farHeight = farHeight;
-        }
-    }
+	void Start() {
+		radialRises = new Vector4[10];
+		riseAmt = 0;
+		RefreshHexagons();
+	}
 
-    void Start() {
-        radialRises = new List<RadialRiseStruct>();
-        RefreshHexagons();
-    }
+	public void RefreshHexagons() {
+		Shader.SetGlobalFloat("Radius", radius);
+		Shader.SetGlobalFloat("CloseHeight", closeHeight);
+		Shader.SetGlobalFloat("FarHeight", farHeight);
+		List<Hexagon> hexagons = new List<Hexagon>();
+		int childCount = transform.childCount;
+		for (int i = 0; i < childCount; i++)
+			Destroy(transform.GetChild(i).gameObject);
+		List<Hexagon> midLine = new List<Hexagon>();
+		float curx = 0;
+		for (int i = 0; i < width; i++) {
+			if (i % 2 == 1)
+				curx += (3 * hexSideLength);
+			Hexagon newHex = Instantiate(hexPrefab).GetComponent<Hexagon>();
+			newHex.transform.SetParent(gameObject.transform);
+			newHex.transform.localPosition = new Vector3(i % 2 == 0 ? curx : -curx, 0, 0);
+			newHex.gameObject.name = "Hex";
+			newHex.gameObject.layer = gameObject.layer;
+			midLine.Add(newHex);
+			hexagons.Add(newHex);
+		}
+		float xshift = Mathf.Cos(Mathf.PI / 3) * hexSideLength + hexSideLength;
+		float zshift = Mathf.Sin(Mathf.PI / 3) * hexSideLength;
+		for (int i = 0; i < height; i++) {
+			int heightMult = (i / 2) + 1;
+			foreach (Hexagon obj in midLine) {
+				Hexagon newHex = Instantiate(obj.gameObject).GetComponent<Hexagon>();
+				newHex.transform.SetParent(gameObject.transform);
+				newHex.transform.localPosition = new Vector3(newHex.transform.localPosition.x, 0, newHex.transform.localPosition.z) +
+					new Vector3(i % 4 < 2 ? xshift : 0, 0, (i % 2 == 0 ? 1 : -1) * heightMult * zshift);
+				newHex.gameObject.name = "Hex";
+				newHex.gameObject.layer = gameObject.layer;
+				hexagons.Add(newHex);
+			}
+		}
+		this.hexagons = hexagons.ToArray();
+	}
 
-    public void RefreshHexagons() {
-        List<Hexagon> hexagons = new List<Hexagon>();
-        int childCount = transform.childCount;
-        for (int i = 0; i < childCount; i++)
-            Destroy(transform.GetChild(i).gameObject);
-        List<Hexagon> midLine = new List<Hexagon>();
-        float curx = 0;
-        for (int i = 0; i < width; i++) {
-            if (i % 2 == 1)
-                curx += (3 * hexSideLength);
-            Hexagon newHex = Instantiate(hexPrefab).GetComponent<Hexagon>();
-            newHex.transform.SetParent(gameObject.transform);
-            newHex.transform.localPosition = new Vector3(i % 2 == 0 ? curx : -curx, 0, 0);
-            newHex.gameObject.name = "Hex";
-            midLine.Add(newHex);
-            hexagons.Add(newHex);
-        }
-        float xshift = Mathf.Cos(Mathf.PI / 3) * hexSideLength + hexSideLength;
-        float zshift = Mathf.Sin(Mathf.PI / 3) * hexSideLength;
-        for (int i = 0; i < height; i++) {
-            int heightMult = (i / 2) + 1;
-            foreach (Hexagon obj in midLine) {
-                Hexagon newHex = Instantiate(obj.gameObject).GetComponent<Hexagon>();
-                newHex.gameObject.name = "Hex";
-                newHex.transform.SetParent(gameObject.transform);
-                newHex.transform.localPosition = newHex.transform.localPosition +
-                    new Vector3(i % 4 < 2 ? xshift : 0, 0, (i % 2 == 0 ? 1 : -1) * heightMult * zshift);
-                hexagons.Add(newHex);
-            }
-        }
-        this.hexagons = hexagons.ToArray();
-    }
+	void Update() {
+		if (refresh) {
+			refresh = false;
+			RefreshHexagons();
+		}
+		//float dist;
+		//for (int i = 0; i < hexagons.Length; i++) {
+		//    hexagons[i].Refresh();
+		//    hexagons[i].targetHeight = 1;
+		//    for (int n = 0; n < riseAmt; n++) {
+		//        dist = DistanceSquare(hexagons[i].position, radialRises[n].loc);
+		//        hexagons[i].targetHeight = Max(hexagons[i].targetHeight,
+		//            Lerp(radialRises[n].closeHeight, radialRises[n].farHeight, Min(dist / radialRises[n].radiusSquare, 1)));
+		//    }
+		//}
+		for (int i = 0; i < radialRises.Length; i++) {
+			if (riseAmt > i)
+				Shader.SetGlobalVector("RiserPosition" + i.ToString(), radialRises[i]);
+			else
+				Shader.SetGlobalVector("RiserPosition" + i.ToString(), new Vector4(0, 0, 0, -1000000));
+		}
+		riseAmt = 0;
+	}
 
-    void Update() {
-        if (refresh) {
-            refresh = false;
-            RefreshHexagons();
-        }
-        float dist;
-        int radialCount = radialRises.Count;
-        for (int i = 0; i < hexagons.Length; i++) {
-            hexagons[i].Refresh();
-            hexagons[i].targetHeight = 1;
-            for (int n = 0; n < radialCount; n++) {
-                dist = Vector3.Distance(hexagons[i].trans.position, radialRises[n].loc);
-                hexagons[i].targetHeight = Mathf.Max(hexagons[i].targetHeight,
-                    Mathf.Lerp(radialRises[n].closeHeight, radialRises[n].farHeight, Mathf.Min(dist / radialRises[n].radius, 1)));
-            }
-        }
-        radialRises.Clear();
-        //transform.GetChild(Random.Range(0, transform.childCount)).GetComponent<Hexagon>().targetHeight = Random.Range(1, 10);
-    }
+	public void RadialRise(Vector3 loc) {
+		radialRises[riseAmt] = new Vector4(loc.x, loc.y, loc.z, 1);
+		riseAmt++;
+	}
 
-    public void RadialRise(Vector3 loc, float radius, float closeHeight, float farHeight) {
-        radialRises.Add(new RadialRiseStruct(loc, radius, closeHeight, farHeight));
-    }
+	private float Lerp(float a, float b, float ratio) {
+		return a + (b - a) * ratio;
+	}
+
+	private float Max(float a, float b) {
+		return a > b ? a : b;
+	}
+
+	private float Min(float a, float b) {
+		return a < b ? a : b;
+	}
+
+	private float DistanceSquare(Vector3 a, Vector3 b) {
+		return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z);
+	}
 }
