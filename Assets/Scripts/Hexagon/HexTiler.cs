@@ -67,22 +67,22 @@ public class HexTiler : MonoBehaviour {
 			refresh = false;
 			RefreshHexagons();
 		}
-		//float dist;
-		//for (int i = 0; i < hexagons.Length; i++) {
-		//    hexagons[i].Refresh();
-		//    hexagons[i].targetHeight = 1;
-		//    for (int n = 0; n < riseAmt; n++) {
-		//        dist = DistanceSquare(hexagons[i].position, radialRises[n].loc);
-		//        hexagons[i].targetHeight = Max(hexagons[i].targetHeight,
-		//            Lerp(radialRises[n].closeHeight, radialRises[n].farHeight, Min(dist / radialRises[n].radiusSquare, 1)));
-		//    }
-		//}
-		for (int i = 0; i < radialRises.Length; i++) {
-			if (riseAmt > i)
-				Shader.SetGlobalVector("RiserPosition" + i.ToString(), radialRises[i]);
-			else
-				Shader.SetGlobalVector("RiserPosition" + i.ToString(), new Vector4(0, 0, 0, -1000000));
+		float dist;
+		for (int i = 0; i < hexagons.Length; i++) {
+			hexagons[i].Refresh();
+			hexagons[i].targetHeight = 1;
+			for (int n = 0; n < riseAmt; n++) {
+				dist = DistanceSquare(hexagons[i].position, radialRises[n]);
+				hexagons[i].targetHeight = Max(hexagons[i].targetHeight,
+					Lerp(closeHeight, farHeight, Min(dist / radius, 1)));
+			}
 		}
+		//for (int i = 0; i < radialRises.Length; i++) {
+		//	if (riseAmt > i)
+		//		Shader.SetGlobalVector("RiserPosition" + i.ToString(), radialRises[i]);
+		//	else
+		//		Shader.SetGlobalVector("RiserPosition" + i.ToString(), new Vector4(0, 0, 0, -1000000));
+		//}
 		riseAmt = 0;
 	}
 

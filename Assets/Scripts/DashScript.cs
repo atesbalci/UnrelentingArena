@@ -8,7 +8,7 @@ public class DashScript : MonoBehaviour {
 	private List<Player> affectedPlayers;
 	private ParticleSystem partSys;
 
-	void Start() {
+	void Awake() {
 		player = GetComponentInParent<PlayerScript>().player;
 		damage = 10;
 		partSys = GetComponentInChildren<ParticleSystem>();
