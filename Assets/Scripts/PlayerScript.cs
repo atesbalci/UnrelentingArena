@@ -23,7 +23,7 @@ public class PlayerScript : MonoBehaviour {
         furyEffect.gameObject.SetActive(false);
         momentum = GetComponentInChildren<MomentumScript>();
         foreach (SkinnedMeshRenderer r in bodyRenderers)
-            r.materials[0].SetColor("_EmissionColor", player.color * Mathf.LinearToGammaSpace(4f));
+            r.materials[0].SetColor("_Color", player.color * Mathf.LinearToGammaSpace(4f));
         foreach (Light light in GetComponentsInChildren<Light>())
             light.color = player.color;
         if (Network.isServer) {

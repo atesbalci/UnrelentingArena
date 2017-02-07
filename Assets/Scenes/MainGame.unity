@@ -5242,6 +5242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 599706880}
+  image: {fileID: 1664027010}
 --- !u!225 &1664027015
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6369,13 +6370,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexPrefab: {fileID: 143832, guid: a82ad1d7c34f65943a67058b4c992dde, type: 2}
-  hexSideLength: 1.14999998
+  hexSideLength: 1.04999995
   width: 30
   height: 90
   refresh: 0
   radius: 25
-  closeHeight: 4
-  farHeight: 1
+  closeHeight: .100000001
+  farHeight: 2
 --- !u!1 &1962118229
 GameObject:
   m_ObjectHideFlags: 0
