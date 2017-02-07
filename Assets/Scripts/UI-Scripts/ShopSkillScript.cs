@@ -53,12 +53,12 @@ public class ShopSkillScript : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        GameManager.instance.tooltip.gameObject.SetActive(true);
+        GameManager.instance.tooltip.active = true;
         GameManager.instance.tooltip.text.text = skillPreset.tooltip;
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        GameManager.instance.tooltip.gameObject.SetActive(false);
+        GameManager.instance.tooltip.active = false;
     }
 
     public void OnPointerClick(PointerEventData eventData) {

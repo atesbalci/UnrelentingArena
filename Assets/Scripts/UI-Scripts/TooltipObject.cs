@@ -9,11 +9,11 @@ public class TooltipObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData) {
         if (text == "")
             return;
-        GameManager.instance.tooltip.gameObject.SetActive(true);
+        GameManager.instance.tooltip.active = true;
         GameManager.instance.tooltip.text.text = text;
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        GameManager.instance.tooltip.gameObject.SetActive(false);
+        GameManager.instance.tooltip.active = false;
     }
 }
