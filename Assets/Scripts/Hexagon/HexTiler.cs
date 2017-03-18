@@ -70,10 +70,10 @@ public class HexTiler : MonoBehaviour {
 		float dist;
 		for (int i = 0; i < hexagons.Length; i++) {
 			hexagons[i].Refresh();
-			hexagons[i].targetHeight = 1;
+			hexagons[i].targetHeight = farHeight;
 			for (int n = 0; n < riseAmt; n++) {
 				dist = DistanceSquare(hexagons[i].position, radialRises[n]);
-				hexagons[i].targetHeight = Max(hexagons[i].targetHeight,
+				hexagons[i].targetHeight = Min(hexagons[i].targetHeight,
 					Lerp(closeHeight, farHeight, Min(dist / radius, 1)));
 			}
 		}
